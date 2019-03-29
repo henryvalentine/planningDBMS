@@ -1,0 +1,961 @@
+﻿.alert-box 
+{
+    -ms-border-radius:3px;
+    border-radius:3px;
+	font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px;
+	padding:10px 36px;
+    width: auto;
+    z-index: 7
+}
+
+.error
+ {
+    font-size: 8pt;
+    background: none;
+    color: #d93a2d;
+    color: rgba(217, 58, 45, 0.9);
+    width: auto;
+    background: #ffecec url('../Images/error-7-16.gif') scroll left;
+    padding: 10px;
+    display: none;
+  }
+
+
+.nav-container {
+    /*margin-top: 15px;*/
+    padding: 7px;
+    background-color:  #EFEEEF;
+    border-top: 1px solid green;
+        font-size: 0;
+    -ms-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    -ms-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.nav-container .page-button {
+
+            cursor: pointer;
+            font-size: small;
+            padding: 2px;
+            background-color: green;
+            /*margin-top: 15px;*/
+            color: #fff;
+            display: inline-block;
+            margin-right: 3px;
+            outline: none;
+            border: 1px solid green;
+    margin-bottom: 2px;
+        }
+        .nav-container .current {
+
+            background-color: whitesmoke !important;
+            cursor: auto !important;
+            color: green !important;
+            border: 1px solid green !important;
+        }
+
+/*.success
+ {
+    z-index: 100;
+    font-size: 10pt;
+    width: 100%;
+    margin-left: 15px;
+    width: auto;
+    background: url('../Images/ok-24.gif') no-repeat scroll left rgba(114, 137, 0, 0.18);
+    padding: 5%;
+    display: none;
+   border: 1px solid #728900;
+    border: 1px solid rgba(114, 137, 0, 0.2);
+   color: green;
+
+}*/
+
+.success {
+    color: green;
+    background-color:  #DFF2BF;
+    background-color: rgba(114, 137, 0, 0.18);
+    background-image: url('../Images/ok-24.gif');
+    width: 100%;
+}
+
+.info, .success, .warning, .error, .validation
+ {
+    border: none;
+    padding: 5px 30px 5px 35px;
+    background-repeat: no-repeat;
+    background-position: 5px center;
+}
+
+.newItemTd {
+    padding: 0 3px 0 3px;
+    border: 0 none; 
+}
+
+
+.notice {
+	background:#e3f7fc url('images/notice.png') no-repeat 10px 50%;
+	border:1px solid #8ed9f6;
+}
+
+.spinProgress {
+    z-index: 9000;
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    background-color: whitesmoke;
+    display: none;
+    height: 47px;
+    width: 47px;
+    -ms-border-radius: 40px;
+    border-radius: 40px;
+}
+
+.spinProgress2 {
+    position: absolute;
+    left: 50%;
+    background-color: whitesmoke;
+    display: none;
+    margin-top: 1%;
+}
+
+.overlay
+ {
+  
+    height: 100%;
+    background-color: #000;
+    -ms-opacity: 0.2;
+    opacity: 0.2;
+    left: 0px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 20;
+}
+
+
+.legendErr {
+    width: 100%;
+    position: relative;
+    float: left;
+    padding: 7px 0px 6px 2%;
+    background-color: #cb5d54;
+    background-color: rgba(203, 93, 84, 0.85);
+    color: #F9F9F9;
+}
+
+ .btnCloseErr
+     {
+         background: #cb5d54;
+         color: #FFF;
+         cursor: pointer;border: none;
+         float: right;
+         width: 95px;
+         padding: 6px 30px
+     }
+
+
+  .customNewCheckbox
+       {
+           text-align: center;
+            float: right;
+            margin-right:1%;
+          
+         }
+         
+       #btnClose
+        {
+           width: 96px;
+       }
+
+       .addNewFieldRow
+        {
+           width: 18px; height: 18px; cursor: pointer; background:green; -ms-border-radius:11px; border-radius:11px; border:0 green; float: right
+       }
+
+         #tblReport 
+         {
+              border-collapse:collapse;border:1px solid green;
+         }
+
+        #tblReport td
+        {
+            border:1px solid green;
+         }
+
+        .edrow{}
+       .edrTx{}
+   
+       .xxvz
+        {
+          vertical-align: middle;
+            width: 50%;
+            max-width: 50%;
+           -moz-min-width: 50%;
+           -ms-min-width: 50%;
+           -o-min-width: 50%;
+           -webkit-min-width: 50%;
+           min-width: 50%;
+       }
+
+       .ssd 
+       {
+        -moz-min-width: 4%; -ms-min-width: 4%; -o-min-width: 4%; -webkit-min-width: 4%; min-width: 4%; max-width: 4%
+        }
+
+       /*.errx {
+            background: #ff0000;
+           color: white;
+           width: 99%;
+              
+       }*/
+
+        .bxcf
+        {
+            height: 36px; min-height: 36px; max-height: 36px; vertical-align: bottom;
+        }
+
+        .kxxd {
+            -moz-min-width:16%; -ms-min-width:16%; -o-min-width:16%; -webkit-min-width:16%; min-width:16%
+        }
+
+       .fxxv
+        {
+           width: 70%; max-width: 70%; -moz-min-width: 70%; -ms-min-width: 70%; -o-min-width: 70%; -webkit-min-width: 70%; min-width: 70%; 
+        } 
+
+
+        .delTx 
+     {
+        cursor: pointer
+    }
+    .edTx 
+    {
+        cursor: pointer
+    }
+
+    .infTx
+    {
+        cursor: pointer
+    }
+    
+
+    .detTx
+     {
+        cursor: pointer 
+    }
+    
+    .minus
+     {
+          background: url(/Images/minus-5-16.png) no-repeat fixed 96px center transparent;
+      
+     }
+     /*.minus:hover { background-position: bottom left; }*/
+
+     .plus
+      {
+          background: url(/Images/plus-5-16.png) no-repeat fixed 96px center transparent;
+        
+     } 
+    
+     .sfirst
+     {
+        background: url(/Images/settings-8.png) no-repeat scroll;
+        width: 100%;
+        background-position: 1px center;
+        padding-left: 25px;
+     }
+
+      .adfirst
+     {
+        background: url(/Images/administrator.png) no-repeat scroll;
+        width: 100%;
+        cursor: pointer;
+        background-position: 1px center;
+        padding-left: 25px;
+     }
+
+     .usfirst
+     {
+        background: url('/Images/users.png') no-repeat scroll;
+        width: 100%;
+        cursor: pointer;
+        background-position: 5px bottom;
+        padding-left: 23px;
+     }
+       .rdfirst
+     {
+        background: url(/Images/report.png) no-repeat scroll;
+        width: 100%;
+        cursor: pointer;
+        background-position: 1px center;
+        padding-left: 25px;
+     }
+        .dfirst
+     {
+        background: url(/Images/dataentry.png) no-repeat scroll;
+        width: 100%;
+        background-position: 1px center;
+        cursor: pointer;
+        padding-left: 25px;
+     }
+
+
+     #topsection{
+  background: url('../images/bannerBGs.jpg');
+  background-repeat:no-repeat;
+  background: url('../images/bannerBGl.jpg');
+  background-repeat:repeat-x;
+}
+
+      .sSecond
+     {
+        background: url(/Images/circle-outline-16.png) no-repeat scroll;
+        width: 100%; 
+         background-position: 10px center;
+        cursor: pointer; 
+        border: none;
+        text-decoration: none;
+         padding: 1%;
+         height: auto;
+     }
+
+    .btnNext
+     {
+        background:url(/Images/next.png) 110px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+    .btnBack
+     {
+        background:url(/Images/back.png) 20px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+     .btnNextZX
+     {
+        background:url(/Images/next.png) 80px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnGetPrevQuery
+     {
+        background:url(/Images/next.png) 110px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnGetRepFields
+     {
+        background:url(/Images/next.png) 160px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnAdd
+     {
+        background:url(/Images/add2.png) 160px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+     .btnSearch
+     {
+        background:url(/Images/search_.png) 100px no-repeat ;
+        text-align: left;
+         border: 1px solid green;
+        cursor: pointer;border: none;
+        background-color: whitesmoke;
+         color: green;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnLogin
+     {
+        background:url(/Images/login-16.png) 75px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+     .btnAddWC
+     {
+        background:url(/Images/add2.png) 175px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnAddP
+     {
+        background:url(/Images/add2.png) 118px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+     .btnAddP2
+     {
+        background:url(/Images/add2.png) 120px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+      .btnAddP3
+     {
+        background:url(/Images/add2.png) 165px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+    .btnAddFX
+     {
+        background:url(/Images/add2.png) 163px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+    .datetimepicker {
+        width: 100%;
+        cursor: default;
+    }
+
+    .btnAddW
+     {
+        background:url(/Images/add2.png) 205px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnAddK
+     {
+        background:url(/Images/add2.png) 95px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+     .btnAddXy
+     {
+        background:url(/Images/add2.png) 130px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnAddX
+     {
+        background:url(/Images/add2.png) 200px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+     .btnSave
+     {
+        background:url(/Images/check.png) 80px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        background-color: green;
+        /*background-position: left 40px center;*/
+     }
+
+
+    .btnAdd5
+     {
+        background:url(/Images/add2.png) 95px no-repeat green;
+        text-align: left;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+     .btnAdd2
+     {
+        background:url(/Images/add2.png) 135px no-repeat green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+         text-align: left;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+     .vvs {
+         
+          font-weight: bold;
+         margin-left: 2%;
+         width: auto;
+         color: green;
+     }
+    
+
+     .icon-wrench:before {
+    content: "";
+}
+
+     [class^="icon-"]:before, [class*=" icon-"]:before
+      {
+    text-decoration: inherit;
+    display: inline-block;
+}
+
+     #text_nav_side_fixed > li > a > span {
+    margin: 0px 18px 0px 12px;
+    font-size: 16px;
+    color: #FFF;
+}
+a [class^="icon-"], a [class*=" icon-"] {
+    display: inline;
+}
+[class^="icon-"], [class*=" icon-"] {
+    display: inline;
+    width: auto;
+    height: auto;
+    line-height: normal;
+    vertical-align: baseline;
+    background-image: none;
+    background-position: 0% 0%;
+    background-repeat: repeat;
+    margin-top: 0px;
+}
+[class^="icon-"], [class*=" icon-"] {
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+}
+
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+td#dtCanc a:hover {
+             color: #fff;background-color: green
+        }
+
+a#ancCancel{ text-decoration: none; color: #fff}
+
+.btnAdd3
+     {
+        background:url(/Images/add2.png) 205px no-repeat green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnUpload
+     {
+        background:url(/Images/upload.png) 80px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnGoTop
+     {
+    background: green url('../Images/arrow-207-xl.png') no-repeat 87px;
+    -ms-background-size: 20px 20px;
+    background-size: 18px 18px;
+    color: #FFF;
+    cursor: pointer;
+    border: none; /*background-position: left 40px center;*/
+}
+
+    .btnUpdate2
+     {
+        background:url(/Images/refresh.png) 10px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnEdit
+     {
+        background:url(/Images/edit.png) 130px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/
+     }
+
+    .btnClose{ background:url(/Images/cancel.png) 80px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;}
+
+    .btnUpdate
+     {
+        background:url(/Images/Update.png) 80px no-repeat  green;
+        -ms-background-size:18px 18px;
+        background-size:18px 18px; color: #FFF;
+        cursor: pointer;border: none;
+        /*background-position: left 40px center;*/}
+ 
+    table a:hover { background: none; cursor: pointer}  /* mouse over link */
+  
+    #gnSttng a:hover { width: 8%;height: 4%; background: transparent}
+
+     /*#tblBranches #tblEdQuals #tblDepartments   #tblBranches tr:nth-child(even)
+      {*/
+         /*background: none repeat scroll 0% 0% #cae9fd;
+         background: none repeat scroll 0% 0% rgba(202, 233, 253, 0.8);*/
+        /*background: none repeat scroll 0% 0% #E6F0F3;
+        border-top: 1px solid #CCC;
+        font-family: Trebuchet MS,Tw Cen MT,Verdana,Arial;
+     }*/
+
+.customGridHeader 
+{
+    /*background: none repeat scroll 0% 0% #008b8b;
+    background: none repeat scroll 0% 0% rgba(0, 139, 139, 0.7);*/
+    background: transparent;color: green;font-weight: bold;font-size: 7pt;height: 35px;
+    
+}
+
+.background2
+{
+    background: none repeat scroll 0% 0% #008b8b;
+    background: none repeat scroll 0% 0% rgba(0, 139, 139, 0.1);
+    /*border-left: 0.5px solid green;
+    border-right: 0.5px solid green;
+    border-bottom: 0.5px solid green;*/
+     border: none;
+    color: black;
+    font-weight: normal;
+    font-weight: normal; 
+}
+
+.fils-border 
+{
+    border-color: green
+}
+
+.allcontent
+    {   margin-left: auto;margin-right: auto;width: 100%;height: auto;min-height: 70%;top: 30%;border: 1px solid green;
+    }
+
+.gridItem1 {
+    background-color:whitesmoke;
+    /*background: #E2E2E2;
+    background-color:rgba(245, 245, 245, 0.79);*/
+    font-family:Trebuchet MS, Tw Cen MT, Verdana, Arial;
+    font-size:0.85em;
+    color:#000;
+	font-weight: normal; 
+    padding: 0.25em 2em 0.25em 0em;
+}
+
+#dvsttngs a:hover
+{
+    height: 18px;
+    width: 18px;
+    background: none;
+    font-weight: bold;
+    font-size: 8pt;
+}
+
+#imgMenu :hover
+{
+     background: none;
+}
+
+/*#tblDepartments tr:nth-child(odd) 
+{
+    color: #e6f0f3;
+    font-family: Trebuchet MS, Tw Cen MT, Verdana, Arial;
+    font-size: 8pt;
+    color: #333;
+    font-weight: normal;
+    padding: 0 5px 0 5px; 
+}*/
+
+.dvsttngs {
+    cursor: pointer;
+    width: 24px;height: 24px;
+    /*background: url('/Images/activity-feed-24.gif') 1px no-repeat;*/
+    -ms-background-size: 24px;
+    background-size: 24px;
+}
+
+#customMenu li 
+{
+    float: right
+}
+
+#container {
+    margin: auto;
+    width: 490px;
+}
+
+#button {
+    height: 32px;
+    width: 184px;
+    margin: auto;
+}
+
+ul, li {
+    margin:0; 
+    padding:0; 
+    list-style:none;
+}
+
+.file_menu {
+    display:none;
+    width:300px;
+    border: 1px solid #1c1c1c;
+}
+
+.file_menu li {
+    background-color: #302f2f;
+}
+
+.file_menu li a {
+    color:#FFFFFF; 
+    text-decoration:none; 
+    padding:10px; 
+    display:block;
+}
+
+.file_menu li a:hover {
+    padding:10px;
+    font-weight:bold;
+    color: #F00880;
+}
+
+.large
+{
+   padding: 6px 40px;
+}
+
+.legend22
+{
+    /*cursor: move;*/
+    width:100%;
+    position:relative;
+    float:left;
+    font-weight: bold;
+    font-size: 10pt;
+    padding:7px 0 1% 2%;
+	border: 1px solid green;
+    background-color: #008000;
+    color: #F9F9F9;
+   
+}
+
+.legend2 {
+    width: 100%;
+    position:relative;
+    float:left;
+    font-weight: bold;
+    font-size: 10pt;
+    padding:7px 0 2% 12%;
+    background-color: #008000;
+    color: whitesmoke;
+}
+
+.legend2R {
+    width: 100%;
+    position:relative;
+    float:left;
+    font-weight: bold;
+    font-size: 10pt;
+    padding:7px 0 2px 12%;
+    background-color: #008000;
+    color: whitesmoke;
+}
+
+
+.legend2x {
+    width: 100%;
+       position:relative;
+    float:left;
+    font-weight: bold;
+    font-size: 10pt;
+    padding:7px 0 1% 2%;
+    background-color: whitesmoke;
+    color: green;
+}
+
+.rowColor {
+    border: green 1px solid
+}
+
+.dashHeader
+{ 
+   
+    width:100%;
+    position:relative;
+    font-weight: bold;
+    font-size: 11pt;
+    padding:7px 0px 6px 3%;
+    float:left;
+    color:green;
+   
+}
+
+.customlegend22
+{ 
+   
+    width:100%;
+    position:relative;
+    font-weight: bold;
+    font-size: 10pt;
+    padding:7px 0px 6px 2%;
+    float:left;
+    color:#fcfcfc;
+	background-color:green;
+	color:#f9f9f9;
+   
+}
+
+.tr2{ font-size: 10pt;background-color:green;color:#f9f9f9;}
+
+
+.dashBoardLegend
+{ 
+   
+    width:100%;
+    position:relative;
+    font-weight: bold;
+    font-size: 10pt;
+    padding:7px 0px 6px 2%;
+    float:left;
+    color:#fcfcfc;
+	background-color:whitesmoke;
+	color:#619702;
+   
+}
+
+.gtx{ }
+.dvSummaryWrapper {background:whitesmoke; border:1px solid whitesmoke}
+.activeFieldSet{ display: block;}
+.inActiveFieldSet{ display: none;}
+.inActiveFieldSet2{ display: none}
+.rearrangeControls{float: right; position: relative; margin-right: 1%}
+.toggleWidth{width: 700px;}
+
+.chkRole {}
+.submitAnchor {border-color: inherit;border-width: medium;cursor: pointer;margin-left: 70%;background: #0099cc;color: white;width: 29%;height: 34px;border-style: none} 
+.lsx { color: black; /*background: #3c7fb1;*/}
+.xtc {/*for TABLE Column RENUMBERING AND LINKING*/text-align: center}
+.dnTx{/*for LINKING*/}
+.xtcR {/*for TABLE ROW RENUMBERING*/}
+.fsEdit {
+    width:40%;
+    background: whitesmoke; 
+    border: 1px groove #C0C0C0;
+    height: auto;
+    -ms-border-radius: 7px;
+    border-radius: 7px;
+}
+
+.xzcComp 
+{
+    display: none; 
+    visibility: visible; 
+    max-height: 80%
+}
+
+.fsRepFields {
+    width:36%;
+    background: whitesmoke; 
+    /*border: 1px  #C0C0C0;*/
+    height: auto;
+}
+
+.xxc{}
+
+.fsLogin {
+    height: auto;
+    margin: 0em auto;
+    background-color: #FFF;
+    border-radius: 3px;
+    width: 30%; 
+    margin-left: 35%; 
+    margin-top: 5%; 
+    border: 1px solid green; 
+    background-color: #fff
+}
+
+.fsRegister {
+    height: auto;
+    margin: 0em auto;
+    background-color: #FFF;
+    border-radius: 3px; 
+    margin-left: 15%; 
+    margin-top: 5%; 
+    border: 1px solid green; 
+    background-color: #fff
+}
+
+[draggable=true]
+{
+    cursor: move;
+}
+
+.resizable {
+    overflow: scroll;
+    -moz-resize: both;
+    -ms-resize: both;
+    -o-resize: both;
+    resize: both;
+    max-width: 300px;
+    max-height: 460px;
+}
+

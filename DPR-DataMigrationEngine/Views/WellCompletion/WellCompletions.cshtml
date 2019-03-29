@@ -1,0 +1,683 @@
+﻿@using System.Globalization
+@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model DPR_DataMigrationEngine.ViewModels.WellCompletionViewModel
+           
+<style type="text/css">
+    .wellworkEdTx {
+    }
+
+    .wellworkDelTx {
+    }
+
+    .workoverDate {
+    }
+
+    a#btnBulkUpload:link, a#btnBulkUpload:visited, a#btnBulkUpload:active, a#btnBulkUpload:hover {
+        text-decoration: none;
+        background: url(/Images/next.png) 110px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+    }
+</style>
+
+<form action="@Url.Action("AddWellCompletion", "WellCompletion")" id="fsWellCompleteion" class="fsEdit" style="display: none; visibility: visible">
+    <span class="legend22" id="lgEditWellCompletionCompletion" style="width: 100%">Add New WellCompletion</span>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Well: </i><span style="color: red">*</span><span id="spddlWells" data-valmsg-for="wellCompletion.WellId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                @*<input type="hidden" placeholder="-- Select Well --" class="form-control" name="wellCompletion.WellId" id="ddlWells" />*@
+                
+                <select class="form-control" name="wellCompletion.WellId" id="ddlWells">
+                    @{
+                        var wellExtensions = new ExtensionHelpers().ListOption(Model.WellObjects, "WellId", "Name", "-- Select Well --");
+
+                        foreach (var well in wellExtensions.Select(wellString => Html.Raw(wellString)))
+                        {
+                            @well
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Well Completion Type: </i><span style="color: red">*</span><span id="spddlWellCompletionTypes" data-valmsg-for="wellCompletion.WellCompletionTypeId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="wellCompletion.WellCompletionTypeId" id="ddlWellCompletionTypes" onchange="toggleIntervalOptions()">
+                    @{
+                        var wellCompletionTypeExtensions = new ExtensionHelpers().ListOption(Model.WellCompletionTypes, "WellCompletionTypeId", "Type", "-- Select Well Completion Type --");
+
+                        foreach (var wellCompletionType in wellCompletionTypeExtensions.Select(wellCompletionTypeString => Html.Raw(wellCompletionTypeString)))
+                        {
+                    @wellCompletionType
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr id="rowSingleType">
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto" id="spL1">Lower Interval: </i><span style="color: red">*</span><span id="sptxtL1" data-valmsg-for="wellCompletionInterval.L1" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <input type="text" name="wellCompletion.L1" id="txtL1" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto" id="spU1">Upper Interval: </i><span style="color: red">*</span><span id="sptxtU1" data-valmsg-for="wellCompletionInterval.U2" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <input type="text" name="wellCompletion.U1" id="txtU1" class="form-control" />
+            </td>
+        </tr>
+        <tr id="rowDualtype" style="display: none">
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Lower Interval 2: </i><span style="color: red">*</span><span id="spLowerInterval" data-valmsg-for="wellCompletionInterval.LowerInterval" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <input type="text" name="wellCompletion.L2" id="txtL2" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Upper Interval 2: </i><span style="color: red">*</span><span id="spUpperInterval" data-valmsg-for="wellCompletionInterval.UpperInterval" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <input type="text" name="wellCompletion.U2" id="txtU2" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group">
+                <div class="formLabel"><i style="width: auto">Equipment: </i><span style="color: red">*</span><span id="spddlEquipments" data-valmsg-for="wellCompletion.EquipmentId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="wellCompletion.EquipmentId" id="ddlEquipments">
+                    @{
+                        var equipmentExtensions = new ExtensionHelpers().ListOption(Model.Equipments, "EquipmentId", "Name", "-- Select Equipment --");
+
+                        foreach (var equipment in equipmentExtensions.Select(equipmentString => Html.Raw(equipmentString)))
+                        {
+                    @equipment
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group">
+                <div class="formLabel"><i style="width: auto">Date Completed</i><span style="color: red">*</span><span class="field-validation-valid" id="spdtWellCompletionDateCompleted" data-valmsg-for="wellCompletionInterval.DateCompleted" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="wellCompletion.DateCompleted" id="dtWellCompletionDateCompleted" class="form-control datepicker" />
+            </td>
+        </tr> 
+
+        <tr>
+            <td colspan="2">
+                <input type="checkbox" id="chkInitial" name="wellCompletion.IsInitial" style="margin-left: 2%" />&nbsp; Initial Completion?&nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessWellCompletion" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessWellCompletion" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%; border: none">
+    <tr>
+        <td style="width: 80%">
+            <form style="width: 100%" method="POST" id="workCompFrm" action="@Url.Action("GetWellCompletionsByMonth", "WellCompletion")">
+                <table>
+                    <tr>
+                        <td colspan="2">
+                            @*<label style="font-weight: normal; font-size: 10pt; float: left; width: 100%; ">Retrieve Well Completions by Month:</label>*@
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-group" style="width: 40%">
+                            @*<div style="margin-left: 2%"><i style="width: auto">Year: </i><span style="color: red">*</span><span id="spddlYearCompRepo" data-valmsg-for="wellWorkover.Year" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                            <select class="form-control" name="search.Year" id="ddlYearCompRepo">
+                                @{
+                                    var yearExtensions = new ExtensionHelpers().ListOption(Model.YearList, "DocId", "DocName", "-- Select Year --");
+
+                                    foreach (var year in yearExtensions.Select(yearString => Html.Raw(yearString)))
+                                    {
+                                        @year
+                                    }
+                                }
+                            </select>*@
+                        </td>
+                        <td class="form-group" style="width: 40%">
+                            @*<div style="margin-left: 2%"><i style="width: auto">Month: </i><span style="color: red">*</span><span id="spddlMonthCompRepo" data-valmsg-for="wellWorkover.Month" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                            <select class="form-control" name="search.Month" id="ddlMonthCompRepo">
+                                @{
+                                    var monthExtensions = new ExtensionHelpers().ListOption(Model.MonthList, "DocId", "DocName", "-- Select Month --");
+
+                                    foreach (var month in monthExtensions.Select(monthString => Html.Raw(monthString)))
+                                    {
+                                        @month
+                                    }
+                                }
+                            </select>*@
+
+                        </td>
+                        <td style="width: 20%">
+                            @*<div>&nbsp;</div>
+                            <input type="submit" name="searchDate" class="btn large btnSearch" onclick="return verifyWellCompsearch();" style="width: 130px; border: 1px solid green; float: right" value="Search" />*@
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width: 10%">
+            <div style="text-align: center; float: right; margin-top: 1%">
+                <a id="btnBulkUpload" class="btn btnNext large" style="width: 140px; float: right" href="/WellCompletion/WellCompletionUpload"> Bulk Upload </a>
+            </div>
+        </td>
+        <td style="width: 10%">
+            @*<div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div>*@
+            <div style="width: 100%">
+                <input type="button" id="btnAddWellCompletion" onclick="prepareWellCompletionTemplate()" value="New Well Completion" class="btn btnAdd large" style="width: 190px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+<fieldset id="fsWellList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProcess" style="display: none; visibility: visible"></label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 20%">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedback"></div>
+            </td>
+            @*<td style="width: 20%">
+                <div style="width: 100%">
+                    <input type="button" id="btnAddWellCompletion" onclick="prepareWellCompletionTemplate()" value="New Well Completion" class="btn btnAdd large" style="width: 190px; float: right" />
+                </div>
+            </td>*@
+        </tr>
+    </table>
+    <table id="tblWellCompletions" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 5%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 20%; text-align: left">
+                Well
+            </th>
+            <th style="width: 20%; text-align: left">
+                Well Completion Type
+            </th>
+            <th style="width: 20%; text-align: left">
+                Equipment
+            </th>
+            <th style="width: 25%; text-align: left">
+                Date Completed
+            </th>
+
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>  
+        @{
+            for (var i = 0; i < Model.WellCompletions.Count(); i++)
+            {
+                var zxz = Model.WellCompletions[i];
+                <tr id="tr@(zxz.WellCompletionId)" class="xtcR" style="color: black;">
+                    <td style="width: 5%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdWell">
+                        @zxz.WellName
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdWellCompletionType">
+                        @zxz.WellCompletionTypeName
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdEquipment">
+                        @zxz.EquipmentName
+                    </td>
+                    <td style="width: 25%; text-align: left" id="tdDateCompleted"> 
+                        @zxz.DatecomPletedString
+                    </td>
+                    <td style="width: 10%">
+                        <a class="edTx" title="Edit" id="ed@(zxz.WellCompletionId)" onclick="edTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="delTx" title="Delete" id="del@(zxz.WellCompletionId)" onclick=" delTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>
+<img src="/Images/select2-spinner.gif" id="imgWellCompSpin" class="spinProgress2" />
+
+<script type="text/javascript">
+
+    $(window).load(function () {
+        $("#spLowerInterval").hide();
+        $("#spUpperInterval").hide();
+        getNormWells();
+
+    }); //workCompFrm
+    
+
+    //function getNormWells() {
+    //    var url = '/WellCompletion/GetMoreWells';
+    //    $.ajax({
+    //        url: url,
+    //        contentType: 'application/json; charset=utf-8',
+    //        dataType: 'json',
+    //        type: 'POST',
+    //        success: function (zxz) {
+    //            if (zxz.length < 1) {
+    //                clearTimeout(getNormWells());
+    //                return;
+    //            }
+    //            else {
+    //                populateWellWorkoverDynamicWell(zxz);
+    //                setTimeout(getNormWells(), 2000);
+    //            }
+    //        }
+    //    });
+
+    //}
+
+    var ttx = 0;
+
+    function getNormWells() {
+        var url = '/WellCompletion/GetMoreWells';
+
+        if (ttx > 0) {
+            clearTimeout(getNormWells);
+            getNormWells = null;
+        }
+        $.ajax({
+            url: url,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            success: function (zxz) {
+                if (zxz == null || zxz.length < 1) {
+                    ttx = 1;
+                    clearTimeout(getNormWells);
+                    getNormWells = null;
+                }
+                else {
+                    populateWellWorkoverWells(zxz);
+                    setTimeout(getNormWells, 2000);
+                }
+            }
+        });
+    }
+    
+    function populateWellWorkoverWells(data) {
+        if (data == null || data.length < 1) {
+            return;
+        }
+
+        $.each(data, function (i, v) {
+            $('#ddlWells').append($("<option />").val(v.WellId).text(v.Name));
+        });
+    }
+
+
+    $(".page-button").click(function () {
+        if (!$(this).hasClass('current')) {
+            window.location.href = "http://" +
+                window.location.host + window.location.pathname +
+                '?page=' + $(this).val() + '&pageSize=' + 40;
+        }
+    });
+    
+
+    $(function () {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height() - 120) {
+                
+                var url = '/WellCompletion/GetMoreWellCompletions';
+                $("#imgWellCompSpin").show();
+                $.ajax({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (zxz) {
+                        if (zxz === null) {
+                            $("#imgWellCompSpin").hide();
+                        } else {
+                            $.each(zxz, function (i, r) {
+                                refresh2(r);
+                            });
+                            $("#imgWellCompSpin").hide();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    function feedBackStatus(x, z) {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('success');
+            $("#brFeedback").addClass('error');
+            $("#brFeedback").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('error');
+            $("#brFeedback").addClass('success');
+            $("#brFeedback").fadeIn();
+        }
+        
+        
+    }
+    
+    function verifyWellCompsearch() {
+        if (!validateTemplate('workCompFrm')) {
+            return false;
+        }
+        return true;
+    }
+
+    $(document).ready(function () {
+        toggleValidators('fsWellCompleteion');
+        toggleValidators('workCompFrm');
+
+        $('#btnCloseProcessWellCompletion').on("click", function () {
+            $("#brFeedback").fadeOut();
+            closePopModal($('#fsWellCompleteion'));
+        });
+        
+
+//        $('#ddlWells').select2(
+//{
+//    minimumInputLength: 2, tags: [],
+//    ajax: {
+//        url: '/WellCompletion/GetSelect2Wells',
+//        dataType: 'json',
+//        type: "GET",
+//        quietMillis: 50,
+//        data: function (term) {
+//            return {
+//                term: term
+//            };
+//        },
+//        results: function (data) {
+//            return {
+//                results: $.map(data, function (item)
+//                {
+//                    return {
+//                        text: item.Name,
+//                        slug: item.slug,
+//                        id: item.WellId
+//                    }; 
+//                })
+//            };
+//        }
+//    }
+//});
+
+
+        $("#fsWellCompleteion").submit(function (e) {
+            $("#brFeedback").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsWellCompleteion')) {
+                return;
+            }
+
+            var type = parseInt($('#ddlWellCompletionTypes').val());
+
+            if (type == 2) {
+                if (parseInt($('#txtL2').val().trim()) < 1) {
+                    $('#spLowerInterval').fadeIn('slow');
+                    return;
+                }
+
+                if (parseInt($('#txtU2').val().trim()) < 1) {
+                    $('#spUpperInterval').fadeIn('slow');
+                    return;
+                }
+
+            }
+
+            var rnx = $('#ddlWells');
+            var rxvx = $('#ddlEquipments');
+            var rdvx = $('#chkInitial');
+
+            var newWellCompletion = {};
+            newWellCompletion.WellCompletionId = rtx;
+            newWellCompletion['WellId'] = rnx.val();
+            newWellCompletion['EquipmentId'] = rxvx.val();
+            newWellCompletion['WellCompletionTypeId'] = type;
+
+            newWellCompletion['L1'] = parseFloat($('#txtL1').val().trim());
+            newWellCompletion['U1'] = parseFloat($('#txtU1').val().trim());
+            newWellCompletion['L2'] = parseFloat($('#txtL2').val().trim());
+            newWellCompletion['U2'] = parseFloat($('#txtU2').val().trim());
+            newWellCompletion['DateCompleted'] = $('#dtWellCompletionDateCompleted').val();
+
+            if (rdvx.is(':checked')) {
+                newWellCompletion['IsInitial'] = 'true';
+            }
+            else {
+                newWellCompletion['IsInitial'] = 'false';
+            }
+
+            newWellCompletion.EquipmentName = $("#ddlEquipments option:selected").text();
+            newWellCompletion.WellName = $("#ddlWells option:selected").text();
+            newWellCompletion.WellCompletionTypeName = $("#ddlWellCompletionTypes option:selected").text();
+
+            var sdx = JSON.stringify({ wellCompletion: newWellCompletion });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode === -1 || zxz.ErrorCode === -2 || zxz.ErrorCode === 0 || zxz.ErrorCode === -3) {
+                        $('#brEdError').text(zxz.Error);
+                        $('#brEdError').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProcess').text() === "2") {
+                        updateTable(zxz);
+                    }
+                }
+            });
+        });
+    });
+  
+    var rtx = 0;
+
+    function edTx(x) {
+        $('#brProcess').text('');
+        $("#brFeedback").fadeOut();
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+          
+            return;
+        }
+        rtx = xxid;
+        var url = '/WellCompletion/EditWellCompletion?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsWellCompleteion', 'Update');
+        $('#fsWellCompleteion').attr("action", "/WellCompletion/EditWellCompletion");
+
+        $('#ddlWells').val(data.WellId);
+        $('#ddlWellCompletionTypes').val(data.WellCompletionTypeId);
+        $('#ddlEquipments').val(data.EquipmentId);
+
+        var type = data.WellCompletionTypeId;
+
+        if (type < 2) {
+            $('#spL1').text('Lower Interval');
+            $('#spU1').text('Upper Interval');
+            $('#txtL1').val(data.L1);
+            $('#txtU1').val(data.U1);
+            $('#rowDualtype').hide('fast');
+        }
+
+        if (type > 1) {
+            $('#rowDualtype').show('fast');
+            $('#spL1').text('Lower Interval 1');
+            $('#spU1').text('Upper Interval 1');
+            $('#txtL1').val(data.L1);
+            $('#txtU1').val(data.U1);
+            $('#txtL2').val(data.L2);
+            $('#txtU2').val(data.U2);
+
+        }
+
+        //$('.datetimepicker').datetimepicker({
+        //    value: data.DatecomPletedString,
+        //    format: 'Y/m/d'
+        //});
+
+        //$('.datetimepicker').datetimepicker({
+        //    value: data.DatecomPletedString,
+        //    format: 'Y/m/d'
+        //});
+
+        $('#dtWellCompletionDateCompleted').datepicker("setValue", data.DatecomPletedString);
+
+        if (data.IsInitial === true) {
+            $('#chkInitial').prop('checked', true);
+        }
+
+        $('#lgEditWellCompletionCompletion').text('Update Well Completion');
+        $('#brProcess').text(2);
+        setModal($('#fsWellCompleteion'));
+    }
+
+    function delTx(x) {
+        $("#brFeedback").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/WellCompletion/DeleteWellCompletion?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    //Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblWellCompletions #tr' + xxid).remove();
+
+                //$('#tblWellCompletions tr.xtcR').each(function (r) {
+                //    $(this).children('.xtc').text(r + 1);
+                //});
+
+            }
+        });
+        return;
+    }
+
+    function getWellCompletionSearchMonth() {
+        $('#lblWellCompletionSearchMonth').val($('#txtWellCompletionDateSearch').val());
+    }
+
+
+    function toggleIntervalOptions() {
+        var type = parseInt($('#ddlWellCompletionTypes').val());
+        if (type == 1) {
+            $('#rowDualtype').fadeOut('slow');
+            $('#spL1').text('Lower Interval');
+            $('#spU1').text('Upper Interval');
+        }
+        if (type == 2) {
+            $('#rowDualtype').fadeIn('slow');
+            $('#spL1').text('Lower Interval 1');
+            $('#spU1').text('Upper Interval 1');
+        }
+    }
+
+
+    function prepareWellCompletionTemplate() {
+        refreshForm('fsWellCompleteion', '');
+        $("#spLowerInterval").hide();
+        $("#spUpperInterval").hide();
+        $("#rowDualtype").hide();
+        $('#fsWellCompleteion').attr("action", "/WellCompletion/AddWellCompletion");
+        $('#brProcess').text(1);
+        setModal($('#fsWellCompleteion'));
+    }
+
+    function updateTable(r) {
+        $('#tblWellCompletions #tr' + rtx).children('#tdWell').html(r.WellName);
+        $('#tblWellCompletions #tr' + rtx).children('#tdWellCompletionType').html(r.WellCompletionTypeName);
+        $('#tblWellCompletions #tr' + rtx).children('#tdEquipment').html(r.EquipmentName);
+        $('#tblWellCompletions #tr' + rtx).children('#tdDateCompleted').html(r.DatecomPletedString);
+
+         //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+        closePopModal($('#fsWellCompleteion'));
+    }
+
+    function refresh(r) {
+        var bv = $('#tblWellCompletions tr').length - 1;
+
+        $("#tblWellCompletions tbody:last").append($('<tr id="tr' + r.WellCompletionId + '" class="xtcR" style="color: black;">'
+
+            + '<td style="width: 5%; text-align: center" class="xtc">'
+            + (bv + 1)
+            + '</td>'
+            + '<td style="width: 20%; text-align: left" id="tdWell">' + r.WellName
+            + '</td><td style="width: 20%; text-align: left" id="tdWellCompletionType">' + r.WellCompletionTypeName
+            + '</td><td style="width: 20%; text-align: left" id="tdEquipment">' + r.EquipmentName  + '</td>'
+            + '<td style="width: 20%; text-align: left" id="tdDateCompleted">' + r.DatecomPletedString + '</td>'
+            + '</td><td style="width: 10%"><a class="edTx" title="Edit" id="ed' + r.WellCompletionId + '" onclick="edTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;'
+            + '<a class="delTx" title="Delete" id="del' + r.WellCompletionId + '" onclick=" delTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a></td></tr>'));
+
+        
+        $('#brProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsWellCompleteion'));
+    }
+    
+
+
+    function refresh2(r) {
+        var bv = $('#tblWellCompletions tr').length - 1;
+
+        $("#tblWellCompletions tbody:last").append($('<tr id="tr' + r.WellCompletionId + '" class="xtcR" style="color: black;">'
+            + '<td style="width: 5%; text-align: center" class="xtc">'
+            + (bv + 1)
+            + '</td>'
+            + '<td style="width: 35%; text-align: left" id="tdWell">' + r.WellName
+            + '</td><td style="width: 25%; text-align: left" id="tdWellCompletionType">' + r.WellCompletionTypeName
+            + '</td><td style="width: 25%; text-align: left" id="tdEquipment">' + r.EquipmentName
+            + '</td></td><td style="width: 10%"><a class="edTx" title="Edit" id="ed' + r.WellCompletionId + '" onclick="edTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;'
+            + '<a class="delTx" title="Delete" id="del' + r.WellCompletionId + '" onclick=" delTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a></td></tr>'));
+        
+    }
+</script>
+

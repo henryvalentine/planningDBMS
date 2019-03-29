@@ -1,0 +1,508 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model  DPR_DataMigrationEngine.ViewModels.FieldViewModel
+
+
+<style type="text/css">
+
+    a#btnBulkUpload:link, a#btnBulkUpload:visited, a#btnBulkUpload:active, a#btnBulkUpload:hover {
+        text-decoration: none;
+        background: url(/Images/next.png) 110px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+    }
+       
+</style>
+
+<form action="@Url.Action("AddField", "Field")" id="fsProcessFields" class="fsEdit" style="display: none; visibility: visible">
+    <span class="legend22" id="lgEditField" style="width: 100%">Add New Field</span>
+
+    @*@Html.AntiForgeryToken()*@
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width:50%">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Field:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtFieldName" data-valmsg-for="branch.Name" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="field.Name" id="txtFieldName" class="form-control" style="margin-left: 2%" />
+            </td>
+            <td class="form-group" style="width:50%">
+                <div>&nbsp;</div><div style="margin-left: 2%"><i style="width: auto">Company: </i><span style="color: red">*</span><span class="field-validation-valid" id="spddlCompanies" data-valmsg-for="field.CompanyId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" style="width: 100%" name="field.CompanyId" id="ddlCompanies">
+                    @{
+                        var companyExtensions = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "-- Select Company --");
+
+                        foreach (var company in companyExtensions.Select(companyString => Html.Raw(companyString)))
+                        {
+                            @company
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width:50%">
+                <div style="margin-left: 2%"><i style="width: auto">Block: </i><span style="color: red">*</span><span class="field-validation-valid" id="spddlTerrains" data-valmsg-for="field.TerrainId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="field.BlockId" id="ddlBlocks">
+                    @{
+                        var blocks = new ExtensionHelpers().ListOption(Model.Blocks, "BlockId", "Name", "-- Select Block --");
+
+                        foreach (var block in blocks.Select(blockString => Html.Raw(blockString)))
+                        {
+                            @block
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width:50%">
+                <div style="margin-left: 2%"><i style="width: auto">Terrain: </i><span style="color: red">*</span><span class="field-validation-valid" id="spddlTerrains" data-valmsg-for="field.TerrainId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="field.TerrainId" id="ddlTerrain">
+                    @{
+                        var blockExtensions = new ExtensionHelpers().ListOption(Model.Terrains, "TerrainId", "Name", "-- Select Terrain --");
+
+                        foreach (var block in blockExtensions.Select(blockString => Html.Raw(blockString)))
+                        {
+                            @block
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width:50%">
+                <div style="margin-left: 2%"><i style="width: auto">Zone:</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlZones" data-valmsg-for="field.ZoneId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="field.ZoneId" id="ddlZones">
+                    @{
+                        var zoneExtensions = new ExtensionHelpers().ListOption(Model.Zones, "ZoneId", "Name", "-- Select Zone --");
+
+                        foreach (var zone in zoneExtensions.Select(zoneString => Html.Raw(zoneString)))
+                        {
+                            @zone
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width:50%">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Technical Allowable Value: </i></div>
+                <input type="text" name="field.TechnicalAllowable" id="txtTechnicalAllowable" class="form-control" style="margin-left: 2%" />
+            </td>
+            
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessField" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessField" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+<table style="width: 100%">
+    <tr>
+        <td style="width: 85%">
+            <div style="text-align: center; float: right; margin-top: 1%">
+                <a id="btnBulkUpload" class="btn btnNext large" style="width: 140px; float: right" href="/Field/FieldUpload"> Bulk Upload </a>
+            </div>
+        </td>
+        <td style="width: 10%">
+            <div style="width: 100%">
+                <input type="button" id="btnAddNewCompany" onclick="prepareFieldTemplate()" value="New Field" class="btn btnAddK large" style="width: 120px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+<fieldset id="fsFieldList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProcess" style="display: none; visibility: visible"></label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 20%">
+        <tr>
+            <td style="width: 100%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedback"></div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblFields" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 5%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 15%; text-align: left">
+                Field
+            </th>
+            <th style="width: 12%; text-align: left">
+                Block
+            </th>
+            <th style="width: 15%; text-align: left">
+                Company
+            </th>
+            <th style="width: 15%; text-align: left">
+                Terrain 
+            </th>
+            <th style="width: 12%; text-align: left">
+                Zone 
+            </th>
+            <th style="width: 12%; text-align: left">
+                Technical Allowable
+            </th>
+            <th style="width: 13%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Fields.Count(); i++)
+            {
+                var zxz = Model.Fields[i];
+                <tr id="tr@(zxz.FieldId)" class="xtcR" style="color: black;">
+                    <td style="width: 5%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdName">
+                        @zxz.Name
+                    </td>
+                    <td style="width: 12%; text-align: left" id="tdBlock">
+                        @zxz.Block.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdCompany">
+                        @zxz.Company.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdTerrain">
+                        @zxz.Terrain.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdZone">
+                        @zxz.Zone.Name
+                    </td>
+                    <td style="width: 12%; text-align: left" id="tdTechnicalValue">
+                        @zxz.TechnicalAllowable
+                    </td>
+                    <td style="width: 13%">
+                        <a class="fieldEdTx" title="Edit" id="ed@(zxz.FieldId)" onclick="fieldEdTx(this.id);"><img src="~/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="fieldDelTx" title="Delete" id="del@(zxz.FieldId)" onclick="fieldDelTx(this.id);"><img src="~/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>
+
+<img src="/Images/select2-spinner.gif" id="imgFieldSpin" class="spinProgress2" />
+
+<script type="text/javascript">
+
+    $(window).load(function ()
+    {
+    });
+    
+
+    $(function () {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height() - 160)
+            {
+                var url = '/Field/GetMoreFieldObjects';
+                $("#imgFieldSpin").show();
+                $.ajax({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (zxz) {
+                        if (zxz === null) {
+                            $("#imgFieldSpin").hide();
+                        } else {
+                            $.each(zxz, function (i, r) {
+                                refresh2(r);
+                            });
+                            $("#imgFieldSpin").hide();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+
+    function feedBackStatus(x, z)
+    {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3)
+        {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('success');
+            $("#brFeedback").addClass('error');
+            $("#brFeedback").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('error');
+            $("#brFeedback").addClass('success');
+            $("#brFeedback").fadeIn();
+        }
+    }
+    
+    //$('#ddlCompanies').on('change', function () {
+    //    var rxv = parseInt($(this).val());
+
+    //    if (rxv < 1) {
+    //        alert('Invalid selection');
+    //        return;
+    //    }
+
+    //    var url = '/Well/GetBlocksByCompany?companyId=' + rxv;
+
+    //    $.get(url, function (retVal) {
+    //        getCompanyBlocks(retVal);
+    //    });
+
+    //});
+    
+    //function getCompanyBlocks(data) {
+    //    if (data == null || data.length < 1) {
+
+    //        $('#ddlBlocks').html('<option value="0"> -- List is empty -- </option>');
+    //        $('#ddlBlocks').prop('disabled', true);
+    //        return;
+    //    }
+    //    $('#ddlBlocks').empty();
+    //    $('#ddlBlocks').append($("<option />").val(0).text(' -- Select Block --'));
+    //    $.each(data, function (i, v) {
+    //        if (v.BlockId < 1) {
+    //            $('#ddlBlocks').empty();
+    //            $('#ddlBlocks').html('<option value="0"> -- List is empty -- </option>');
+    //            $('#ddlBlocks').prop('disabled', 'disabled');
+    //            return;
+    //        }
+
+    //        $('#ddlBlocks').append($("<option />").val(v.BlockId).text(v.Name));
+    //    });
+    //    $('#ddlBlocks').val(ddxzcv);
+    //    $('#ddlBlocks').prop('disabled', false);
+    //}
+
+    $(document).ready(function () {
+        toggleValidators('fsProcessFields');
+
+        $('#btnCloseProcessField').on("click", function () {
+            $("#brFeedback").fadeOut();
+            closePopModal($('#fsProcessFields'));
+        });
+
+        $("#fsProcessFields").submit(function (e) {
+            $("#brFeedback").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessFields')) {
+                return;
+            }
+
+            var vx = $('#txtFieldName');
+            var rx = $('#txtTechnicalAllowable');
+            var rnx = $('#ddlTerrain');
+            var rnzx = $('#ddlBlocks');
+            var rxx = $('#ddlZones');
+            var rxv = $('#ddlCompanies');
+
+            var newField = {};
+            newField.FieldId = rtx;
+
+            newField['Name'] = vx.val();
+            newField['TechnicalAllowable'] = rx.val();
+            newField['TerrainId'] = rnx.val();
+            newField['ZoneId'] = rxx.val();
+            newField['BlockId'] = rnzx.val();
+            newField['CompanyId'] = rxv.val();
+            
+            newField.BlockName = $("#ddlBlocks option:selected").text();
+            newField.TerrainName = $("#ddlTerrain option:selected").text();
+            newField.ZoneName = $("#ddlZones option:selected").text();
+            newField.CompanyName = $("#ddlCompanies option:selected").text();
+
+            var sdx = JSON.stringify({ field: newField });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode === -1 || zxz.ErrorCode === -2 || zxz.ErrorCode === 0 || zxz.ErrorCode === -3) {
+                        $('#brEdError').text(zxz.Error);
+                        $('#brEdError').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProcess').text() === "2") {
+                        updateTable(zxz);
+                    }
+                }
+            });
+        });
+    });
+
+
+    var rtx = 0;
+    function fieldEdTx(x) {
+        $('#brProcess').text('');
+        $("#brFeedback").fadeOut();
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/Field/EditField?id=' + xxid;
+
+        $.get(url, function (data)
+        {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data)
+    {
+        if (data.ErrorCode < 1)
+        {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessFields', 'Update');
+        $('#fsProcessFields').attr("action", "/Field/EditField");
+
+        $('#txtFieldName').val(data.Name);
+        $('#txtTechnicalAllowable').val(data.TechnicalAllowable);
+        $('#ddlTerrain').val(data.TerrainId);
+        $('#ddlZones').val(data.ZoneId);
+        $('#ddlCompanies').val(data.CompanyId);
+        //ddxzcv = data.BlockId;
+        $('#ddlBlocks').val(data.BlockId);
+        //var url = '/Well/GetBlocksByCompany?companyId=' + data.CompanyId;
+
+        //$.get(url, function (retVal) {
+        //    getCompanyBlocks(retVal);
+        //});
+        
+        $('#lgEditField').text('Update Field');
+        $('#brProcess').text(2);
+        setModal($('#fsProcessFields'));
+        
+    }
+
+    var ddxzcv = 0;
+    function fieldDelTx(x) {
+        $("#brFeedback").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/Field/DeleteField?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1)
+                {
+                    //Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblFields #tr' + xxid).remove();
+
+                $('#tblFields tr.xtcR').each(function (r)
+                {
+                    $(this).children('.xtc').text(r + 1);
+                });
+                $('#tblFields .xtcR:even').addClass('gridItem1');
+            }
+        });
+        return;
+    }
+
+    function prepareFieldTemplate()
+    {
+        refreshForm('fsProcessFields', '');
+        $('#fsProcessFields').attr("action", "/Field/AddField");
+        $('#brProcess').text(1);
+        setModal($('#fsProcessFields'));
+    }
+
+    function updateTable(r)
+    {
+        $('#tblFields #tr' + rtx).children('#tdName').html(r.Name);
+        $('#tblFields #tr' + rtx).children('#tdTechnicalValue').html(r.TechnicalAllowable);
+        $('#tblFields #tr' + rtx).children('#tdCompany').html(r.CompanyName);
+        $('#tblFields #tr' + rtx).children('#tdTerrain').html(r.TerrainName);
+        $('#tblFields #tr' + rtx).children('#tdBlock').html(r.BlockName);
+        $('#tblFields #tr' + rtx).children('#tdZone').html(r.ZoneName);
+    
+        //$('#tblFields .xtcR:even').addClass('gridItem1');
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+        closePopModal($('#fsProcessFields'));
+    }
+
+    function refresh(r) {
+        var bv = $('#tblFields tr').length - 1;
+        //<td style="width: 15%; text-align: left" id="tdTechnicalValue">' + r.TechnicalAllowable + '</td>
+        $("#tblFields tbody:last").append($('<tr class="xtcR" id="tr' + r.FieldId + '"><td style="width: 5%;text-align: center" class="xtc">' + (bv + 1) + '</td><td style="width: 15%; text-align: left" id="tdName">'
+            + r.Name
+            + '</td><td style="width: 12%; text-align: left" id="tdTechnicalValue">' + r.BlockName + '</td>'
+            + '<td style="width: 15%; text-align: left" id="tdCompany">'
+            + r.CompanyName + '</td><td style="width: 15%; text-align: left" id="tdTerrain">'
+            + r.TerrainName + '</td><td style="width: 15%; text-align: left" id="tdZone">'
+            + r.ZoneName + '</td>'
+            + '<td style="width: 12%; text-align: left" id="tdTechnicalValue">'
+            + r.TechnicalAllowable + '</td'
+            + '<td style="width: 13%"><a class="fieldEdTx" title="Edit" id="ed'
+            + r.FieldId + '" onclick="fieldEdTx(this.id);"><img src="/Images/edit.png" style="cursor: pointer" alt ="Edit"/></a>&nbsp;&nbsp;<a class="fieldDelTx" title="Delete" id="del' + r.FieldId + '"  onclick="fieldDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" style="cursor: pointer"/></a></td></tr>'));
+
+        //Successfull operation
+        $('#brProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessFields'));  //children('#tdBlock').html(r.BlockName);
+    }
+    
+
+    function refresh2(r) {
+        var bv = $('#tblFields tr').length - 1;
+
+        var tf = '';
+        if (r.TechnicalAllowable !== null) {
+            tf = r.TechnicalAllowable;
+        }
+
+        $("#tblFields tbody:last").append($('<tr class="xtcR" id="tr' + r.FieldId + '"><td style="width: 5%;text-align: center" class="xtc">' + (bv + 1) + '</td><td style="width: 15%; text-align: left" id="tdName">'
+           + r.Name
+           + '</td><td style="width: 12%; text-align: left" id="tdTechnicalValue">' + r.BlockName + '</td>'
+           + '<td style="width: 15%; text-align: left" id="tdCompany">'
+           + r.CompanyName + '</td><td style="width: 15%; text-align: left" id="tdTerrain">'
+           + r.TerrainName + '</td><td style="width: 15%; text-align: left" id="tdZone">'
+           + r.ZoneName + '</td>'
+           + '<td style="width: 12%; text-align: left" id="tdTechnicalValue">'
+           + tf + '</td>'
+           + '<td style="width: 13%"><a class="fieldEdTx" title="Edit" id="ed'
+           + r.FieldId + '" onclick="fieldEdTx(this.id);"><img src="/Images/edit.png" style="cursor: pointer" alt ="Edit"/></a>&nbsp;&nbsp;<a class="fieldDelTx" title="Delete" id="del' + r.FieldId + '"  onclick="fieldDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" style="cursor: pointer"/></a></td></tr>'));
+
+    } 
+</script>
+
+
+

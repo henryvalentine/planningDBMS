@@ -1,0 +1,550 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+
+@model DPR_DataMigrationEngine.ViewModels.WellWorkoverViewModel
+ 
+    <style type="text/css">
+        a {
+        color: whitesmoke;
+            text-decoration: underline;
+        }
+        .export{} 
+        a:hover {
+            color: whitesmoke;
+            text-decoration: underline;
+        }
+    </style>
+
+    <form class="fsEdit xxc xzcComp" style="display: none; visibility: visible; max-height: 70%" id="dvSelectReportFields">
+
+    <legend class="legend22" style="width: 100%; cursor: pointer">Select Report Query Criteria</legend>
+    <table style="width: 100%">
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Company: </i> </div>
+                <select class="form-control" name="queryBuilder.CompanyId" id="ddlWellWorkoverDynamicComp">
+                    @{
+                        var companyExtensions = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "< All >");
+
+                        foreach (var company in companyExtensions.Select(companyString => Html.Raw(companyString)))
+                        {
+                            @company
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Well: </i> </div>
+                <select class="form-control" name="queryBuilder.WellId" id="ddlWellWorkoverDynamicWell">
+                    @{
+                        var wells = new ExtensionHelpers().ListOption(Model.WellObjects, "WellId", "Name", "< All >");
+
+                        foreach (var well in wells.Select(wellString => Html.Raw(wellString)))
+                        {
+                            @well
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Well Type: </i> </div>
+                <select class="form-control" name="queryBuilder.FieldId" id="ddlWellWorkoverDynamicWellType">
+                    @{
+                        var wellTypes = new ExtensionHelpers().ListOption(Model.WellTypes, "WellTypeId", "Title", "< All >");
+
+                        foreach (var wellType in wellTypes.Select(wellTypeString => Html.Raw(wellTypeString)))
+                        {
+                            @wellType
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Well Class: </i> </div>
+                <select class="form-control" name="queryBuilder.WellClassId" id="ddlWellWorkoverDynamicWellClass">
+                    @{
+                        var wellClasses = new ExtensionHelpers().ListOption(Model.WellClasses, "WellClassId", "Name", "< All >");
+
+                        foreach (var wellClass in wellClasses.Select(wellClassString => Html.Raw(wellClassString)))
+                        {
+                            @wellClass
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Work Over Reason: </i> </div>
+                <select class="form-control" name="queryBuilder.WellWorkOverReasonId" id="ddlWellWorkoverDynamicReason">
+                    @{
+                        var workoverReasons = new ExtensionHelpers().ListOption(Model.WellWorkOverReasons, "WellWorkOverReasonId", "Title", "< All >");
+
+                        foreach (var workoverReason in workoverReasons.Select(workoverReasonString => Html.Raw(workoverReasonString)))
+                        {
+                            @workoverReason
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Equipment: </i> </div>
+                <select class="form-control" name="queryBuilder.EquipmentId" id="ddlWellWorkoverDynamicEquipment">
+                    @{
+                        var equipments = new ExtensionHelpers().ListOption(Model.Equipments, "EquipmentId", "Name", "< All >");
+
+                        foreach (var equipment in equipments.Select(equipmentString => Html.Raw(equipmentString)))
+                        {
+                            @equipment
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Terrain: </i> </div>
+                <select class="form-control" name="queryBuilder.TerrainId" id="ddlWellWorkoverDynamicTerrain">
+                    @{
+                        var terrains = new ExtensionHelpers().ListOption(Model.Terrains, "TerrainId", "Name", "< All >");
+
+                        foreach (var terrain in terrains.Select(terrainString => Html.Raw(terrainString)))
+                        {
+                            @terrain
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Zone: </i> </div>
+                <select class="form-control" name="queryBuilder.ZoneId" id="ddlWellWorkoverDynamicZone">
+                    @{
+                        var zones = new ExtensionHelpers().ListOption(Model.Zones, "ZoneId", "Name", "< All >");
+
+                        foreach (var zone in zones.Select(zoneString => Html.Raw(zoneString)))
+                        {
+                            @zone
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; margin-top: 1%; margin-bottom: 1%">
+                    <span style="color: brown">Query Range</span>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Start Date: </i> </div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="text" name="queryBuilder.StartDate" id="workoverStartDate" class="form-control datepicker" />
+                </div>
+            </td>
+            <td style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">End Date: </i> </div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="text" name="queryBuilder.EndDate" id="workoverEndDate" class="form-control datepicker" />
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; margin-left: 0; margin-top: 1%">
+                    <input type="button" id="btnCloseRepField" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" onclick="closeWellWorkoverRepFields()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="button" id="btnProcessRepField" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Generate Rport" onclick="generateWellWorkoverReports();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+
+<table style="width: 100%">
+    <tr>
+        <td style="padding-right:0; width: 35%">
+            <div style="margin-left: 2%"><i style="width: auto">Use a previous query: </i> </div>
+            <select class="form-control" name="queryBuilder.WellWorkoverQueryId" id="ddlwellWorkoverPreviousQueries">
+                @{
+                    var previousQueries = new ExtensionHelpers().ListOption(Model.WellWorkoverQueries, "WellWorkoverQueryId", "WellWorkoverQueryName", "-- Select Previous Query --");
+
+                    foreach (var wellWorkoverQuery in previousQueries.Select(previousQuerString => Html.Raw(previousQuerString)))
+                    {
+                        @wellWorkoverQuery
+                    }
+                }
+            </select>
+        </td>
+        <td style="padding-right:0; width: 7%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: left">
+                <input type="button" id="btnGetPreviousReports" onclick=" generateWellWorkoverReports2()" class="btn btnGetPrevQuery large" style="width: 190px; float: right; text-decoration: none" value="Go" />
+            </div>
+        </td>
+        <td style="padding-right:0; width: 10%">
+            <div>&nbsp;</div>
+            <div style="float: left">
+                <input type="button" id="btnGetReports" onclick=" prepWellWorkoverRepFiledsTemplate()" class="btn btnGetRepFields large" style="width: 190px; float: left; text-decoration: none" value="Select Query Criteria" />
+            </div>
+        </td>
+        <td style="padding-right:0; width: 5%">
+            <div>&nbsp;</div>
+            <a onclick="tableToExcel('tbWellWorkoverReports', 'Well Workover Report')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" /></a>
+        </td>
+        <td style="padding-right:0;width: 5%">
+            <div>&nbsp;</div>
+            <a onclick="printWellWorkoverReport()"><img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer" title="Print Report" /></a> 
+        </td>
+    </tr>
+</table>
+
+<img src="/Images/ProgressLoader.gif" id="imgWellWorkoverRepoSpin" class="spinProgress" />
+
+<form class="fsEdit xxc" style="display: none; visibility: visible; margin-left: 2%" id="frmSaveWellWorkoverQuery">
+    <legend class="legend22" style="width: 100%">Save report query</legend>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="width: 100%">
+                    <div style="margin-left: 5px"><i style="width: auto">Query Name:</i></div>
+                    <input type="text" name="queryName" id="txtWellWorkoverQueryName" class="form-control" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="dft" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Cancel" onclick="closeWellWorkoverQuery()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <input type="button" id="sxd" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Save" onclick="saveWellWorkoverReportQuery();" />
+</div>
+</td>
+</tr>
+</table>
+</form>
+
+    <fieldset id="fsd">
+        <legend class="customlegend22" id="lgHeader">Well Workover Report<span style="float: right; font-weight: normal"><a id="ancSaveWellWorkoverQuery" onclick="showWellWorkoverQuerySaver()" style="display:none; ">Save Query</a></span></legend>
+      
+</fieldset>
+
+
+<script type="text/javascript">    
+
+    $('#dtWellCompletionDateCompleted').datepicker({
+        
+    });
+    
+
+    function printWellWorkoverReport()
+    {
+        if ($('#tbWellWorkoverReports').html() == null)
+        {
+
+            alert('Nothing to Print');
+            return;
+        }
+        $('#ancSaveWellWorkoverQuery').css({ 'display': 'none' });
+        printReportData('fsd', 'ancSaveWellWorkoverQuery');
+    }
+
+    function generateWellWorkoverReports() {
+        //tm.val().trim().toLowerCase().replace(/ /g, '');
+
+        var cId1 = parseInt($('#ddlWellWorkoverDynamicWell').val());
+        var cId2 = parseInt($('#ddlWellWorkoverDynamicWellClass').val());
+        var cId3 = parseInt($('#ddlWellWorkoverDynamicWellType').val());
+        var cId4 = parseInt($('#ddlWellWorkoverDynamicReason').val());
+        var cId5 = parseInt($('#ddlWellWorkoverDynamicEquipment').val());
+        var cId6 = parseInt($('#ddlWellWorkoverDynamicTerrain').val());
+        var cId7 = parseInt($('#ddlWellWorkoverDynamicZone').val());
+        var cId8 = $('#workoverStartDate').val();
+        var cId9 = parseInt($('#ddlWellWorkoverDynamicComp').val());
+        var cId10 = $('#workoverEndDate').val();
+         
+
+        if (cId1 < 1 && cId2 < 1 && cId3 < 1 && cId4 < 1 && cId5 < 1 && cId6 < 1 && cId7 < 1 && cId8.length < 1 && cId9 < 1 && cId10.length < 1) {
+            alert('Please select at least one query criteria.');
+            $('#frmSaveWellCompletionQuery').hide('fast');
+            return;
+        }
+
+        if (cId8.length < 1 && cId10.length > 1) {
+            alert('Please select a starte Date.');
+            $('#frmSaveWellCompletionQuery').hide('fast');
+            return;
+        }
+
+        
+        var tdc = {};
+
+        tdc['WellId'] = cId1;
+        tdc['WellClassId'] = cId2;
+        tdc['WellTypeId'] = cId3;
+        tdc['WorkoverReasonId'] = cId4;
+        tdc['EquipmentId'] = cId5;
+        tdc['TerrainId'] = cId6;
+        tdc['ZoneId'] = cId7;
+        tdc['StartDate'] = cId8;
+        tdc['CompanyId'] = cId9;
+        tdc['EndDate'] = cId10;
+        
+        var sdx = JSON.stringify({ queryBuilder: tdc });
+
+        closeWellWorkoverRepFields();
+        $('#frmSaveWellWorkoverQuery').fadeOut('fast');
+        wellWorkoverSaverAncHide();
+        setModal2($('#imgWellWorkoverRepoSpin'));
+
+        var url = '/WellWorkoverReport/GetWellWorkovers';
+
+        $.ajax({
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: sdx,
+            type: "POST",
+            url: url,
+            success: function (r)
+            {
+                wellWorkoverQueryStatus = 0;
+                buildWellWorkoverReport(r);
+            }
+            ,
+            error: function () {
+                closePopModal($('#imgWellWorkoverRepoSpin'));
+                $('#frmSaveWellWorkoverQuery').hide('fast');
+            }
+        });
+    }
+
+    function generateWellWorkoverReports2() {
+
+        var cId = parseInt($('#ddlwellWorkoverPreviousQueries').val().trim());
+
+        if (cId < 1) {
+            alert('Please select a valid query.');
+            return;
+        }
+
+        var sdx = JSON.stringify({ queryId: cId });
+
+        closeWellWorkoverRepFields();
+        setModal2($('#imgWellWorkoverRepoSpin'));
+
+        var url = '/WellWorkoverReport/GetWellWorkovers2';
+
+        $.ajax({
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: sdx,
+            type: "POST",
+            url: url,
+            success: function (r) {
+                wellWorkoverQueryStatus = 1;
+                buildWellWorkoverReport(r);
+            }
+        });
+
+    }
+
+    var wellWorkoverQueryStatus = 0;
+
+    function prepWellWorkoverRepFiledsTemplate()
+    {
+        setModal($('#dvSelectReportFields'));
+    }
+
+    function closeWellWorkoverRepFields() {
+        closePopModal($('#dvSelectReportFields'));
+    }
+
+    function closeWellWorkoverQuery() {
+        closePopModal($('#frmSaveWellWorkoverQuery'));
+    }
+
+    function wellWorkoverSaverAncHide() {
+        $('#ancSaveWellWorkoverQuery').fadeOut('slow');
+    }
+
+    function wellWorkoverSaverAncShow() {
+        $('#ancSaveWellWorkoverQuery').fadeIn('slow');
+    }
+
+    function showWellWorkoverQuerySaver() {
+        $('#txtWellWorkoverQueryName').val('');
+        setModal($('#frmSaveWellWorkoverQuery'));
+    }
+
+    function saveWellWorkoverReportQuery() {
+        var query = $('#txtWellWorkoverQueryName').val().trim();
+        if (query.length < 1) {
+            alert('Please kindly provide a name for the query.');
+            return;
+        }
+
+        var sdx = JSON.stringify({ queryName: query });
+        var url = '/WellWorkoverReport/SaveSuccessfulQuery';
+
+        $.ajax({
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: sdx,
+            type: "POST",
+            url: url,
+            success: function (r) {
+                if (r.Code < 1) {
+                    alert(r.Error);
+                    return;
+                }
+
+                if (r.Code > 0) {
+                    refreshPreviousWellWorkoverQueryDropdown(r.Code);
+                    alert(r.Error);
+                    closeWellWorkoverQuery();
+                    wellWorkoverSaverAncHide();
+                    return;
+                }
+            }
+        });
+
+    }
+
+    function refreshPreviousWellWorkoverQueryDropdown(k) {
+        if (k < 1) {
+            alert('An error was encountered. Previous Query list could not be refreshed.');
+            return;
+        }
+
+        $('#ddlwellWorkoverPreviousQueries option[value = 0]').text('-- Select Previous Query --');
+
+        $('#ddlwellWorkoverPreviousQueries').append($("<option />").val(k).text($('#txtWellWorkoverQueryName').val().trim()));
+
+    }
+
+    function buildWellWorkoverReport(data) {
+        if (data.length < 1) {
+            closePopModal($('#imgWellWorkoverRepoSpin'));
+            alert('No record found');
+            return;
+        }
+
+        $('#tbWellWorkoverReports').remove();
+
+        var headerStr = '<table class="newTable allcontent" id="tbWellWorkoverReports">' +
+            '<tr class="customGridHeader"><th>S/N</th><th>Company</th>' +
+            '<th >Well</th><th>Well Class</th>'
+            + ' <th>Well Type</th><th>Work Over Reason</th>'
+            + '<th>Terrain</th><th>Zone</th><th>Work Over Completion Period</th><th>Equipment Used</th></tr>';
+        var rowStr = '';
+        var bv = 0;
+        $.each(data, function (i, r) {
+            bv = bv + 1;
+            rowStr += '<tr ><td style="width: auto; text-align: left">' + bv + '</td><td style="width: auto; text-align: left">' + r.CompanyName
+                + '</td><td style="width: auto; text-align: left">' + r.WellName
+                + '</td><td style="width: auto; text-align: left">' + r.WellClassName
+                + '</td>'
+                + '<td style="width: auto; text-align: left">' + r.WellTypeName + '</td>'
+                + '<td style="width: auto; text-align: left">' + r.Reason + '</td>'
+                + '<td style="width: auto; text-align: left">'
+                + r.TerrainName
+                + '</td><td style="width: auto; text-align: left">' + r.ZoneName
+                + '</td><td style="width: auto; text-align: left" >' + r.WorkoverPeriod
+                + '</td><td style="width: auto; text-align: left" >' + r.EquipmentName
+                + '</td></tr>';
+
+        });
+
+        $("#fsd").append($(headerStr + rowStr + '</table>'));
+        closePopModal($('#imgWellWorkoverRepoSpin'));
+        retrivedWellWorkoverReports = data;
+        IsWellWorkoverQueryExisting();
+    }
+
+    function IsWellWorkoverQueryExisting() {
+        var url = '/WellWorkoverReport/IsWellWorkoverQueryExisting';
+
+        $.ajax({
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "POST",
+            url: url,
+            success: function (r) {
+                if (r.Code < 1) {
+                    if (wellWorkoverQueryStatus < 1) {
+                        wellWorkoverSaverAncShow();
+                    }
+                    if (wellWorkoverQueryStatus > 0) {
+                        wellWorkoverSaverAncHide();
+                    }
+                    return;
+                }
+
+                if (r.Code > 0) {
+                    wellWorkoverSaverAncHide();
+                    return;
+                }
+            }
+        });
+    }
+
+    var retrivedWellWorkoverReports = [];
+
+    $(window).load(function () {
+        getWells();
+    });
+    
+    var ttx = 0;
+
+    function getWells()
+    {
+        var url = '/WellWorkoverReport/GetMoreWells';
+       
+        if (ttx > 0)
+        {
+            clearTimeout(getWells);
+            getWells = null;
+        }
+        $.ajax({
+            url: url,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            success: function (zxz) {
+                if (zxz == null || zxz.length < 1)
+                {
+                    ttx = 1;
+                    clearTimeout(getWells);
+                    getWells = null;
+                }
+                else
+                {
+                    populateWellWorkoverDynamicWell(zxz);
+                    setTimeout(getWells, 2000);
+                }
+            }
+        });
+    }
+     
+    function populateWellWorkoverDynamicWell(data)
+    {
+        if (data == null || data.length < 1)
+        {
+            return;
+        }
+        
+        $.each(data, function (i, v)
+        {
+            $('#ddlWellWorkoverDynamicWell').append($("<option />").val(v.WellId).text(v.Name));
+        });
+    }
+</script>

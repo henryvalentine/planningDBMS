@@ -1,0 +1,425 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+
+@model DPR_DataMigrationEngine.ViewModels.IncidentViewModel
+
+<style type="text/css">
+    a {
+        color: whitesmoke;
+        text-decoration: underline;
+    }
+
+        a:hover {
+            color: whitesmoke;
+            text-decoration: underline;
+        }
+</style>
+
+<form class="fsEdit xxc" style="display: none; visibility: visible; max-height: 70%" id="dvSelectIncidentReportItems">
+
+    <legend class="legend22" style="width: 100%">Select Report Criteria</legend>
+    <table style="width: 100%">
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Incident Type: </i> </div>
+                <select class="form-control" name="queryBuilder.IncidentTypeId" id="ddlIncidentDynamicType">
+                    @{
+                        var blocks = new ExtensionHelpers().ListOption(Model.IncidentTypes, "IncidentTypeId", "Name", "< All >");
+
+                        foreach (var block in blocks.Select(blockString => Html.Raw(blockString)))
+                        {
+                            @block
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Company: </i> </div>
+                <select class="form-control" name="queryBuilder.CompanyId" id="ddlIncidentDynamicCmpany">
+                    @{
+                        var blockTypes = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "< All >");
+
+                        foreach (var blockType in blockTypes.Select(blockTypeString => Html.Raw(blockTypeString)))
+                        {
+                            @blockType
+                        }
+                    }
+                </select>
+            </td>
+        </tr>  
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; margin-top: 1%; margin-bottom: 1%">
+                    <span style="color: brown">Query Range</span>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Start Date: </i> </div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="text" name="queryBuilder.StartDate" id="incidentStartDate" class="form-control datepicker" />
+                </div>
+            </td>
+            <td style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">End Date: </i> </div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="text" name="queryBuilder.EndDate" id="incidentEndDate" class="form-control datepicker" />
+                </div>
+            </td> 
+        </tr> 
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseRepIncident" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" onclick="closeIncidentRepIncidents()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="button" id="btnProcessRepIncident" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Generate Rport" onclick="generateIncidentReports();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="padding-right:0; width: 35%">
+            <div style="margin-left: 2%"><i style="width: auto">Use a previous query: </i> </div>
+            <select class="form-control" name="queryBuilder.QueryId" id="ddlincidentPreviousQueries">
+                @{
+                    var previousQueries = new ExtensionHelpers().ListOption(Model.IncidentQueries, "IncidentQueryId", "IncidentQueryName", "-- Select Previous Query --");
+
+                    foreach (var incidentQuery in previousQueries.Select(previousQuerString => Html.Raw(previousQuerString)))
+                    {
+                        @incidentQuery
+                    }
+                }
+            </select>
+        </td>
+        <td style="padding-right:0; width: 7%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: left">
+                <input type="button" id="btnGetPreviousIncidentReports" onclick=" generateIncidentReports2()" class="btn btnGetPrevQuery large" style="width: 190px; float: right; text-decoration: none" value="Go" />
+            </div>
+        </td>
+        <td style="padding-right:0; width: 10%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: left">
+                <input type="button" id="btnGetReports" onclick=" prepIncidentRepFiledsTemplate()" class="btn btnGetRepFields large" style="width: 190px; float: right; text-decoration: none" value="Select Query Criteria" />
+            </div>
+        </td>
+        <td style="padding-right:0; width: 5%">
+            <div>&nbsp;</div>
+            <a onclick="tableToExcel('tbIncidentReports', 'Incident Report')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" /></a>
+        </td>
+        <td style="padding-right:0;width: 5%">
+            <div>&nbsp;</div>
+            <img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer" title="Print Report" onclick="printIncidentReport()" />
+        </td>
+    </tr>
+</table>
+
+<img src="/Images/ProgressLoader.gif" id="imgIncidentRepoSpin" class="spinProgress" />
+
+<form class="fsEdit xxc" style="display: none; visibility: visible; margin-left: 2%" id="frmSaveIncidentQuery">
+    <legend class="legend22" style="width: 100%">Save report query</legend>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="width: 100%">
+                    <div style="margin-left: 5px"><i style="width: auto">Query Name:</i></div>
+                    <input type="text" name="queryName" id="txtIncidentQueryName" class="form-control" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="dft" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Cancel" onclick="closeIncidentQuery()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="button" id="sxd" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Save" onclick="saveIncidentReportQuery();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<div style="width: 100%" id="dvIncidentRep">
+    
+</div>
+
+<fieldset id="dvIncidentRep">
+    <legend class="customlegend22" id="lgHeader">Incident Report</legend> <span style="float: right"><a id="ancSaveIncidentQuery" onclick="showIncidentQuerySaver()" style="display:none">Save Query</a></span>
+</fieldset>
+
+<script type="text/javascript">
+    function printIncidentReport() {
+        if ($('#tbIncidentReports').html() == null)
+        {
+            alert('Nothing to Print');
+            return;
+        }
+        $('#ancSaveIncidentQuery').css({ 'display': 'none' });
+        printReportData('dvIncidentRep');
+    }
+
+    function generateIncidentReports() {
+        //tm.val().trim().toLowerCase().replace(/ /g, '');
+        
+     
+        var cId1 = parseInt($('#ddlIncidentDynamicType').val());
+        var cId2 = parseInt($('#ddlIncidentDynamicCmpany').val());
+        var cId3 = $('#incidentStartDate').val();
+        var cId4 = $('#incidentEndDate').val();
+
+         
+
+        if (cId1 < 1 && cId2 < 1 && cId3.length < 1 && cId4.length < 1) {
+            alert('Please select at least one report Item.');
+            $('#frmSaveIncidentQuery').hide('fast');
+            return;
+        }
+
+        if (cId3.length < 1 && cId4.length > 1) {
+            alert('Please select a starte Date.');
+            $('#frmSaveIncidentQuery').hide('fast');
+            return;
+        }
+
+        var tdc = {};
+
+        tdc['IncidentTypeId'] = cId1;
+        tdc['CompanyId'] = cId2;
+        tdc['StartDate'] = cId3;
+        tdc['EndDate'] = cId4;
+
+        var sdx = JSON.stringify({ queryBuilder: tdc });
+
+        closeIncidentRepIncidents();
+
+        $('#frmSaveIncidentQuery').fadeOut('fast');
+        incidentSaverAncHide();
+        setModal2($('#imgIncidentRepoSpin'));
+
+        var url = '/IncidentReport/GetIncidents';
+
+        $.ajax({
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: sdx,
+            type: "POST",
+            url: url,
+            success: function (r) {
+                incidentQueryStatus = 0;
+                buildIncidentReport(r);
+            }
+            ,
+            error: function () {
+                closePopModal($('#imgIncidentRepoSpin'));
+                $('#frmSaveIncidentQuery').hide('fast');
+            }
+        });
+    }
+
+    function generateIncidentReports2() {
+
+        var cId = parseInt($('#ddlincidentPreviousQueries').val().trim());
+
+        if (cId < 1) {
+            alert('Please select a valid query.');
+            return;
+        }
+
+        var sdx = JSON.stringify({ queryId: cId });
+
+        closeIncidentRepIncidents();
+        setModal2($('#imgIncidentRepoSpin'));
+
+        var url = '/IncidentReport/GetIncidents2';
+
+        $.ajax({
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: sdx,
+            type: "POST",
+            url: url,
+            success: function (r) {
+                incidentQueryStatus = 1;
+                buildIncidentReport(r);
+            }
+        });
+
+    }
+
+    var incidentQueryStatus = 0;
+
+    function prepIncidentRepFiledsTemplate() {
+        setModal($('#dvSelectIncidentReportItems'));
+    }
+
+    function closeIncidentRepIncidents() {
+        closePopModal($('#dvSelectIncidentReportItems'));
+    }
+
+    function closeIncidentQuery() {
+        closePopModal($('#frmSaveIncidentQuery'));
+    }
+
+    function incidentSaverAncHide() {
+        $('#ancSaveIncidentQuery').fadeOut('slow');
+    }
+
+    function incidentSaverAncShow() {
+        $('#ancSaveIncidentQuery').fadeIn('slow');
+    }
+
+    function showIncidentQuerySaver() {
+        $('#txtIncidentQueryName').val('');
+        setModal($('#frmSaveIncidentQuery'));
+    }
+
+    function saveIncidentReportQuery() {
+        var query = $('#txtIncidentQueryName').val().trim();
+        if (query.length < 1) {
+            alert('Please kindly provide a name for the query.');
+            return;
+        }
+
+        var sdx = JSON.stringify({ queryName: query });
+        var url = '/IncidentReport/SaveSuccessfulQuery';
+
+        $.ajax({
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: sdx,
+            type: "POST",
+            url: url,
+            success: function (r) {
+                if (r.Code < 1) {
+                    alert(r.Error);
+                    return;
+                }
+
+                if (r.Code > 0) {
+                    refreshPreviousIncidentQueryDropdown(r.Code);
+                    alert(r.Error);
+                    closeIncidentQuery();
+                    incidentSaverAncHide();
+                    return;
+                }
+            }
+        });
+
+    }
+
+    function refreshPreviousIncidentQueryDropdown(k) {
+        if (k < 1) {
+            alert('An error was encountered. Previous Query list could not be refreshed.');
+            return;
+        }
+
+        $('#ddlincidentPreviousQueries option[value = 0]').text('-- Select Previous Query --');
+
+        $('#ddlincidentPreviousQueries').append($("<option />").val(k).text($('#txtIncidentQueryName').val().trim()));
+
+    }
+
+    function buildIncidentReport(data) {
+        if (data.length < 1) {
+            closePopModal($('#imgIncidentRepoSpin'));
+            alert('No record found');
+            return;
+        }
+
+        $('#tbIncidentReports').remove();
+
+        var headerStr = '<table class="newTable allcontent" id="tbIncidentReports"><tr class="tr2"></tr>' +
+            '<tr class="customGridHeader"><th<S/N></th><th>Company</th>' +
+            '<th >Incident Name</th><th >Incident Type</th><th >Incident Date</th>'
+        + ' <th >Description</th><th >Reported By</th></tr>'
+        + '<th >Location</th>';
+        var rowStr = '';
+        var bv = 0;
+        $.each(data, function (i, r) {
+          
+            bv = bv + 1;
+            var location = " ";
+            var description = " ";
+            var reportedBy = " ";
+            
+            if (r.Description === null || r.Description < 1) {
+                description = " ";
+            } else {
+                description = r.Description;
+            }
+            if (r.ReportedBy === null || r.ReportedBy < 1) {
+                reportedBy = " ";
+            } else {
+                reportedBy = r.ReportedBy;
+            }
+
+            if (r.Location === null || r.Location < 1) {
+                location = " ";
+            } else {
+                location = r.Location;
+            }
+           
+            rowStr += '<tr ><td style="width: auto; text-align: left">' + bv + '</td><td style="width: auto; text-align: left">' + r.CompanyName + '</td>'
+                + '<td style="width: auto; text-align: left">' + r.IncidentName + '</td>'
+                + '<td style="width: auto; text-align: left">' + r.IncidentTypeName
+                + '<td style="width: auto; text-align: left">' + r.IncidentDate
+                + '</td><td style="width: auto; text-align: left">' + description
+                + '</td><td style="width: auto; text-align: left">' + reportedBy + '</td>'
+                + '</td><td style="width: auto; text-align: left" >' + location
+                + '</td></tr>';
+
+        });
+        
+        
+        $("#dvIncidentRep").append($(headerStr + rowStr + '</table>'));
+        closePopModal($('#imgIncidentRepoSpin'));
+        retrivedIncidentReports = data;
+        IsIncidentQueryExisting();
+    }
+
+    function IsIncidentQueryExisting() {
+        var url = '/IncidentReport/IsIncidentQueryExisting';
+
+        $.ajax({
+            async: true,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: "POST",
+            url: url,
+            success: function (r) {
+                if (r.Code < 1) {
+                    if (r.Code === -5) {
+                        if (incidentQueryStatus < 1) {
+                            incidentSaverAncShow();
+                        }
+                        if (incidentQueryStatus > 0) {
+                            incidentSaverAncHide();
+                        }
+                    }
+
+                    if (r.Code === -2) {
+                        productionSaverAncHide();
+                    }
+
+                    return;
+                }
+
+                if (r.Code > 0) {
+                    incidentSaverAncHide();
+                    return;
+                }
+            }
+        });
+    }
+
+    var retrivedIncidentReports = [];
+</script>

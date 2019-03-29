@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QueryBuilderModelStoreContainer" CdmEntityContainer="QueryBuilderEntities">
+    <EntitySetMapping Name="FieldQueries">
+      <EntityTypeMapping TypeName="QueryBuilderModel.FieldQuery">
+        <MappingFragment StoreEntitySet="FieldQuery">
+          <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+          <ScalarProperty Name="FieldQueryName" ColumnName="FieldQueryName" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="TerrainId" ColumnName="TerrainId" />
+          <ScalarProperty Name="FieldQueryId" ColumnName="FieldQueryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionQueries">
+      <EntityTypeMapping TypeName="QueryBuilderModel.ProductionQuery">
+        <MappingFragment StoreEntitySet="ProductionQuery">
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="ProductionQueryName" ColumnName="ProductionQueryName" />
+          <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+          <ScalarProperty Name="FieldId" ColumnName="FieldId" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="TerrainId" ColumnName="TerrainId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="ProductionQueryId" ColumnName="ProductionQueryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellCompletionQueries">
+      <EntityTypeMapping TypeName="QueryBuilderModel.WellCompletionQuery">
+        <MappingFragment StoreEntitySet="WellCompletionQuery">
+          <ScalarProperty Name="WellClassId" ColumnName="WellClassId" />
+          <ScalarProperty Name="WellCompletionQueryName" ColumnName="WellCompletionQueryName" />
+          <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="CompletionTypeId" ColumnName="CompletionTypeId" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="TerrainId" ColumnName="TerrainId" />
+          <ScalarProperty Name="WellTypeId" ColumnName="WellTypeId" />
+          <ScalarProperty Name="WellId" ColumnName="WellId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="WellCompletionQueryId" ColumnName="WellCompletionQueryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellWorkoverQueries">
+      <EntityTypeMapping TypeName="QueryBuilderModel.WellWorkoverQuery">
+        <MappingFragment StoreEntitySet="WellWorkoverQuery">
+          <ScalarProperty Name="WellTypeId" ColumnName="WellTypeId" />
+          <ScalarProperty Name="WellClassId" ColumnName="WellClassId" />
+          <ScalarProperty Name="WellWorkoverQueryName" ColumnName="WellWorkoverQueryName" />
+          <ScalarProperty Name="WellId" ColumnName="WellId" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+          <ScalarProperty Name="WorkoverReasonId" ColumnName="WorkoverReasonId" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="TerrainId" ColumnName="TerrainId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="WellWorkoverQueryId" ColumnName="WellWorkoverQueryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellQueries">
+      <EntityTypeMapping TypeName="QueryBuilderModel.WellQuery">
+        <MappingFragment StoreEntitySet="WellQuery">
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+          <ScalarProperty Name="WellQueryName" ColumnName="WellQueryName" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="TerrainId" ColumnName="TerrainId" />
+          <ScalarProperty Name="WellClassId" ColumnName="WellClassId" />
+          <ScalarProperty Name="FieldId" ColumnName="FieldId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="WellTypeId" ColumnName="WellTypeId" />
+          <ScalarProperty Name="WellQueryId" ColumnName="WellQueryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IncidentQueries">
+      <EntityTypeMapping TypeName="QueryBuilderModel.IncidentQuery">
+        <MappingFragment StoreEntitySet="IncidentQuery">
+          <ScalarProperty Name="IncidentQueryName" ColumnName="IncidentQueryName" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="IncidentTypeId" ColumnName="IncidentTypeId" />
+          <ScalarProperty Name="IncidentQueryId" ColumnName="IncidentQueryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

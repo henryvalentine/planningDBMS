@@ -1,0 +1,102 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+
+@model DPR_DataMigrationEngine.ViewModels.ProductionViewModel
+
+
+    <table style="width: 100%; margin-bottom: 1%">
+      <tr>
+            <td colspan="3">
+                <label style="font-weight: normal; font-size: 10pt; float: left; width: 100%; ">Retrieve Production Reports by Period:</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 40%"> 
+                <div style="margin-left: 2%"><i style="width: auto">Year: </i> </div>
+                <select class="form-control" name="search.Year" id="ddlYearProdRepo">
+                    @{
+                        var yearExtensions = new ExtensionHelpers().ListOption(Model.YearList, "DocId", "DocName", "-- Select Year --");
+
+                        foreach (var year in yearExtensions.Select(yearString => Html.Raw(yearString)))
+                        {
+                            @year 
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 40%">
+                <div style="margin-left: 2%"><i style="width: auto">Month: </i> </div>
+                <select class="form-control" name="search.Month" id="ddlMonthProdRepo">
+                    @{
+                        var monthExtensions = new ExtensionHelpers().ListOption(Model.MonthList, "DocId", "DocName", "-- Select Month --");
+
+                        foreach (var month in monthExtensions.Select(monthString => Html.Raw(monthString)))
+                        {
+                            @month  
+                        }
+                    }
+                </select>
+
+            </td>
+            <td style="padding-right:0; width: 10%">
+                <div>&nbsp;</div>
+                <div style="text-align: center; float: right">
+                    <input type="button" id="btnGetReports" onclick=" prepProductionRepFiledsTemplate()" class="btn btnGetRepFields large" style="width: 190px; float: right; text-decoration: none" value="Select Query Criteria" />
+                </div>
+            </td>
+            <td style="padding-right:0;width: 10%">
+                <div>&nbsp;</div>
+                <img src="/Images/printer-24_opt.png" style="float: right; cursor: pointer" title="Print Report" onclick="printReport()" />
+            </td>
+        </tr>
+    </table>
+
+<fieldset class="fsEdit xxc" style="display: none; visibility: visible" id="dvSelectProductionReportFields">
+    <legend class="legend22" style="width: 100%">Select Query Criteria</legend>
+   
+        <table style="width: 98%; background: transparent; border: none">
+            <tr>
+                <td class="form-group">
+                    <br /><i style="width: auto; font-size: 11pt">Production Report Fields</i>
+                    <div>&nbsp;</div>
+                    <ul id="ulProductionReports" style="width: 100%"></ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>&nbsp;</div>
+                    <div style="width: 100%">
+                        <input type="button" id="btnCloseProductionRepField" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" onclick="closeProductionRepFields()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <input type="button" id="btnProcessProductionRepField" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Generate Rport" onclick="generateProductionReports();" />
+                </div>
+                </td>
+            </tr>
+        </table>
+</fieldset>
+
+
+<div style="width: 100%" id="dvproductionRep">
+    <fieldset id="fsProductionReport" style="background: whitesmoke; width: 100%" class="allcontent">
+        <legend class="customlegend22" id="lgHeader">Production Report for: <span id="spProdRepPeriod"></span>
+        </legend>
+    </fieldset>
+</div>
+
+<img src="/Images/ProgressLoader.gif" id="imgProdRepoSpin" class="spinProgress" />
+
+
+
+<script type="text/javascript">
+    function printReport()
+    {
+        if ($('#tbProductionReports').html() == null)
+        {
+            alert('Nothing to Print');
+            return;
+        }
+        printReportData('dvproductionRep');
+    }
+</script>
+
+<style type="text/css">
+    /*ul#ulProductionReports li{display: inline}*/
+</style>

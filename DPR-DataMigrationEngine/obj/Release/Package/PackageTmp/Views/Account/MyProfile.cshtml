@@ -1,0 +1,73 @@
+﻿@model DPR_DataMigrationEngine.Models.RegisterViewModel
+<style type="text/css">
+    a {
+        color: green;
+    }
+</style>
+
+
+<form id="frmUpdate" class="fsRegister" style="margin-left: 1%" method="POST" action="@Url.Action("UpdateLoggedOnUserProfile", "Account")">
+    <span class="legend22" id="lgUpdateUser" style="width: 100%">Update Your Profile</span>
+    @Html.AntiForgeryToken()
+    <label id="feedBack" style="display: none">@ViewBag.Code</label>
+    <table style="width: 100%; border: none">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brProfilerror">@ViewBag.Error</div>
+            </td>
+        </tr>  
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">First Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtUpdateFirstName" data-valmsg-for="model.FirstName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.FirstName" value="@Model.FirstName" id="txtUpdateFirstName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Last Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtUpdateLastName" data-valmsg-for="model.LastName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.LastName" value="@Model.LastName" id="txtUpdateLastName" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">User Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtUpdateUserName" data-valmsg-for="model.UserName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.UserName" value="@Model.UserName" id="txtUpdateUserName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Email:</i>@*<span style="color: red">*</span><span class="field-validation-valid" id="sptxtUpdateEmail" data-valmsg-for="model.Email" style="color: red" data-valmsg-replace="true">Required</span>*@</div>
+                <input type="email" name="model.Email" value="@Model.Email" id="txtUpdateEmail" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="float: left; position: relative; width: 40%">
+                   <span style="width: auto; float: right; margin-right: 40%">@Html.ActionLink("Change Password", "Manage", "Account", routeValues: null, htmlAttributes: new { id = "manageLink", @style = "float: left; color: green" })</span>&nbsp;<span style=" float: left">Password: *******</span>
+                </div>
+                <div style="float: right; position: relative; width: 40%; ">
+                    @*<input type="button" id="btncloseUserInfo" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />*@&nbsp;
+                    <input type="submit" id="btnUpdateUserInfo" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Update" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form> 
+
+<script type="text/javascript">
+    $(window).load(function () {
+        var dx = parseInt($('#feedBack').text());
+        
+        if (dx < 0) {
+            $("#brProfilerror").removeClass('success');
+            $("#brProfilerror").addClass('error');
+            $("#brProfilerror").fadeIn();
+        }
+
+        if (dx > 0) {
+            $("#brProfilerror").removeClass('error');
+            $("#brProfilerror").addClass('success');
+            $("#brProfilerror").fadeIn();
+        }
+
+    });
+</script>

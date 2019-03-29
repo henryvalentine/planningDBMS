@@ -1,0 +1,292 @@
+﻿@model List<DPR_DataMigrationEngine.EF.Models.EquipmentType>
+   
+        <form action="@Url.Action("AddEquipmentType", "EquipmentType")" id="fsProcessEquipmentTypes" class="fsEdit" style="display: none; visibility: visible">
+           <span class="legend22" id="lgEditEquipment" style="width: 100%">Add New Equipment Type</span>
+          
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <table style="width: 100%; border: none">
+                <tr id="trBrEdError" style="display: none; visibility: visible">
+                    <td colspan="2">
+                        <div style="width: 100%; font-weight:normal; font-size: 10pt" class="error label" id="brEdErrorEquipmentType"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-group" colspan="2">
+                        <div>&nbsp;</div>
+                        <div style="margin-left: 2%"><i style="width: auto">Equipment</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtEquipmentName" data-valmsg-for="branch.Name" style="color: red" data-valmsg-replace="true">Required</span></div>
+                        <input type="text" name="equipmentType.Name" id="txtEquipmentName" class="form-control" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 90%">
+                        <div style="width: 100%">
+                            <input type="button" id="btnCloseProcessEquipment" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input type="submit" id="btnProcessEquipment" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" /> 
+                        </div>
+                   </td>
+                </tr>
+            </table>
+        </form>
+   
+    <fieldset id="fsEquipmentList" style="background: whitesmoke; width: 100%" class="allcontent">
+        <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+        <label id="brProcess" style="display: none; visibility: visible"></label>
+        <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+            <tr>
+                <td style="width: 80%">
+                    <div style="width: 100%; font-weight: normal; font-size: 11pt; display: none; visibility: visible" id="brFeedbackEquipmentType"></div>
+                </td>
+                <td style="width: 20%">
+                    <div style="width: 100%">
+                        <input type="button" id="btnAddNewCompanyEquipment" onclick="prepareEquipmentTemplate()" value="New Equipment Type" class="btn btnAdd large" style="width: 190px; float: right" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table id="tblEquipmentes" style="width: 100%" class="fils-border newTable">
+            <tr class="customGridHeader">
+                <th style="width: 7%; text-align: center">
+                    S/N
+                </th>
+                <th style="width: 80%; text-align: left">
+                    Equipment Type
+                </th>
+                <th style="width: 7%">
+                    Action
+                </th>
+            </tr>
+            @{
+    for (var i = 0; i < Model.Count(); i++)
+    {
+        var zxz = Model[i];
+
+        <tr id="tr@(zxz.EquipmentTypeId)" class="xtcR" style="color: black;">
+            <td style="width: 3%; text-align: center" class="xtc">
+                @(i + 1)
+            </td>
+            <td style="width: 70%; text-align: left" id="tdName">
+                @zxz.Name
+            </td>
+            <td style="width: 10%">
+                <a class="edTx" title="Edit" id="ed@(zxz.EquipmentTypeId)" onclick=" edTx(this.id);"><img src="~/Images/edit.png" alt="Edit" style="width: 16px; height: 16px" /></a>&nbsp;&nbsp;<a class="delTx" title="Delete" id="del@(zxz.EquipmentTypeId)" onclick=" delTx(this.id);"><img src="~/Images/delete_opt(1).png" alt="Delete" style="width: 16px; height: 16px" /></a>
+            </td>
+        </tr>
+    }
+}
+        </table>
+    </fieldset>
+
+<script type="text/javascript">
+    
+    $(window).load(function ()
+    {
+        //$('#tblEquipmentes .xtcR:even').addClass('gridItem1');
+    });
+
+    function feedBackStatus(x, z)
+    {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2) {
+            $("#brFeedbackEquipmentType").text(z);
+            $("#brFeedbackEquipmentType").removeClass('success');
+            $("#brFeedbackEquipmentType").addClass('error');
+            $("#brFeedbackEquipmentType").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedbackEquipmentType").text(z);
+            $("#brFeedbackEquipmentType").removeClass('error');
+            $("#brFeedbackEquipmentType").addClass('success');
+            $("#brFeedbackEquipmentType").fadeIn();
+        }
+    }
+
+    $(document).ready(function ()
+    {
+        toggleValidators('fsProcessEquipmentTypes');
+
+        $('#btnCloseProcessEquipment').on("click", function () {
+            closePopModal($('#fsProcessEquipmentTypes'));
+        });
+
+        $("#fsProcessEquipmentTypes").submit(function (e) {
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessEquipmentTypes')) {
+                return;
+            }
+
+            var data = $(this).serialize();
+
+            if ($('#brProcess').text() === "1")
+            {
+                var url = $(this).attr('action');
+                //submit
+                $.post(url, data, function (x)
+                {
+                    refresh(x);
+                });
+            }
+
+            if ($('#brProcess').text() === "2")
+            {
+                //update
+                upDateQ();
+            }
+
+        });
+
+    });
+
+    var rtx = '';
+
+    function edTx(x) {
+        $('#brProcess').text('');
+
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/EquipmentType/EditEquipmentType?id=' + xxid;
+
+        $.get(url, function (data) { edGet(data); });
+
+    }
+
+    function edGet(data) {
+
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessEquipmentTypes', 'Update');
+        $('#fsProcessEquipmentTypes').attr("action", "/EquipmentType/EditEquipmentType");
+        $('#txtEquipmentName').val(data.Name);
+        $('#lgEditEquipment').text('Update Equipment');
+        $('#brProcess').text(2);
+        setModal($('#fsProcessEquipmentTypes'));
+    }
+
+    function delTx(x)
+    {
+
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/EquipmentType/DeleteEquipmentType?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblEquipmentes #tr' + xxid).remove();
+
+                $('#tblEquipmentes tr.xtcR').each(function (r)
+                {
+                    $(this).children('.xtc').text(r + 1);
+                });
+               
+            }
+        });
+        return;
+    }
+  
+    function prepareEquipmentTemplate()
+    {
+        refreshForm('fsProcessEquipmentTypes', '');
+        $('#fsProcessEquipmentTypes').attr("action", "/EquipmentType/AddEquipmentType");
+        $('#brProcess').text(1);
+        setModal($('#fsProcessEquipmentTypes'));
+    }
+
+    function upDateQ()
+    {
+        var frm = $('#fsProcessEquipmentTypes');
+        var url = frm.attr('action');
+        var data = frm.serialize();
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: url,
+            data: data,
+            success: function (r)
+            {
+                updateTable(r);
+
+            }
+        });
+    }
+
+    function updateTable(r)
+    {
+
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3)
+        {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorEquipmentType').text(r.Error);
+            $('#trBrEdError').fadeIn('slow');
+            return;
+        }
+
+        closePopModal($('#fsProcessEquipmentTypes'));
+
+        if (r.ErrorCode === 0) {
+            //Session has expired/Unknown Error was encountered => when an Exception was caught/Database operation failed
+            feedBackStatus(r.ErrorCode, r.Error);
+            return;
+        }
+
+        $('#tblEquipmentes #tr' + rtx).children('#tdName').html(r.Name);
+
+        //$('#tblEquipmentes .xtcR:even').addClass('gridItem1');
+
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+    }
+
+    function refresh(r)
+    {
+
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3)
+        {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorEquipmentType').text(r.Error);
+            $('#trBrEdError').fadeIn('slow');
+            return;
+        }
+
+        closePopModal($('#fsProcessEquipmentTypes'));
+
+        if (r.ErrorCode === 0)
+        {
+            //Session has expired/Unknown Error was encountered => when an Exception was caught/Database operation failed
+            feedBackStatus(r.ErrorCode, r.Error);
+            return;
+        }
+        
+        var bv = $('#tblEquipmentes tr').length - 1;
+
+        $("#tblEquipmentes tbody:last").append($('<tr class="xtcR" id="tr' + r.EquipmentTypeId + '"><td style="width: 7%;text-align: center" class="xtc">' + (bv + 1) + '</td><td style="width: 80%"  id="tdName">' + r.Name + '</td><td style="width: 10%"><a class="edTx" title="Edit" id="ed' + r.EquipmentTypeId + '" onclick="edTx(this.id);"><img src="/Images/edit.png" style="width: 16px; height: 16px; cursor: pointer" alt ="Edit"/></a>&nbsp;&nbsp;<a class="delTx" title="Delete" id="del' + r.EquipmentTypeId + '" onclick=" delTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" style="width: 16px; height: 16px; cursor: pointer"/></a></td></tr>'));
+
+        //Successfull operation
+        
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+    }
+</script>
+

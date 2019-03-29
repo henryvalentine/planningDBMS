@@ -1,0 +1,41 @@
+﻿@model List<DPR_DataMigrationEngine.EF.Models.Equipment>
+
+<fieldset id="fsEquipmentList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <table id="tblEquipments" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 3%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 33%; text-align: left">
+                Equipment
+            </th>
+            <th style="width: 34%; text-align: left">
+                Equipment Type
+            </th>
+            <th style="width: 30%; text-align: left">
+                License Status
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Count(); i++)
+            {
+                var zxz = Model[i];
+                <tr id="tr@(zxz.EquipmentId)" class="xtcR" style="color: black;">
+                    <td style="width: 3%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 33%; text-align: left" id="tdName">
+                        @zxz.Name
+                    </td>
+                    <td style="width: 34%; text-align: left" id="tdType">
+                        @zxz.EquipmentType.Name
+                    </td>
+                    <td style="width: 30%; text-align: left" id="tdLicenseStatus">
+                        @zxz.EquipmentLicenseStatus
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>

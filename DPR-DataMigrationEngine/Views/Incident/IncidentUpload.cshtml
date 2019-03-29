@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "Incident Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<style type="text/css">
+    a#ancClose:link, a#ancClose:visited, a#ancClose:active, a#ancClose:hover {
+        text-decoration: none;
+        background: url(/Images/cancel.png) 80px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+        cursor: pointer;
+        border: none;
+    }
+</style>
+
+@{
+
+    if (ViewBag.ErrorCode < 0)
+    {
+        var td = @Html.Raw(ViewBag.ErrorMessage);
+        <label style="font-weight: normal; color: black;"> @td </label>
+
+    }
+
+    if (ViewBag.ErrorCode > 0)
+    {
+        var td = @Html.Raw(ViewBag.ErrorMessage);
+        <label style="font-weight: normal; color: green;">@td</label>
+
+    }
+}
+
+
+<table style="width: 60%">
+    <tr>
+        <td style="width: 90%">
+            <form class="fsEdit" style="width: 100%" method="POST" action="@Url.Action("IncidentUpload", "Incident")" enctype="multipart/form-data" id="frmProcessProductionDocs">
+                <span class="legend22" style="width: 100%">Incident Bulk Upload</span>
+               
+                @Html.ValidationSummary(true)
+                <table style="width: 100%; background: whitesmoke; border: none;margin-top:0">
+                    <tr>
+                        <td colspan="2">
+                            <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorProductionBulk"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="form-group">
+                            <br /><i style="width: auto">Select Excel Data File *</i>
+                            <input id="fdProductionTemplate" type="file" name="file" style="width: 98%; margin-left: 1%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div>&nbsp;</div>
+                            <div style="width: 100%; margin-left: 0">
+                                <div style="text-align: center; float: right; margin-top: 1%">
+                                    <a id="ancClose" style="border: none; float:right; width: 110px" class="btn btnClose large" href="/Incident/Incidents">Close</a>&nbsp; &nbsp; &nbsp;
+                                </div>
+                                <input type="submit" id="btnProcessBulkProduction" class="btn btnUpload large" style=" border: none; float: right; width: 110px" value="Upload" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width:10%; padding-right: 8px; vertical-align: top">
+            <div style="text-align: center; float: right">
+                <a title="Download Bulk Upload Template" style="cursor:pointer" href="@("/Incident/DownloadContentFromFolder?path=" + "~/BulkTemplate/IncidentTemplate.xlsx")"><img src="/Images/downloadExcel.png" alt="download Bulk Upload Template" style="width: 40px; height: 40px" /></a>
+            </div>
+
+        </td>
+    </tr>
+</table>

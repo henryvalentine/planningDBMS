@@ -1,0 +1,86 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model List<DPR_DataMigrationEngine.EF.Models.Block>
+
+<table style="width: 100%">
+    <tr>
+        <td style="width: 90%"></td>
+        <td style="padding-right:0; width: 5%">
+            <div>&nbsp;</div>
+            <a onclick="tableToExcel('tblBlockRep', 'Block Report')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" /></a>
+        </td>
+        <td style="padding-right:0;width: 5%">
+            <div>&nbsp;</div>
+            <img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer" title="Print Report" onclick="printBlockReport()" />
+        </td>
+    </tr>
+</table>
+<fieldset id="fsBlockList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">Block Report</legend>
+   
+    <table id="tblBlockRep" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 5%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 15%; text-align: left">
+                Block
+            </th>
+            <th style="width: 15%; text-align: left">
+                Block Type
+            </th>
+            <th style="width: 15%; text-align: left">
+                Lease Type
+            </th>
+            <th style="width: 12%; text-align: left">
+                Year Of Award
+            </th>
+            <th style="width: 15%; text-align: left">
+                Company
+            </th>
+            <th style="width: 15%; text-align: left">
+                Area(Kmsq)
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Count(); i++)
+            {
+                var zxz = Model[i];
+                <tr id="tr@(zxz.BlockId)" class="xtcR" style="color: black;">
+                    <td style="width: 5%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdName">
+                        @zxz.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdBlockTypeName">
+                        @zxz.BlockType.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdLeaseType">
+                        @zxz.LeaseType.Name
+                    </td>
+                    <td style="width: 12%; text-align: left" id="tdAwardYear">
+                        @zxz.YearOfAward
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdCompany">
+                        @zxz.Company.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdArea">
+                        @zxz.Area
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>
+
+<script type="text/javascript">
+    function printBlockReport() {
+        if ($('#tblBlockRep').html() == null) {
+
+            alert('Nothing to Print');
+            return;
+        }
+        printReportData('fsBlockList');
+    }
+
+</script>

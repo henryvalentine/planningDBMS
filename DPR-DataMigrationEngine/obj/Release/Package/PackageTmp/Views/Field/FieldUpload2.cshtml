@@ -1,0 +1,59 @@
+﻿
+@{
+
+    if (ViewBag.ErrorCode < 0)
+    {
+        <label style="font-weight: normal; color: red;">@ViewBag.ErrorMessage </label>
+        
+    }
+    
+     if (ViewBag.ErrorCode > 0)
+    {
+        <label style="font-weight: normal; color: green;">@ViewBag.ErrorMessage </label>
+        
+    }
+}
+
+
+<form class="fsEdit" style="width: 50%" method="POST" action="@Url.Action("SaveToFolder2", "Field")" enctype="multipart/form-data" id="frmProcessIncidentDocs">
+    <span class="legend22" style="width: 100%">Field Bulk Upload</span>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; background: whitesmoke; border: none;margin-top:0">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorBulkIncident"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="form-group">
+                <br /><i style="width: auto" class="formLabel">Select Excel Data File</i><span id="spfldIncidentTemplate" style="color: #FF0000; display: none">*Invalid file format</span>
+                <input id="fldIncidentTemplate" type="file" name="file" style="width: 100%" />
+            </td>
+        </tr>
+        @*<tr>
+            <td class="form-group" colspan="2">
+                <div class="formLabel"><i style="width: auto">Company: </i><span style="color: red">*</span><span id="spddlBulkCompanies" data-valmsg-for="incidentHistory.CompanyId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" style="height: 45px" name="incidentHistory.CompanyId" id="ddlBulkCompanies">
+                    @{
+                        var companyExtensions = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "-- Select Company --");
+
+                        foreach (var company in companyExtensions.Select(companyString => Html.Raw(companyString)))
+                        {
+                            @company
+                        }
+                    }
+                </select>
+            </td>
+        </tr>*@
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="submit" id="btnProcessIncidentBulkUpload" class="btn btnUpload large" style=" border: none; float: right; width: 110px" value="Upload"/>
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+

@@ -1,0 +1,181 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model DPR_DataMigrationEngine.ViewModels.WellViewModel
+
+
+<form class="fsEdit xxc" style="display: none; visibility: visible; max-height: 70%" id="dvSelectReportFields">
+
+    <legend class="legend22" style="width: 100%">Select Well Report Fields</legend>
+    <table style="width: 100%">
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Well Type: </i> </div>
+                <select class="form-control" name="queryBuilder.WellTypeId" id="ddlWellDynamicType">
+                    @{
+                        var wellTypes = new ExtensionHelpers().ListOption(Model.WellTypes, "WellTypeId", "Title", "< All >");
+
+                        foreach (var wellType in wellTypes.Select(wellTypeString => Html.Raw(wellTypeString)))
+                        {
+                            @wellType
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Well Class: </i> </div>
+                <select class="form-control" name="queryBuilder.WellClassId" id="ddlWellDynamicClass">
+                    @{
+                        var wellClasses = new ExtensionHelpers().ListOption(Model.WellClasses, "WellClassId", "Name", "< All >");
+
+                        foreach (var wellClass in wellClasses.Select(classString => Html.Raw(classString)))
+                        {
+                            @wellClass
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Field: </i> </div>
+                <select class="form-control" name="queryBuilder.FieldId" id="ddlWellDynamicField">
+                    @{
+                        var fields = new ExtensionHelpers().ListOption(Model.Fields, "FieldId", "Name", "< All >");
+
+                        foreach (var field in fields.Select(fieldString => Html.Raw(fieldString)))
+                        {
+                            @field
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Terrain: </i> </div>
+                <select class="form-control" name="queryBuilder.TerrainId" id="ddlWellDynamicTerrain">
+                    @{
+                        var terrains = new ExtensionHelpers().ListOption(Model.Terrains, "TerrainId", "Name", "< All >");
+
+                        foreach (var terrain in terrains.Select(terrainString => Html.Raw(terrainString)))
+                        {
+                            @terrain
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Zone: </i> </div>
+                <select class="form-control" name="queryBuilder.ZoneId" id="ddlWellDynamicZone">
+                    @{
+                        var zones = new ExtensionHelpers().ListOption(Model.Zones, "ZoneId", "Name", "< All >");
+
+                        foreach (var zone in zones.Select(zoneString => Html.Raw(zoneString)))
+                        {
+                            @zone
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Company: </i> </div>
+                <select class="form-control" name="queryBuilder.CompanyId" id="ddlWellDynamicComp">
+                    @{
+                        var companyExtensions = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "< All >");
+
+                        foreach (var company in companyExtensions.Select(companyString => Html.Raw(companyString)))
+                        {
+                            @company
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Spud Date: </i> </div>
+                <div style="width: 100%; margin-left: 0">
+                    <select class="form-control" name="queryBuilder.SpudYear" id="ddlWellDynamicSpudDate">
+                        @{
+                            var spudYears = new ExtensionHelpers().ListOption(Model.SpudYears, "DocId", "DocName", " < All >");
+
+                            foreach (var spudYear in spudYears.Select(spudYearString => Html.Raw(spudYearString)))
+                            {
+                                @spudYear
+                            }
+                        }
+                    </select>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseRepField" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" onclick="closeWellRepFields()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="button" id="btnProcessRepField" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Generate Rport" onclick="generateReports();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="padding-right:0; width: 30%">
+            <div style="margin-left: 2%"><i style="width: auto">Use a previous query: </i> </div>
+            <select class="form-control" name="queryBuilder.QueryId" id="ddlwellPreviousQueries">
+                @{
+                    var previousQueries = new ExtensionHelpers().ListOption(Model.WellQueries, "WellQueryId", "WellQueryName", "-- Select Previous Query --");
+
+                    foreach (var wellQuery in previousQueries.Select(previousQuerString => Html.Raw(previousQuerString)))
+                    {
+                        @wellQuery
+                    }
+                }
+            </select>
+        </td>
+        <td style="padding-right:0; width: 7%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: left">
+                <input type="button" id="btnGetPreviousReports" onclick=" prepWellRepFiledsTemplate()" class="btn btnGetRepFields large" style="width: 190px; float: right; text-decoration: none" value="Go" />
+            </div> 
+        </td>
+        <td style="padding-right:0; width: 10%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: right">
+                <input type="button" id="btnGetReports" onclick=" prepWellRepFiledsTemplate()" class="btn btnGetRepFields large" style="width: 190px; float: right; text-decoration: none" value="Select Query Criteria" />
+            </div>
+        </td>
+        <td style="padding-right:0;width: 10%">
+            <div>&nbsp;</div>
+            <img src="/Images/printer-24_opt.png" style="float: right; cursor: pointer" title="Print Report" onclick="printWellReport()" />
+        </td>
+    </tr>
+</table>
+
+<img src="/Images/ProgressLoader.gif" id="imgWellRepoSpin" class="spinProgress" />
+
+
+<div style="width: 100%" id="dvWellRep">
+    <fieldset id="fsWellReport" style="background: whitesmoke; width: 100%" class="allcontent">
+        @*<legend class="customlegend22" id="lgHeader">Well Report Builder</legend>*@
+
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+    function printWellReport()
+    {
+        if ($('#tbWellReports').html() == null)
+        {
+            alert('Nothing to Print');
+            return;
+        }
+        printReportData('dvWellRep');
+    }
+</script>
+

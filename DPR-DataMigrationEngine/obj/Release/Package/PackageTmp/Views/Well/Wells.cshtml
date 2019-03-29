@@ -1,0 +1,716 @@
+﻿
+@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model    DPR_DataMigrationEngine.ViewModels.WellViewModel 
+
+
+<style type="text/css">
+    a#btnBulkUpload:link, a#btnBulkUpload:visited, a#btnBulkUpload:active, a#btnBulkUpload:hover {
+        text-decoration: none;
+        background: url(/Images/next.png) 110px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+    }
+</style>
+
+
+
+<form action="@Url.Action("AddWell", "Well")" id="fsProcessWells" class="fsEdit" style="display: none; visibility: visible">
+    <span class="legend22" id="lgEditWell" style="width: 100%">Add New Well</span>
+
+    @Html.AntiForgeryToken()    
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorWell"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width:50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Well:</i><span style="color: red">*</span><span id="sptxtWellName" data-valmsg-for="well.Name" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="well.Name" id="txtWellName" class="form-control" style="margin-left: 2%" />
+            </td>
+            <td class="form-group" style="width:50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Well Type: </i><span style="color: red">*</span><span id="spddlWellTypes" data-valmsg-for="well.WellTypeId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="well.WellTypeId" id="ddlWellTypes">
+                    @{
+                        var wellTypeExtensions = new ExtensionHelpers().ListOption(Model.WellTypes, "WellTypeId", "Title", "-- Select Well Type --");
+
+                        foreach (var wellType in wellTypeExtensions.Select(wellTypeString => Html.Raw(wellTypeString)))
+                        {
+                            @wellType
+                        }
+                    }
+                </select> 
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width:50%">
+                <div class="formLabel"><i style="width: auto">Well Class: </i><span style="color: red">*</span><span id="spddlWellClasses" data-valmsg-for="wellClass.WellClassId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="well.WellClassId" id="ddlWellClasses">
+                    
+                     @{
+                         var wellClassExtensionExtensions = new ExtensionHelpers().ListOption(Model.WellClasses, "WellClassId", "Name", "-- Select Well Class --");
+
+
+                         foreach (var wellClass in wellClassExtensionExtensions.Select(wellClassString => Html.Raw(wellClassString)))
+                        {
+                             @wellClass
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width:50%">
+                <div class="formLabel">
+                    <i style="width: auto">Field:</i><span style="color: red">*</span><span id="spddlWellFields" data-valmsg-for="well.CompanyId" style="color: red" data-valmsg-replace="true">Invalid Selection</span>
+                </div>
+                <select class="form-control" style="width: 100%" name="well.FieldId" id="ddlWellFields">
+                    @{
+                        var companyExtensions = new ExtensionHelpers().ListOption(Model.Fields, "FieldId", "Name", "-- Select Field --");
+
+                        foreach (var company in companyExtensions.Select(companyString => Html.Raw(companyString)))
+                        {
+                            @company
+                        }
+                    }
+                </select>
+            </td>
+
+        </tr>
+        <tr>
+            @*<td class="form-group" style="width:50%">
+                <div class="formLabel"><i style="width: auto">Block:</i><span style="color: red">*</span><span id="spddlBlocks" data-valmsg-for="well.BlockId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" style="height: 34px;" disabled="disabled" name="well.BlockId" id="ddlBlocks">
+                    <option value="0"> -- List is empty -- </option>
+                </select>
+            </td>*@
+            <td>
+                <div style="margin-left: 2%"><i style="width: auto">Technical Allowable: </i></div>
+                <input type="text" name="well.TechnicalAllowable" id="txtWellTechValue" class="form-control" style="margin-left: 2%" />
+            </td>
+            <td class="form-group" style="width:50%"> 
+                <div style="margin-left: 2%"><i style="width: auto">Total Dept:</i><span style="color: red">*</span><span id="sptxtTotalDept" data-valmsg-for="well.TotalDept" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="well.TotalDept" id="txtTotalDept" class="form-control" style="margin-left: 2%" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" colspan="2">
+                <div style="margin-left: 2%"><i style="width: auto">SPUD Date </i><span style="color: red">*</span></div>
+                <input type="text" name="well.SpudDate" id="dtSpudDate" class="form-control datepicker" style="margin-left: 2%; width: 98%" />
+            
+                @*<div class='input-group date' id='datetimepicker5'>
+                    <input type='text' id="dtSpudDate" class="form-control" data-date-format="YYYY/MM/DD" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>*@
+            </td>
+        </tr>
+        <tr>      
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessWell" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessWell" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="width: 90%; padding-right: 8px; vertical-align: top; text-align: center">
+            <div style="text-align: center; float: right; margin-top: 1%">
+                <a id="btnBulkUpload" @*onclick="prepareBulkUploadTemplate()"*@ class="btn btnNext large" style="width: 140px; float: left" href="/Well/WellUpload"> Bulk Upload </a>
+            </div>
+        </td>
+        <td style="width: 10%">
+            <div style="width: 100%">
+                <input type="button" id="btnAddNewCompany" onclick="prepareWellTemplate()" value="Single Entry" class="btn btnAddXy large" style="width: 170px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+<fieldset id="fsWellList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProcessWell" style="display: none; visibility: visible">@ViewBag.ErrorCode</label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 20%">
+        <tr>
+            <td style="width: 70%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedbackWell">@ViewBag.ErrorMessage</div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblWells" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 3%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 15%; text-align: left">
+                Well
+            </th>
+            <th style="width: 10%; text-align: left">
+                Well Type
+            </th>
+            <th style="width: 10%; text-align: left">
+                Well Class
+            </th>
+            <th style="width: 15%; text-align: left">
+                Block
+            </th>
+            <th style="width: 10%; text-align: left">
+                Total Dept(FT)
+            </th>
+            <th style="width: 10%; text-align: left">
+                Technical Allowable(FT)
+            </th>
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Wells.Count(); i++)
+            {
+                var zxz = Model.Wells[i];
+                <tr id="tr@(zxz.WellId)" class="xtcR" style="color: black;">
+                    <td style="width: 3%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdName">
+                        @zxz.Name
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdWellType">
+                        @zxz.WellTypeName
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdWellClass">
+                        @zxz.WellClassName
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdWellBlock">
+                        @zxz.BlockName
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdTotalDept">
+                        @zxz.TotalDept
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdTechValue">
+                        @zxz.TechnicalAllowable
+                    </td>
+                    <td style="width: 10%">
+                        <a class="wellEdTx" title="Edit" id="ed@(zxz.WellId)" onclick="wellEdTx(this.id);"><img src="~/Images/edit.png" alt="Edit" /></a><a class="wellDelTx" title="Delete" id="del@(zxz.WellId)" onclick=" wellDelTx(this.id);"><img src="~/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+   
+</fieldset>
+<img src="/Images/select2-spinner.gif" id="imgWellSpin" class="spinProgress2" />
+<script type="text/javascript">
+
+
+    $(window).load(function ()
+    {
+        var dx = parseInt($('#brProcessWell').text().trim());
+
+        if (dx < 0) {
+            
+            $("#brFeedbackWell").removeClass('success');
+            $("#brFeedbackWell").addClass('error');
+            $("#brFeedbackWell").fadeIn();
+        }
+
+        if (dx > 0) {
+            
+            $("#brFeedbackWell").removeClass('error');
+            $("#brFeedbackWell").addClass('success');
+            $("#brFeedbackWell").fadeIn();
+        }
+    });
+    
+    $(".page-button").click(function () {
+        if (!$(this).hasClass('current')) {
+
+            window.location.href = "http://" +
+                window.location.host + window.location.pathname +
+                '?pageNumber=' + $(this).val() + '&itemsPerPage=' + 50;
+
+        }
+    });
+    
+    $(function () {
+        $(window).scroll(function() 
+        {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height() - 120)
+            {
+                
+                var url = '/Well/GetMoreWells';
+                $("#imgWellSpin").show();
+                $.ajax({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (zxz)
+                    {
+                        if (zxz === null)
+                        {
+                            $("#imgWellSpin").hide();
+                        } else
+                        {
+                            $.each(zxz, function (i, r)
+                            {
+                                refresh2(r);
+                            });
+                            $("#imgWellSpin").hide();
+                        }
+                    }        
+                });
+            }
+        });
+    }); 
+
+
+    function feedBackStatus(x, z)
+    {
+        var dx = parseInt(x);
+
+        if (dx < 1)
+        {
+            $("#brFeedbackWell").text(z);
+            $("#brFeedbackWell").removeClass('success');
+            $("#brFeedbackWell").addClass('error');
+            $("#brFeedbackWell").fadeIn();
+        }
+
+        if (dx > 0)
+        {
+            $("#brFeedbackWell").text(z);
+            $("#brFeedbackWell").removeClass('error');
+            $("#brFeedbackWell").addClass('success');
+            $("#brFeedbackWell").fadeIn();
+        }
+    }
+    
+    $('#dnTx').on('click', function (e)
+    {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        downloadFile(href);
+    });
+    
+   
+
+    $(document).ready(function ()
+    {
+        //$('#dtSpudDate').datepicker().on('changeDate', function (ev)
+        //{
+        //    $(this).datepicker('hide');
+        //});
+        
+        toggleValidators('fsProcessWells');
+        toggleValidators('frmProcessDocs');
+      
+        $('#btnCloseProcessWell').on("click", function ()
+        {
+            $('#brEdErrorWell').text('');
+            $('#brEdErrorWell').fadeOut('slow');
+            $("#brFeedbackWell").fadeOut();
+            fieldId = 0;
+            classId = 0;
+            closePopModal($('#fsProcessWells'));
+        });
+
+        //$('#ddlWellFields').on('change', function ()
+        //{
+        //    $('#brEdErrorWell').text('');
+        //    $('#brEdErrorWell').fadeOut('slow');
+        //    $("#brFeedbackWell").fadeOut();
+        //    var rxv = parseInt($(this).val());
+
+        //    if (rxv < 1)
+        //    {
+        //        alert('Invalid selection');
+        //        return;
+        //    }
+            
+        //    var url = '/Well/GetBlocksByField?fieldId=' + rxv;
+
+        //    $.get(url, function (retVal)
+        //    {
+        //        populateDropdown(retVal);
+        //    });
+
+        //});
+         
+        $("#fsProcessWells").submit(function (e)
+        {
+            $("#brFeedbackWell").fadeOut();
+            e.preventDefault();
+            $('#brEdErrorWell').text('');
+            $('#brEdErrorWell').fadeOut('slow');
+            if (!validateTemplate('fsProcessWells'))
+            {
+                return;
+            }
+            
+            var vx = $('#txtWellName');
+            var rx = $('#txtWellTechValue');
+            var rxd = $('#txtTotalDept');
+            var rnx = $('#ddlWellTypes');
+            var rxx = $('#ddlWellFields');
+            var rxvx = $('#ddlBlocks');
+            var rdvx = $('#dtSpudDate');
+            var rdwvx = $('#ddlWellClasses');
+            
+            var newWell = {};
+            newWell.WellId = rtx;
+
+            newWell['Name'] = vx.val();
+            newWell['TotalDept'] = rxd.val();
+            newWell['TechnicalAllowable'] = rx.val();
+            newWell['WellTypeId'] = rnx.val();
+            newWell['BlockId'] = rxvx.val();
+            newWell['FieldId'] = rxx.val();
+            newWell['SpudDate'] = rdvx.val();
+            newWell['WellClassId'] = rdwvx.val();
+
+            newWell.BlockName = $("#ddlBlocks option:selected").text();
+            newWell.WellTypeName = $("#ddlWellTypes option:selected").text();
+            newWell.FieldName = $("#ddlWellFields option:selected").text();
+            newWell.WellClassName = $("#ddlWellClasses option:selected").text();
+
+            var sdx = JSON.stringify({ well: newWell});
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz)
+                {
+                    if (zxz.ErrorCode < 1)
+                    {
+                        $('#brEdErrorWell').text(zxz.Error);
+                        $('#brEdErrorWell').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProcessWell').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProcessWell').text() === "2")
+                    {
+                        updateTable(zxz);
+                    }
+                    
+                    fieldId = 0;
+                    classId = 0;
+                }
+            });
+        });
+    });
+
+    function valIdateTemplate()
+    {
+        if ($('#fldDocument').val().trim().length < 1)
+        {
+            alert("Please Select an Excel file to upload!");
+            $('#fldDocument').val('');
+            return false;
+        }
+        
+        if (!validateTemplate('frmProcessDocs'))
+        {
+            $('#brEdErrorBulk').text('Validation failed. Please check the input fileds and try again')
+                .fadeIn();
+            return false;
+        }
+        return true;
+        // $('#btnProcessBulkUpload').unbind('click').click();
+    }
+    
+
+    function populateDropdown(data)
+    {
+        if (data == null || data.length < 1)
+        {
+            $('#brEdErrorWell').text("Block list for the selected Company could not be retrieved");
+            $('#ddlBlocks').html('<option value="0"> -- List is empty -- </option>');
+            $('#ddlBlocks').prop('disabled', true);
+            $('#brEdErrorWell').fadeIn('slow');
+            return;
+        }
+        $('#ddlBlocks').empty();
+        $('#ddlBlocks').html('<option value="0"> -- Select Block -- </option>');
+        $.each(data, function (i, v)
+        {
+            if (v.BlockId < 1)
+            {
+                $('#ddlBlocks').empty();
+                $('#ddlBlocks').html('<option value="0"> -- List is empty -- </option>');
+                $('#ddlBlocks').prop('disabled', 'disabled');
+                alert('An unknown error was encountered. Process has been terminated');
+                return;
+            }
+
+            $('#ddlBlocks').append($("<option />").val(v.BlockId).text(v.Name));
+        });
+       
+        $('#ddlBlocks').val(fieldId);
+        //$('#ddlBlocks').prop('selectedIndex', 0);
+        $('#ddlBlocks').prop('disabled', false);
+    }
+    
+    var rtx = 0;
+
+    function wellEdTx(x)
+    {
+        $('#brProcessWell').text('');
+        $("#brFeedbackWell").fadeOut();
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1)
+        {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/Well/EditWell?id=' + xxid;
+
+        $.get(url, function (data)
+        {
+            fieldId = 0;
+            classId = 0;
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data)
+    {
+        if (data.ErrorCode < 1)
+        {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessWells', 'Update');
+        $('#fsProcessWells').attr("action", "/Well/EditWell");
+
+        $('#txtWellName').val(data.Name);
+        $('#txtWellTechValue').val(data.TechnicalAllowable);
+        $('#ddlWellFields').val(data.FieldId);
+        $('#txtTotalDept').val(data.TotalDept);
+        $('#ddlWellTypes').val(data.WellTypeId);
+        $('#ddlWellClasses').val(data.WellClassId);
+         
+        fieldId = data.BlockId;
+        classId = data.WellClassId;
+
+        //var url = '/Well/GetBlocksByField?fieldId=' + data.FieldId;
+        
+        //$.get(url, function (retVal)
+        //{
+        //    populateDropdown(retVal);
+        //});
+       
+        $('#ddlBlocks').val(data.BlockId);
+
+
+        $('#dtSpudDate').datepicker("setValue", data.Date);
+        
+
+        $('#lgEditWell').text('Update Well');
+        $('#brProcessWell').text(2);
+        setModal($('#fsProcessWells'));
+    }
+
+    function wellDelTx(x) {
+        $("#brFeedbackWell").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/Well/DeleteWell?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    //Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblWells #tr' + xxid).remove();
+
+                //$('#tblWells tr.xtcR').each(function (r) {
+                //    $(this).children('.xtc').text(r + 1);
+                //});
+                //$('#tblWells .xtcR:even').addClass('gridItem1');
+            }
+        });
+        return;
+    }
+
+    function prepareWellTemplate()
+    {
+        refreshForm('fsProcessWells', '');
+        $('#fsProcessWells').attr("action", "/Well/AddWell");
+        $('#brProcessWell').text(1);
+        $('#lgEditWell').text('Add New Well');
+        $('#ddlBlocks').html('');
+        fieldId = 0;
+        classId = 0;
+        setModal($('#fsProcessWells'));
+    }
+
+    var fieldId = 0;
+    var classId = 0;
+
+    function prepareBulkUploadTemplate()
+    {
+        refreshForm('frmProcessDocs', '');
+        setModal($('#frmProcessDocs'));
+    }
+    
+
+    function updateTable(r)
+    {
+        $('#tblWells #tr' + rtx).children('#tdName').html(r.Name);
+        $('#tblWells #tr' + rtx).children('#tdTechValue').html(r.TechnicalAllowable);
+        //$('#tblWells #tr' + rtx).children('#tdCompany').html(r.FieldName);
+        $('#tblWells #tr' + rtx).children('#tdWellType').html(r.WellTypeName);
+        $('#tblWells #tr' + rtx).children('#tdWellClass').html(r.WellClassName);
+        $('#tblWells #tr' + rtx).children('#tdWellBlock').html(r.BlockName);
+        $('#tblWells #tr' + rtx).children('#tdTotalDept').html(r.TotalDept);
+        
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcessWell').text(0);
+        closePopModal($('#fsProcessWells'));
+    }
+
+    function refresh(r)
+    {
+        var bv = $('#tblWells tr').length - 1;
+
+        var ttd = '';
+        var tgg = '';
+        if (r.TotalDept < 1) {
+            ttd = "";
+        } else {
+            ttd = r.TotalDept;
+        }
+
+        if (r.TechnicalAllowable < 1) {
+            tgg = "";
+        } else {
+            tgg = r.TechnicalAllowable;
+        }
+
+
+        $("#tblWells tbody:last").append($('<tr id="tr' + r.WellId + '" class="xtcR" style="color: black;">'
+            + '<td style="width: 3%; text-align: center" class="xtc">'
+            + (bv + 1)
+            + '</td>'
+            + '<td style="width: 15%; text-align: left" id="tdName">' + r.Name
+            + '</td><td style="width: 10%; text-align: left" id="tdWellType">' + r.WellTypeName
+            + '</td><td style="width: 10%; text-align: left" id="tdWellClass">' + r.WellClassName
+            ////+ '</td><td style="width: 15%; text-align: left" id="tdCompany">' + r.CompanyName
+            + '<td style="width: 10%; text-align: left" id="tdWellBlock">' + r.BlockName
+            + '</td><td style="width: 10%; text-align: left" id="tdTotalDept">' + ttd
+            + '</td><td style="width: 15%; text-align: left" id="tdTechValue">' + tgg
+            + '</td><td style="width: 10%"><a class="wellEdTx" title="Edit" id="ed' + r.WellId + '" onclick="wellEdTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>'
+            + '<a class="wellDelTx" title="Delete" id="del' + r.WellId + '"  onclick=" wellDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a></td></tr>'));
+        
+        //Successfull operation
+        $('#brProcessWell').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessWells'));
+    }
+    
+    function refresh2(r) {
+        var bv = $('#tblWells tr').length - 1;
+        var ttd = '';
+        var tgg = '';
+        if (r.TotalDept < 1) {
+            ttd = "";
+        } else {
+            ttd = r.TotalDept;
+        }
+        
+        if (r.TechnicalAllowable < 1) {
+            tgg = "";
+        } else {
+            tgg = r.TechnicalAllowable;
+        }
+
+        $("#tblWells tbody:last").append($('<tr id="tr' + r.WellId + '" class="xtcR" style="color: black;"> '
+            + '<td style="width: 3%; text-align: center" class="xtc">'
+            + (bv + 1)
+            + '</td>'
+            + '<td style="width: 15%; text-align: left" id="tdName">' + r.Name
+            + '</td><td style="width: 10%; text-align: left" id="tdWellType">' + r.WellTypeName
+            + '</td><td style="width: 10%; text-align: left" id="tdWellClass">' + r.WellClassName
+            + '</td>'
+            //+ '<td style="width: 15%; text-align: left" id="tdCompany">' + r.CompanyName + '</td>'
+            + '<td style="width: 10%; text-align: left" id="tdWellBlock">' + r.BlockName
+            + '</td><td style="width: 10%; text-align: left" id="tdTotalDept">' + ttd
+            + '</td><td style="width: 15%; text-align: left" id="tdTechValue">' + tgg
+            + '</td><td style="width: 10%"><a class="wellEdTx" title="Edit" id="ed' + r.WellId + '" onclick="wellEdTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>'
+            + '<a class="wellDelTx" title="Delete" id="del' + r.WellId + '"  onclick=" wellDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a></td></tr>'));
+        
+    }
+    
+    function prepareBulkUploadTemplate() {
+        refreshForm('frmProcessDocs', '');
+        setModal($('#frmProcessDocs'));
+    }
+    
+    function downloadFile(d)
+    {
+        if (d.length < 1)
+        {
+            alert('Invalid Selection!');
+            return;
+        }
+        $.get(d);
+    }
+
+    $('#fldDocument').on('change', previewImage);
+    
+    function previewImage(z)
+    {
+        var content = $('#fldDocument');
+        var input = z.target.files;
+
+        if (input.length > 0)
+        {
+            var extension = content.val().split('.').pop();
+            // str.substring(str.lastIndexOf('~'));
+            var cdg = $('#fldDocument');
+            if (extension === 'xlsx' || extension === 'xls')
+            {
+                $('#spfldDocument').fadeOut();
+            }
+            else
+            {
+                $('#spfldDocument').fadeIn();
+                cdg.val('');
+            }
+            return;
+        }
+        else {
+            alert("Please select an Excel file to upload!");
+        }
+    }
+
+</script>
+

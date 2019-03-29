@@ -1,0 +1,139 @@
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.dll.config
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.pdb
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Antlr3.Runtime.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.EF.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.Services.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\EntityFramework.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\EntityFramework.SqlServer.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Newtonsoft.Json.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Owin.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\PagedList.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\PagedList.Mvc.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Helpers.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Mvc.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Optimization.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Razor.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.Razor.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\WebGrease.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.EF.pdb
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.Services.pdb
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\EntityFramework.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\EntityFramework.SqlServer.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\PagedList.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\PagedList.Mvc.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Helpers.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Mvc.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Optimization.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Razor.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.Razor.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Newtonsoft.Json.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Antlr3.Runtime.pdb
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR-DataMigrationEngine.csprojResolveAssemblyReference.cache
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR_DataMigrationEngine.Migrations.Stage1.resources
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR-DataMigrationEngine.csproj.GenerateResource.Cache
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR-DataMigrationEngine.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR-DataMigrationEngine.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.dll.config
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Antlr3.Runtime.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.EF.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.Services.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\EntityFramework.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\EntityFramework.SqlServer.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Newtonsoft.Json.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Owin.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\PagedList.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\PagedList.Mvc.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Helpers.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Mvc.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Optimization.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Razor.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.Deployment.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.Razor.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\WebGrease.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.EF.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\DPR-DataMigrationEngine.Services.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\EntityFramework.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\EntityFramework.SqlServer.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\PagedList.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\PagedList.Mvc.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Helpers.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Mvc.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Optimization.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.Razor.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.Deployment.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\System.Web.WebPages.Razor.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Newtonsoft.Json.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Antlr3.Runtime.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR-DataMigrationEngine.csprojResolveAssemblyReference.cache
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR_DataMigrationEngine.Migrations.Stage1.resources
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR-DataMigrationEngine.csproj.GenerateResource.Cache
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR-DataMigrationEngine.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR-DataMigrationEngine.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\CsvHelper.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\CsvHelper.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\CsvHelper.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\obj\Release\DPR_DataMigrationEngine.Migrations.Stage2.resources
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.SqlServer.ConnectionInfo.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.SqlServer.Management.Sdk.Sfc.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.SqlServer.Smo.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.SqlServer.SmoExtended.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\bin\Microsoft.SqlServer.SqlEnum.dll

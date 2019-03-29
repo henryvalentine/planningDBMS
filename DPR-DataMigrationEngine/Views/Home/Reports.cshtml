@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Reports";
+}
+<style type="text/css">
+    ul a {
+        text-decoration: none;
+    }
+</style>
+<div style="width: 25%; position: relative; float: left; margin-left: 3%">
+    <fieldset style="width: 100%; border: 1px solid whitesmoke; margin-left: 20px">
+        <legend class="customlegend22">General Reports</legend>
+        <ul>
+            <li>@Html.ActionLink("Production Report", "Report", "Production")</li>
+            <li>@Html.ActionLink("Well Workover Report", "Report", "WellWorkOver")</li>
+            <li>@Html.ActionLink("Well Completion", "Report", "WellCompletion")</li>
+            <li>@Html.ActionLink("Well Report", "Report", "Well")</li>
+            <li>@Html.ActionLink("Incident Report", "Report", "Incident")</li>
+            <li>@Html.ActionLink("Project Report", "Reports", "Project")</li>
+            <li>@Html.ActionLink("Equipment Report", "Reports", "Equipment")</li>
+            <li>@Html.ActionLink("Block Report", "Report", "Block")</li>
+        </ul>
+    </fieldset>
+</div>
+
+@*<div style="width: 15%; position: relative; float: left; margin-left: 19%">
+        <ul>
+            <li>@Html.ActionLink("Well Report", "Report", "Well")</li>
+            <li>@Html.ActionLink("Projects", "Projects", "Project")</li>
+            <li>@Html.ActionLink("Incidents", "Incidents", "Incident")</li>
+            <li>@Html.ActionLink("Well Workovers", "WellWorkovers", "WellWorkOver")</li>
+            <li>@Html.ActionLink("Well Completion", "WellCompletions", "WellCompletion")</li>
+        </ul>
+    </div>*@
+
+<div style="width: 25%; position: relative; float: right; margin-right: 30%; top: 0">
+    <fieldset style="width: 100%; border: 1px solid whitesmoke; margin-left: 20px">
+        <legend class="customlegend22">Report Builders</legend>
+        <ul>
+            <li>@Html.ActionLink("Production Report", "DynamicReports", "ProductionReport")</li>
+            <li>@Html.ActionLink("Well Workover Report", "DynamicReports", "WellWorkoverReport")</li>
+            <li>@Html.ActionLink("Well Completion Report", "DynamicReports", "WellCompletionReport")</li>
+            <li>@Html.ActionLink("Well Report", "DynamicReports", "WellReport")</li>
+            <li>@Html.ActionLink("Field Report", "DynamicReports", "FieldReport")</li>
+            <li>@Html.ActionLink("Incident Report", "DynamicReports", "IncidentReport")</li>
+        </ul>
+    </fieldset>
+</div>
+

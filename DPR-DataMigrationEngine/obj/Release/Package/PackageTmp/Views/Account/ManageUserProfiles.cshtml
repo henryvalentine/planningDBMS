@@ -1,0 +1,781 @@
+﻿@using WebGrease.Css.Extensions
+@model Tuple< List<DPR_DataMigrationEngine.Models.ApplicationUser> , List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>>
+           
+<style type="text/css">
+    ul#rolList li 
+    {
+        text-decoration: none;
+        display: inline;
+    }
+    ul#rolListUpdate li {
+        text-decoration: none;
+    }
+    .rolexis {
+        
+    }
+    .edTxx{text-decoration: none; color: green;}
+</style>
+
+<form id="frmRegister" class="fsEdit" method="POST" style="display: none" action="@Url.Action("Register", "Account")">
+    <span class="legend22" id="lgRegUser" style="width: 100%">Add User</span>
+    @Html.AntiForgeryToken()
+    
+    <table style="width: 100%; border: none">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brRegError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">First Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtFirstName" data-valmsg-for="model.FirstName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.FirstName" id="txtFirstName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Last Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtLastName" data-valmsg-for="model.LastName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.LastName" id="txtLastName" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">User Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtUserName" data-valmsg-for="model.UserName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.UserName" id="txtUserName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Email:</i>@*<span style="color: red">*</span><span class="field-validation-valid" id="sptxtEmail" data-valmsg-for="model.Email" style="color: red" data-valmsg-replace="true">Required</span>*@</div>
+                <input type="email" name="model.Email" id="txtEmail" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Password:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtPassword" data-valmsg-for="model.Password" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="password" name="model.Password" id="txtPassword" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Confirm Password:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtConfirmPassword" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="password" id="txtConfirmPassword" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="formLabel"><i style="width: auto">User Role(s)</i></div>
+                <div class="col-md-10">
+                    <div id="rolList">
+                        @{
+                            foreach (var role in Model.Item2)
+                            {
+                                 <div style="float: left; margin-right: 2px; position: relative">
+                                    <input type="checkbox" value="@role.Id" class="rolexis" /><span id="@role.Id">@(role.Name.Replace("_", " "))</span>
+                                </div>
+
+                            } 
+                        }
+                    </div>
+
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btncloseRegister" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessRegister" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form> 
+
+
+<form id="frmUpdate" class="fsEdit" method="POST" style="display: none" action="@Url.Action("UpdateUserProfile", "Account")">
+    <span class="legend22" id="lgUpdateUser" style="width: 100%">Update User Information</span>
+    @Html.AntiForgeryToken()
+
+    <table style="width: 100%; border: none">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brUpdaterror"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">First Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtUpdateFirstName" data-valmsg-for="model.FirstName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.FirstName" id="txtUpdateFirstName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Last Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtUpdateLastName" data-valmsg-for="model.LastName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.LastName" id="txtUpdateLastName" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">User Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtUpdateUserName" data-valmsg-for="model.UserName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.UserName" id="txtUpdateUserName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Email:</i>@*<span style="color: red">*</span><span class="field-validation-valid" id="sptxtUpdateEmail" data-valmsg-for="model.Email" style="color: red" data-valmsg-replace="true">Required</span>*@</div>
+                <input type="text" name="model.Email" id="txtUpdateEmail" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btncloseUserInfo" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnUpdateUserInfo" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Update" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form> 
+
+
+<form id="frmUpdateUserRoles" class="fsEdit" method="POST" style="display: none" action="@Url.Action("UpdateUserRoles", "Account")">
+    <span class="legend22" id="lgUpdateUser" style="width: 100%">Update User Information</span>
+    @Html.AntiForgeryToken()
+
+    <table style="width: 100%; border: none">  
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brUpdateRoleError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">User Role(s)</i></div>
+                <div class="col-md-10">
+                    <div id="rolListUpdate">
+                        @{
+                            foreach (var role in Model.Item2)
+                            {
+                                <div style="margin-bottom: 2px; position: relative">
+                                    <input type="checkbox" value="@role.Id" class="rolexis" /><span>@(role.Name.Replace("_", " "))</span>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td >
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btncloseUserRole" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnUpdateUserRole" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Update" />
+                </div>
+            </td>
+        </tr>
+    </table>   
+</form> 
+
+@using (Html.BeginForm("UpdateUserPassword", "Account", FormMethod.Post, new { @class = "fsEdit", @style = "width: 40%; display: none", role = "form", @id = "frmUpdateUserPassword" }))
+{
+    // @Html.AntiForgeryToken()
+    <legend class="legend22"> Change User Account password</legend>
+
+    @Html.ValidationSummary()
+
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brUpdatePassError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">New Password:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtNewPassword" data-valmsg-for="model.Password" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="password" name="model.NewPassword" id="txtNewPassword" class="form-control" />
+                <input type="hidden" id="selz" />
+            </td>
+        </tr> 
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Confirm Password:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtConfirmNewPassword" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="password" id="txtConfirmNewPassword" class="form-control" />
+            </td>
+        </tr> 
+        <tr> 
+            <td>
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btncloseChangePass" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnUpdatePass" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Update" />
+                </div>
+            </td>
+        </tr> 
+    </table>
+}
+
+
+<fieldset id="frmRegisterList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">Manage User Profiles</legend>
+    <label id="brRegisterStatus" style="display: none; visibility: visible">@ViewBag.ErrorCode</label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 20%">
+        <tr>
+            <td style="width: 80%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brRegFeedBack"></div>
+            </td>
+            <td style="width: 20%">
+                <div style="width: 100%">
+                    <input type="button" id="btnNewUser" onclick="prepRegForm()" value="New User" class="btn btnAdd large" style="width: 190px; float: right" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table id ="tblRegList" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 5%; text-align: center">
+                    S/N
+                </th>
+            <th style="width: 25%; text-align: left">
+                User Name
+            </th>
+            <th style="width: 25%; text-align: left">
+                Email
+            </th>
+            <th style="width: 30%; text-align: left">
+                User Roles
+            </th>
+            <th style="width: 15%; text-align: left">
+                Action
+            </th>
+        </tr>
+        @{
+    for (var i = 0; i < Model.Item1.Count(); i++)
+    {
+        var zxz = Model.Item1[i];
+        <tr class="xtcR" style="color: black;" id="tr@(zxz.Id)">
+            <td style="width: 5%; text-align: center" class="xtc">
+                @(i + 1)
+            </td>
+            <td style="width: 30%; text-align: left" id="tdUserName">
+                <a class="edTx" style="text-decoration: none; color: green" title="Manage User Details" id="@(zxz.Id)" onclick="regEdTx(this.id);">@zxz.UserName</a>
+            </td>
+            <td style="width: 25%; text-align: left" id="tdEmail">
+                @zxz.UserInfo.Email
+            </td>
+            <td style="width: 25%; text-align: left" id="tdRoles@(zxz.Id)">
+                @{
+        if (zxz.Roles.Any())
+        {
+            foreach (var m in zxz.Roles)
+            {
+                var ttx = Model.Item2.Find(c => c.Id == m.RoleId);
+                if (ttx != null)
+                {
+                    @(ttx.Name.Replace("_", " ") + "; ")
+                }
+            }
+        }
+                }
+            </td>
+            <td style="width: 15%; text-align: left">
+                <a class="edTx" title="Change Password" id="@(zxz.Id)" onclick="prepPassEdForm(this.id)"><img src="/Images/password.png" alt="Change Password" /></a>&nbsp;&nbsp;<a class="edTx" title="Manage Roles" id="@(zxz.Id)" onclick="userRoleEdTx(this.id);"><img src="/Images/edit.png" alt="Manage Roles" /></a>
+            </td>
+        </tr>
+    }
+}
+    </table>
+    
+</fieldset>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script type="text/javascript">
+
+    $(window).load(function () {
+
+
+    });
+
+
+    function feedBackStatus(x, z) {
+        var dx = parseInt(x);
+
+        if (dx < 1) {
+            $("#brRegFeedBack").text(z);
+            $("#brRegFeedBack").removeClass('success');
+            $("#brRegFeedBack").addClass('error');
+            $("#brRegFeedBack").fadeIn();
+        }
+
+        if (dx > 0) {
+            $("#brRegFeedBack").text(z);
+            $("#brRegFeedBack").removeClass('error');
+            $("#brRegFeedBack").addClass('success');
+            $("#brRegFeedBack").fadeIn();
+        }
+    }
+
+    $(document).ready(function() {
+        toggleValidators('frmRegister');
+        toggleValidators('frmUpdate');
+        toggleValidators('frmUpdateUserPassword');
+
+        $('#btncloseChangePass').on("click", function() {
+            $("#brRegFeedBack").fadeOut();
+            closePopModal($('#frmUpdateUserPassword'));
+            txpudz = '';
+        });
+        $('#btncloseRegister').on("click", function() {
+            $("#brRegFeedBack").fadeOut();
+            closePopModal($('#frmRegister'));
+        });
+
+        $('#btncloseUserInfo').on("click", function() {
+            $("#brRegFeedBack").fadeOut();
+            closePopModal($('#frmUpdate'));
+        });
+
+        $('#btncloseUserRole').on("click", function() {
+            $("#brRegFeedBack").fadeOut();
+            closePopModal($('#frmUpdateUserRoles'));
+        });
+
+        $("#frmRegister").submit(function(e) {
+            $("#brRegFeedBack").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('frmRegister')) {
+                return;
+            }
+
+            //brRegFeedBack txtFirstName txtUserName txtEmail txtPassword txtConfirmPassword
+
+            var rnx = $('#txtFirstName');
+            var rxx = $('#txtLastName');
+            var rxvx = $('#txtEmail');
+            var rdvx = $('#txtPassword');
+            var ruvx = $('#txtUserName');
+
+           if ($('#txtPassword').val().length < 1) {
+                $('#sptxtPassword').fadeIn();
+                return;
+            } else {
+                $('#sptxtPassword').fadeOut();
+            }
+
+            if ($('#txtPassword').val().length < 6) {
+                alert('The Password should be at least six character lenght');
+                return;
+            }
+
+            if ($('#txtConfirmPassword').val().length < 1) {
+                $('#sptxtConfirmPassword').fadeIn();
+                return;
+            } else {
+                $('#sptxtConfirmPassword').fadeOut();
+            }
+
+            if ($('#txtConfirmPassword').trim === $('#txtConfirmPassword').trim) {
+            } else {
+                alert('Password and password confirmation do not match');
+                return;
+            }
+
+            var newUser = {};
+            newUser.Id = rtx;
+
+            newUser['FirstName'] = rnx.val();
+            newUser['Email'] = rxvx.val();
+            newUser['UserName'] = ruvx.val();
+            newUser['LastName'] = rxx.val();
+            newUser['Password'] = rdvx.val();
+            newUser.UserRoles = [];
+            var roleList = $('#rolList input:checked');
+
+
+            if (roleList.length > 0) {
+                for (var i = 0; i < roleList.length; i++) {
+                    newUser.UserRoles.push($(roleList[i]).val());
+                }
+            } else {
+                alert('Please select at least one role');
+                return;
+            }
+
+            if (newUser.UserRoles.length < 1) {
+                alert('Please select at least one role');
+                return;
+            }
+            var sdx = JSON.stringify({ model: newUser });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function(zxz) {
+                    if (zxz.Code < 1) {
+                        $('#brEdError').text(zxz.Error);
+                        $('#brEdError').fadeIn('slow');
+                        return;
+                    }
+
+                    //window.location.href = "http://" + window.location.host + window.location.pathname;
+
+                    refresh(zxz);
+
+                }
+            });
+
+        });
+
+        $("#frmUpdateUserPassword").submit(function(e) {
+            $("#brRegFeedBack").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('frmUpdateUserPassword')) {
+                return;
+            }
+
+            var tsxv = $('#txtNewPassword').val();
+            var frtd = $('#txtConfirmNewPassword').val();
+
+            var userId = txpudz;
+
+            if (userId.length < 1) {
+                alert('Invalid selection');
+                return;
+            }
+
+            if (tsxv.length < 1) {
+                alert('Please provide the new Password');
+                return;
+            }
+            if (tsxv.length < 6) {
+                alert('The Password should be at least six character lenght');
+                return;
+            }
+            if (frtd.length < 1) {
+                alert('Please confirm the Password');
+                return;
+            }
+
+            if (tsxv.length === frtd.length) {
+
+            } else {
+                alert('The Password and password confirmation do not match');
+                return;
+            }
+
+            var manht = {};
+            manht.NewPassword = tsxv;
+            manht.Id = userId;
+
+            var sdx = JSON.stringify({ model: manht });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function(zxz) {
+                    if (zxz.Code < 1) {
+                        $('#brUpdatePassError').text(zxz.Error);
+                        $("#brUpdatePassError").fadeIn();
+                        return;
+                    }
+
+                    feedBackStatus(zxz.Code, zxz.Error);
+                    closePopModal($('#frmUpdateUserPassword'));
+                    txpudz = '';
+                }
+            });
+
+        });
+
+
+        $("#frmUpdateUserRoles").submit(function(e) {
+            $("#brRegFeedBack").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('frmUpdateUserRoles')) {
+                return;
+            }
+
+            var userId = rolId;
+
+            var roleList = $('#rolListUpdate input:checked');
+            var roles = [];
+
+            if (roleList.length > 0) {
+                for (var i = 0; i < roleList.length; i++) {
+                    roles.push($(roleList[i]).val());
+                }
+            } else {
+                alert('Please select at least one role');
+                return;
+            }
+
+            if (roles.length < 1) {
+                alert('Please select at least one role');
+                return;
+            }
+
+            var sdx = JSON.stringify({ selecteUserRoles: roles, userId: userId });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function(zxz) {
+                    if (zxz.Code < 1)
+                    {
+                        $("#brUpdateRoleError").addClass('error');
+                        $('#brUpdateRoleError').text(zxz.Error);
+                        $("#brUpdateRoleError").fadeIn();
+                        return;
+                    }
+
+                    feedBackStatus(zxz.Code, zxz.Error);
+                    //UpdateUserRoles  UserRoles
+
+                    var roleStr = '';
+                    
+                    if (zxz.UserRoles.length > 0)
+                    {
+                        $.each(zxz.UserRoles, function (o, v) 
+                        {
+                            roleStr = roleStr + v.replace("_", " ") + "; ";
+                        });
+
+                        $('#tdRoles' + rolId).html(roleStr);
+                    }
+
+                    closePopModal($('#frmUpdateUserRoles'));
+
+                }
+            });
+            
+        });
+        
+        $("#frmUpdate").submit(function (e) {
+            $("#brRegFeedBack").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('frmUpdate')) {
+                return;
+            }
+
+
+            var rnx = $('#txtUpdateFirstName');
+            var rxx = $('#txtUpdateLastName');
+            var rxvx = $('#txtUpdateEmail');
+            var ruvx = $('#txtUpdateUserName');
+
+            var newUser = {};
+            newUser.Id = rtx;
+
+            newUser['FirstName'] = rnx.val();
+            newUser['Email'] = rxvx.val();
+            newUser['UserName'] = ruvx.val();
+            newUser['LastName'] = rxx.val();
+
+            var sdx = JSON.stringify({ model: newUser });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.Code < 1) {
+                        $("#brUpdaterror").addClass('error');
+                        $('#brUpdaterror').text(zxz.Error);
+                        $("#brUpdaterror").fadeIn();
+                        return;
+                    }
+
+                    updateTable(zxz);
+                }
+            });
+
+        });
+    });
+    var rtx = 0;
+
+    function regEdTx(x) {
+
+        $("#brRegFeedBack").fadeOut();
+        $("#brUpdaterror").hide();
+        var xxid = x.trim().replace(/\s+/, "");
+        if (xxid.length < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/Account/GetUserProfile?userId=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function userRoleEdTx(x)
+    {
+        $("#brRegFeedBack").fadeOut();
+        $("#brUpdateRoleError").hide();
+        var xxid = x.trim().replace(/\s+/, "");
+        if (xxid.length < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rolId = xxid;
+        var url = '/Account/GetUserRoles?userId=' + xxid;
+
+        $.get(url, function (data)
+        {
+            edGetRoles(data);
+        });
+
+    }
+
+    var rolId = '';
+
+    function edGetRoles(data)
+    {
+        if (data.Code < 1) {
+            $("#brUpdaterror").addClass('error');
+            $('#brUpdaterror').text(data.Error);
+            $("#brUpdaterror").fadeIn();
+            return;}
+
+        var txx = $('#rolListUpdate input:checkbox');
+        for (var j = 0; j < txx.length; j++)
+        {
+            $(txx[j]).removeAttr('checked');
+        }
+
+        if (data.length > 0)
+        {
+            for (var i = 0; i < data.length; i++)
+            {
+                var txz = $('#rolListUpdate input:checkbox');
+                for (var t = 0; t < txz.length; t++)
+                {
+                    if ($(txz[t]).val() === data[i])
+                    {
+                        $(txz[t]).prop('checked', true);
+                    }
+                }
+            }
+
+        }
+
+        setModal($('#frmUpdateUserRoles'));
+    }
+
+    function edGet(data) {
+        if (data.Code < 1)
+        {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            $("#brUpdaterror").addClass('error');
+            $('#brUpdaterror').text(data.Error);
+            $("#brUpdaterror").fadeIn();
+            return;
+        }
+
+        refreshForm('frmUpdate', 'Update');
+
+        $('#txtUpdateFirstName').val(data.FirstName);
+        $('#txtUpdateLastName').val(data.LastName);
+        $('#txtUpdateEmail').val(data.Email);
+        $('#txtUpdateUserName').val(data.UserName);
+        setModal($('#frmUpdate'));
+    }
+
+    function prepRegForm() {
+        $('#brEdError').hide();
+        refreshForm('frmRegister', '');
+        $('#txtPassword').val('');
+        $('#txtConfirmPassword').val('');
+        setModal($('#frmRegister'));
+    }
+    
+    function prepPassEdForm(id) {
+        $('#brEdError').hide();
+        var xxid = id.trim().replace(/\s+/, "");
+        if (xxid.length < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        txpudz = xxid;
+        $('#txtNewPassword').val('');
+        $('#txtConfirmNewPassword').val('');
+        setModal($('#frmUpdateUserPassword'));
+    }
+
+    var txpudz = '';
+    
+    function updateTable(r)
+    {
+        feedBackStatus(r.Code, r.Error);
+        
+        $('#' + rtx).html(r.UserName); 
+        $('#tblRegList #tr' + rtx).children('#tdEmail').html(r.Email);
+        
+        closePopModal($('#frmUpdate')); 
+    }
+
+    function refresh(r) {
+        if (r.code < 1) {
+            feedBackStatus(r.Code, r.Error);
+            return;
+        }
+        var bv = $('#tblRegList tr').length - 1;
+        var roles = '';
+        if (r.UserRoles.length > 0) {
+            for (var i = 0; i < r.UserRoles.length; i++) {
+                roles += r.UserRoles[i].replace('_', ' ') + '; ';
+            }
+        }
+
+        //var email = '';
+        //if(r.Email !== null  )
+
+        $("#tblRegList tbody:last").append($(' <tr class="xtcR" style="color: black;">'
+            + ' <td style="width: 5%; text-align: center" class="xtc">'
+            + (bv + 1)
+            + '   </td>'
+            + ' <td style="width: 25%; text-align: left" id="tdUserName">'
+            + '<a class="edTx" style="text-decoration: none; color: green" title="Manage User Details" id="' + r.Id + '" onclick="regEdTx(this.id);">' + r.UserName + '</a>'
+            + ' </td>'
+            + ' <td style="width: 25%; text-align: left" id="tdEmail"> '
+            + r.Email
+            + ' </td>'
+            + ' <td style="width: 30%; text-align: left" id="tdRoles' + r.Id + '">'
+            + roles
+            + '  </td>'
+            + ' <td style="width: 15%; text-align: left">'
+            + '<a class="edTx" title="Change User Password" id="' + r.Id + '" onclick="prepPassEdForm(this.id)" ><img src="/Images/password.png" alt="Change Password" /></a>&nbsp;&nbsp;<a class="edTx" title="Manage Roles" id="' + r.Id + '" onclick="userRoleEdTx(this.id);"><img src="/Images/edit.png" alt="Manage Roles" /></a>'
+            + '</td>'
+            + ' </tr> '));
+
+        
+        //<a class="regDelTx" title="Delete" id="del' + r.Id + '" onclick=" regDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+        //Successfull operation
+        feedBackStatus(r.Code, r.Error);
+        closePopModal($('#frmRegister'));
+    }
+</script>

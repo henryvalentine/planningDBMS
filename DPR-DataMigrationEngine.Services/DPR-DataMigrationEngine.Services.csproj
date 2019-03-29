@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{87A4A128-AD36-4A00-BB1F-5FEC7BA832EA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DPR_DataMigrationEngine.Services</RootNamespace>
+    <AssemblyName>DPR-DataMigrationEngine.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.7.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GenericQueryBuilders\WellGenericQueryBuilder.cs" />
+    <Compile Include="ServiceEnum.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceManager\ProviderServices.cs" />
+    <Compile Include="ServiceManager\Sys_ParamsServices.cs" />
+    <Compile Include="ServiceManager\IncidentQueryBuilderServices.cs" />
+    <Compile Include="ServiceManager\FieldQueryBuilderServices.cs" />
+    <Compile Include="ServiceManager\WellCompletionQueryBuilderServices.cs" />
+    <Compile Include="ServiceManager\WellWorkovererServices.cs" />
+    <Compile Include="ServiceManager\WellWorkoverQueryBuilderServices.cs" />
+    <Compile Include="ServiceManager\ProductionQueryBuilderServices.cs" />
+    <Compile Include="ServiceManager\WellQueryBuilderServices.cs" />
+    <Compile Include="ServiceManager\BlockTypeServices.cs" />
+    <Compile Include="ServiceManager\BlockServices.cs" />
+    <Compile Include="ServiceManager\CompanyServices.cs" />
+    <Compile Include="ServiceManager\EquipmentServices.cs" />
+    <Compile Include="ServiceManager\EquipmentTypeServices.cs" />
+    <Compile Include="ServiceManager\EquipmentUsageHistoryServices.cs" />
+    <Compile Include="ServiceManager\FieldServices.cs" />
+    <Compile Include="ServiceManager\IncidentHistoryServices.cs" />
+    <Compile Include="ServiceManager\SectorServices.cs" />
+    <Compile Include="ServiceManager\ProjectTypeServices.cs" />
+    <Compile Include="ServiceManager\IncidentTypeServices.cs" />
+    <Compile Include="ServiceManager\MilestoneStatuServices.cs" />
+    <Compile Include="ServiceManager\PersonServices.cs" />
+    <Compile Include="ServiceManager\ProductionServices.cs" />
+    <Compile Include="ServiceManager\ProductServices.cs" />
+    <Compile Include="ServiceManager\ProjectMileStoneServices.cs" />
+    <Compile Include="ServiceManager\ProjectRepServices.cs" />
+    <Compile Include="ServiceManager\ProjectServices.cs" />
+    <Compile Include="ServiceManager\TerrainServices.cs" />
+    <Compile Include="ServiceManager\WellClasServices.cs" />
+    <Compile Include="ServiceManager\WellClassificationServices.cs" />
+    <Compile Include="ServiceManager\WellCompletionIntervalServices.cs" />
+    <Compile Include="ServiceManager\WellCompletionServices.cs" />
+    <Compile Include="ServiceManager\WellCompletionTypeServices.cs" />
+    <Compile Include="ServiceManager\WellServices.cs" />
+    <Compile Include="ServiceManager\WellTypeServices.cs" />
+    <Compile Include="ServiceManager\WellWorkOverReasonServices.cs" />
+    <Compile Include="ServiceManager\LeaseTypeServices.cs" />
+    <Compile Include="ServiceManager\ZoneServices.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DPR-DataMigrationEngine.EF\DPR-DataMigrationEngine.EF.csproj">
+      <Project>{2A9CCF12-7D9A-49C3-9FBF-AA0B15B94615}</Project>
+      <Name>DPR-DataMigrationEngine.EF</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\PagedList.css" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

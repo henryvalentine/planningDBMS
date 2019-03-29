@@ -1,0 +1,206 @@
+﻿@using System.Globalization
+@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model DPR_DataMigrationEngine.ViewModels.WellViewModel
+@{
+    ViewBag.Title = "Report";
+}
+<form style="width: 100%" method="POST" id="productionRepoFrm" action="@Url.Action("GetWellReportsByCompany", "Well")">
+    <table style="width: 100%">
+        <tr>
+            <td colspan="3">
+              <label style="font-weight: normal; font-size: 10pt; float: left; width: 100%; ">Retrieve Well Reports by Company:</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 35%">
+                <div style="margin-left: 2%"><i style="width: auto">Company: </i> </div>
+                <select class="form-control" name="companyId" id="ddlWellCompRepo">
+                    @{
+                        var yearExtensions = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "-- Select Company --");
+
+                        foreach (var year in yearExtensions.Select(yearString => Html.Raw(yearString)))
+                        {
+                            @year
+                        }
+                    }
+                </select>
+            </td>
+            <td style="width: 20%">
+                <div>&nbsp;</div>
+                <input type="submit" name="searchDate" class="btn large btnSearch" onclick="return verifyCompletionRepoSearchMonth()" style="width: 130px; border: 1px solid green; float: left" value="Search" />
+            </td>
+            <td style="width: 20%"></td>
+            <td style="padding-right:0; width: 5%">
+                <div>&nbsp;</div><div>&nbsp;</div>
+                <a onclick="tableToExcel('tblStatWellReport', 'Well Report')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" alt="Export to Excel" /></a>
+            </td>
+            <td style="width: 10%">
+                <div>&nbsp;</div><div>&nbsp;</div>
+                <img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer; padding-bottom: 7px" alt="Print Report" title="Print Report" onclick="printWellStatReport()" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+  <div style="width: 100%" id="dvWellStaticRep">
+    <fieldset id="fsWellList" style="background: whitesmoke; width: 100%" class="allcontent">
+        <legend class="customlegend22" id="lgHeader">Well Report</legend>
+        <table id="tblStatWellReport" style="width: 100%" class="fils-border newTable">
+            <tr class="customGridHeader">
+                <th style="width: 5%; text-align: center">
+                    S/N
+                </th>
+                <th style="width: 17%; text-align: left">
+                    Well
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Well Type
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Well Class
+                </th>
+                <th style="width: 15%; text-align: left">
+                    Company
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Field
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Terrain
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Zone
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Total Dept(FT)
+                </th>
+                <th style="width: 15%; text-align: left">
+                    Technical Allowable(FT)
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Spud Date
+                </th>
+            </tr>
+            @{
+                for (var i = 0; i < Model.WellReportObjects.Count(); i++)
+                {
+                    var zxz = Model.WellReportObjects[i];
+                    <tr id="tr@(zxz.WellId)" class="xtcR" style="color: black;">
+                        <td style="width: 5%; text-align: center" class="xtc">
+                            @(i + 1)
+                        </td>
+                        <td style="width: 17%; text-align: left" id="tdName">
+                            @zxz.Name
+                        </td>
+                        <td style="width: 10%; text-align: left" id="tdWellType">
+                            @zxz.WellTypeName
+                        </td>
+                        <td style="width: 10%; text-align: left" id="tdWellType">
+                            @zxz.WellClassName
+                        </td>
+                        <td style="width: 15%; text-align: left" id="tdCompany">
+                            @zxz.CompanyName
+                        </td>
+                        <td style="width: 10%; text-align: left" id="tdWellField">
+                            @zxz.FieldName
+                        </td>
+                        <td style="width: 10%; text-align: left">
+                            @zxz.TerrainName
+                        </td>
+                        <td style="width: 10%; text-align: left">
+                            @zxz.ZoneName 
+                        </td>
+                        <td style="width: 10%; text-align: left" id="tdTotalDept">
+                            @zxz.TotalDept
+                        </td>
+                        <td style="width: 15%; text-align: left" id="tdTechValue">
+                            @zxz.TechnicalAllowable
+                        </td>
+                        <td style="width: 10%; text-align: left">
+                            @zxz.SpudDate
+                        </td>
+                    </tr>
+                }
+            
+            }
+        </table>
+    </fieldset>
+</div>
+
+<img src="/Images/select2-spinner.gif" id="imgWellRepoSpin" class="spinProgress2" />
+
+<script type="text/javascript">
+    function printWellStatReport() {
+        if ($('#tblStatWellReport').html() == null)
+        {
+            alert('Nothing to Print');
+            return;
+        }
+        printReportData('fsWellList');
+    }
+
+    $(".page-button").click(function () {
+        if (!$(this).hasClass('current')) {
+
+            window.location.href = "http://" +
+                window.location.host + window.location.pathname + 
+                '?pageNumber=' + $(this).val() + '&itemsPerPage=' + 50;
+
+        }
+    });
+    
+
+    $(function () {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height() - 180)
+            {
+                var url = '/Well/GetMoreStaticWellReports';
+                $("#imgWellRepoSpin").show();
+                $.ajax({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (zxz) {
+                        if (zxz === null) {
+                            $("#imgWellRepoSpin").hide();
+                        } else {
+                            $.each(zxz, function (i, r)
+                            {
+                                refreshWellRepo2(r);
+                            });
+                            $("#imgWellRepoSpin").hide();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    function refreshWellRepo2(r)
+    {
+
+        var bv = $('#tblStatWellReport tr').length - 1;
+
+        $("#tblStatWellReport tbody:last").append($(
+
+            '<tr ><td style="width: 5%; text-align: left">' + (bv + 1) + '</td>'
+                + '<td style="width: 17%; text-align: left">' + r.Name
+            + '</td><td style="width: 10%; text-align: left">' + r.WellTypeName
+            + '</td>'
+            + '<td style="width: 10%; text-align: left">' + r.WellClassName + '</td>'
+             + '<td style="width: 15%; text-align: left">'
+            + r.CompanyName + '</td>'
+        + '<td style="width: 10%; text-align: left">' + r.FieldName + '</td>'
+            + '<td style="width: 10%; text-align: left">' 
+            + r.TerrainName
+            + '</td><td style="width: 10%; text-align: left">' + r.ZoneName
+            + '</td><td style="width: 10%; text-align: left">' + r.TotalDept + ' </td>'
+          +' <td style="width: 15%; text-align: left" id="tdTechValue">'
+           + r.TechnicalAllowable + ' </td>'
+            + '<td style="width: 10%; text-align: left" >' + r.SpudDate
+                + '</td></tr>'));
+
+    }
+
+</script>

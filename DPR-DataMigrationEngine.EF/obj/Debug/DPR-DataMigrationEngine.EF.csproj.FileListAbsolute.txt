@@ -1,0 +1,30 @@
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\DPR-DataMigrationEngine.EF.dll.config
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\DPR-DataMigrationEngine.EF.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\DPR-DataMigrationEngine.EF.pdb
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\EntityFramework.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\PagedList.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\PagedList.Mvc.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\EntityFramework.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\PagedList.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\PagedList.Mvc.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\obj\Debug\DPR-DataMigrationEngine.EF.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\obj\Debug\DPR-DataMigrationEngine.EF.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\DPR-DataMigrationEngine.EF.dll.config
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\DPR-DataMigrationEngine.EF.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\DPR-DataMigrationEngine.EF.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\CsvHelper.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\EntityFramework.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\PagedList.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\PagedList.Mvc.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\CsvHelper.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\CsvHelper.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\EntityFramework.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\PagedList.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\bin\Debug\PagedList.Mvc.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\obj\Debug\DPR-DataMigrationEngine.EF.csprojResolveAssemblyReference.cache
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\obj\Debug\DPR-DataMigrationEngine.EF.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.EF\obj\Debug\DPR-DataMigrationEngine.EF.pdb

@@ -1,0 +1,434 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model DPR_DataMigrationEngine.ViewModels.ProjectMilestoneViewModel
+<style type="text/css">
+    .ProjectMilestoneSingleEdTx {
+    }
+
+    .projectMilestoneSingleDelTx 
+    {
+    }
+    a#ancClose:link, a#ancClose:visited, a#ancClose:active, a#ancClose:hover
+     {
+        text-decoration: none;
+        background: url(/Images/back.png) 20px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+        cursor: pointer;
+        border: none;
+    }
+</style>
+
+<form action="@Url.Action("AddProjectMilestone", "ProjectMilestone")" id="fsProcessSingleProjectMilestones" class="fsEdit" style="display: none; visibility: visible; width: 45%">
+    <span class="legend22" id="lgEditSingleProjectMilestone" style="width: 100%">Add New Project Milestone</span>
+
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorProjectSingleMilestone"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Project Milestone: </i><span style="color: red">*</span><span id="sptxtSingleProjectMilestoneName" data-valmsg-for="projectMilestone.Title" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <input type="text" name="projectMilestone.Name" id="txtSingleProjectMilestoneName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Parent Milestone: </i><span style="color: red">*</span><span id="spddlSingleParentMilestone" data-valmsg-for="projectMilestone.ParentId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="projectMilestone.ParentId" id="ddlSingleParentMilestone">
+                   
+                </select>
+                <input type="hidden" value="@ViewBag.ProjectId" id="inProj"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Date Due: </i><span style="color: red">*</span><span id="spdtSingleMilestoneDateDue" data-valmsg-for="projectMilestone.DueDate" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <input type="text" class="form-control datepicker" name="projectMilestone.DueDate" id="dtSingleMilestoneDateDue">
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Milestone: </i><span style="color: red">*</span><span id="spddlOrdinarySingleMilestone" data-valmsg-for="projectMilestone.MileStoneStatusId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="projectMilestone.MileStoneStatusId" id="ddlOrdinarySingleMilestone">
+                    @{
+                        <option value="0">-- Select Milestone --</option>
+                        foreach (var projectMilestone in Model.MilestoneStatuses)
+                        {
+                            <option value="@projectMilestone.MilestoneStatusId">@projectMilestone.Name</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div class="formLabel"><i style="width: auto">Project Milestone Description:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtSingleProjectMilestoneDescription" data-valmsg-for="projectMilestone.Description" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <textarea name="projectMilestone.Description" id="txtSingleProjectMilestoneDescription" class="form-control"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessProjectMilestone" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessProjectMilestone" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<table style="width: 100%">
+    <tr>
+        <td style="width: 75%; color: green; font-weight: bold">
+            @ViewBag.Title
+            <input type="hidden" value="@ViewBag.ProjectId" />
+        </td>
+        <td style="width: 15%">
+            <div style="text-align: center; float: left; margin-top: 2%;width: 100%;">
+                <a id="ancClose" style="border: none; float:right; width: 180px" class="btn btnBack large" href="/Project/Projects">Back To Projects</a>
+            </div>
+        </td>
+        <td style="width: 10%">
+            <div style="width: 100%">
+                <input type="button" id="btnAddNewProjectMilestone" onclick="prepareSingleProjectMilestoneTemplate()" value="New Project Milestone" class="btn btnAddP3 large" style="width: 190px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+
+<fieldset id="fsProjectMilestoneList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgSingleHeader">Mange Project's Milestones</legend>
+    <label id="brProjectMilestoneSingleProcess" style="display: none; visibility: visible"></label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 100%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedbackSingleProjectMilestone"></div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblSingleProjectMilestones" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 3%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 30%; text-align: left">
+                Project Milestone
+            </th>
+            <th style="width: 30%; text-align: left">
+                Project Milestone Parent
+            </th>
+            <th style="width: 12%; text-align: left">
+                Date Due
+            </th>
+            <th style="width: 15%; text-align: left">
+                Completion Status
+            </th>
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.ProjectMileStones.Count(); i++)
+            {
+                var zxz = Model.ProjectMileStones[i];
+                <tr id="tr@(zxz.ProjectMileStoneId)" class="xtcR" style="color: black;">
+                    <td style="width: 3%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 30%; text-align: left" id="tdSingleProjectMilestone">
+                       @zxz.Title
+                    </td>
+                    <td style="width: 30%; text-align: left" id="tdSingleMilestone">
+                        @zxz.ParentName
+                    </td>
+                    <td style="width: 12%; text-align: left" id="tdSingleProjectMilestonedDueDate">
+                        @zxz.DateDueString
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdSingleMilestoneCompletion">
+                        @zxz.MileStoneName
+                    </td>
+                    <td style="width: 18%">
+                        <a class="ProjectMilestoneSingleEdTx" title="Edit" id="ed@(zxz.ProjectMileStoneId)" onclick="ProjectMilestoneSingleEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a><a class="projectMilestoneSingleDelTx" title="Delete" id="del@(zxz.ProjectMileStoneId)" onclick="projectMilestoneSingleDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <br />
+    @*@Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))*@
+</fieldset>
+
+<script type="text/javascript">
+
+    $(window).load(function () {
+        var url = '/ProjectMileStone/GetAllProjectMileStones';
+
+        $.get(url, function (retVal) {
+            populateMilestoneDropdown2(retVal);
+        });
+    });
+
+    function populateMilestoneDropdown2(data) {
+        if (data == null || data.length < 1) {
+
+            $('#ddlSingleParentMilestone').html('<option value="0"> -- List is empty -- </option>');
+
+            return;
+        }
+        $('#ddlSingleParentMilestone').empty();
+        $('#ddlSingleParentMilestone').html('<option value="0"> -- Select Parent Project Milestone -- </option>');
+        $.each(data, function (i, v) {
+            if (v.FieldId < 1) {
+                $('#ddlSingleParentMilestone').empty();
+                $('#ddlSingleParentMilestone').html('<option value="0"> -- List is empty -- </option>');
+                return;
+            }
+
+            $('#ddlSingleParentMilestone').append($("<option />").val(v.ProjectMileStoneId).text(v.Title));
+        });
+
+        $('#ddlSingleParentMilestone').prop('selectedIndex', 0);
+    }
+
+
+    function feedBackStatus(x, z) {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3 || dx === -1) {
+            $("#brFeedbackSingleProjectMilestone").text(z);
+            $("#brFeedbackSingleProjectMilestone").removeClass('success');
+            $("#brFeedbackSingleProjectMilestone").addClass('error');
+            $("#brFeedbackSingleProjectMilestone").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedbackSingleProjectMilestone").text(z);
+            $("#brFeedbackSingleProjectMilestone").removeClass('error');
+            $("#brFeedbackSingleProjectMilestone").addClass('success');
+            $("#brFeedbackSingleProjectMilestone").fadeIn();
+        }
+    }
+
+    $(document).ready(function () {
+        toggleValidators('fsProcessSingleProjectMilestones');
+        toggleValidators('frmProcessProjectMilestoneDocs');
+
+        $('#btnCloseProcessProjectMilestone').on("click", function () {
+            $('#brEdErrorProjectSingleMilestone').text('');
+            $('#brEdErrorProjectSingleMilestone').hide();
+            closePopModal($('#fsProcessSingleProjectMilestones'));
+        });
+
+        $("#fsProcessSingleProjectMilestones").submit(function (e) {
+            $("#brFeedbackSingleProjectMilestone").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessSingleProjectMilestones')) {
+                return;
+            }
+
+            var vx = $('#txtSingleProjectMilestoneName');
+            var rnsx = $('#ddlSingleParentMilestone');
+            var rxy = $('#dtSingleMilestoneDateDue');
+            var rnxy = $('#txtSingleProjectMilestoneDescription');
+            var rnx = $('#ddlOrdinarySingleMilestone');
+
+            var newProjectMilestone = {};
+            newProjectMilestone.ProjectMileStoneId = rtx;
+            var projIn = parseInt($('#inProj').val());
+            if (projIn < 1) {
+                alert('A fatal error was encountered. Project Information is empty.');
+                return;
+            }
+            newProjectMilestone.ProjectId = projIn;
+            //ProjectName Title  DateDueString Completion
+
+            newProjectMilestone['Title'] = vx.val();
+            newProjectMilestone['ParentId'] = rnsx.val();
+            newProjectMilestone['DateDue'] = rxy.val();
+            newProjectMilestone['MileStoneStatusId'] = rnx.val();
+            newProjectMilestone['Description'] = rnxy.val();
+
+            newProjectMilestone.ParentName = $("#ddlSingleParentMilestone option:selected").text();
+            newProjectMilestone.MileStoneName = $("#ddlOrdinarySingleMilestone option:selected").text();
+
+            var sdx = JSON.stringify({ projectMilestone: newProjectMilestone });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode === -1 || zxz.ErrorCode === -2 || zxz.ErrorCode === 0 || zxz.ErrorCode === -3) {
+                        $('#brEdErrorProjectSingleMilestone').text(zxz.Error);
+                        $('#brEdErrorProjectSingleMilestone').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProjectMilestoneSingleProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProjectMilestoneSingleProcess').text() === "2") {
+                        updateTable(zxz);
+                    }
+
+                    $('#brEdErrorProjectSingleMilestone').text('');
+                    $('#brEdErrorProjectSingleMilestone').hide();
+                }
+            });
+        });
+    });
+
+
+    var rtx = 0;
+    function ProjectMilestoneSingleEdTx(x) {
+        $("#brFeedbackSingleProjectMilestone").fadeOut();
+        $('#brProjectMilestoneSingleProcess').text('');
+
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/ProjectMilestone/EditProjectMilestone?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessSingleProjectMilestones', 'Update');
+
+        $('#txtSingleProjectMilestoneName').val(data.Title);
+        $('#ddlMilestoneProjects').val(data.ProjectId);
+        $('#ddlSingleParentMilestone').val(data.ParentId);
+        $('#txtSingleProjectMilestoneDescription').val(data.Description);
+        $('#ddlOrdinarySingleMilestone').val(data.MileStoneStatusId);
+
+        rtx = data.ProjectMileStoneId;
+        $('#fsProcessSingleProjectMilestones').attr("action", '/ProjectMileStone/EditProjectprojectMileStone');
+        $('#dtSingleMilestoneDateDue').datetimepicker("setDate", data.DateDueString);
+
+        $('#lgEditSingleProjectMilestone').text('Update Project Milestone Information');
+        $('#brProjectMilestoneSingleProcess').text(2);
+        setModal($('#fsProcessSingleProjectMilestones'));
+    }
+
+    function projectMilestoneSingleDelTx(x) {
+        $("#brFeedbackSingleProjectMilestone").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/ProjectMilestone/DeleteProjectMilestone?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblSingleProjectMilestones #tr' + xxid).remove();
+
+                $('#tblSingleProjectMilestones tr.xtcR').each(function (r) {
+                    $(this).children('.xtc').text(r + 1);
+                });
+                $('#tblSingleProjectMilestones .xtcR:even').addClass('gridItem1');
+            }
+        });
+        return;
+    }
+
+    function prepareSingleProjectMilestoneTemplate() {
+        $('#brEdErrorProjectSingleMilestone').text('');
+        $('#brEdErrorProjectSingleMilestone').hide();
+        refreshForm('fsProcessSingleProjectMilestones', '');
+        $('#fsProcessSingleProjectMilestones').attr("action", "/ProjectMilestone/AddProjectMilestone");
+        $('#brProjectMilestoneSingleProcess').text(1);
+        setModal($('#fsProcessSingleProjectMilestones'));
+    }
+
+    function updateTable(r) {
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorProjectSingleMilestone').text(r.Error);
+            $('#brEdErrorProjectSingleMilestone').fadeIn('slow');
+            return;
+        }
+
+        $('#tblSingleProjectMilestones #tr' + rtx).children('#tdSingleMilestone').html(r.ParentName);
+        $('#tblSingleProjectMilestones #tr' + rtx).children('#tdSingleProjectMilestonedDueDate').html(r.DateDueString);
+        $('#tblSingleProjectMilestones #tr' + rtx).children('#tdSingleMilestoneCompletion').html(r.Completion);
+        $('#tblSingleProjectMilestones #tr' + rtx).children('#tdSingleProjectMilestone').html(r.Title);
+
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProjectMilestoneSingleProcess').text(0);
+        closePopModal($('#fsProcessSingleProjectMilestones'));
+    }
+
+    function refresh(r) {
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorProjectSingleMilestone').text(r.Error);
+            $('#brEdErrorProjectSingleMilestone').fadeIn('slow');
+            return;
+        }
+        var bv = $('#tblSingleProjectMilestones tr').length - 1;
+
+        $("#tblSingleProjectMilestones tbody:last").append($('<tr id="tr' + r.ProjectMileStoneId + '" class="xtcR" style="color: black;">'
+                   + '<td style="width: 3%; text-align: center" class="xtc">'
+                      + (bv + 1)
+                   + ' </td>'
+                   + ' <td style="width: 30%; text-align: left" id="tdSingleProjectMilestone">'
+                   + r.Title
+                   + ' </td>'
+                   + '  <td style="width: 30%; text-align: left" id="tdSingleMilestone">'
+                   + r.ParentName
+                   + ' </td>'
+                   + ' <td style="width: 12%; text-align: left" id="tdSingleProjectMilestonedDueDate">'
+                    + r.DateDueString
+                   + ' </td>'
+                   + ' <td style="width: 15%; text-align: left" id="tdSingleMilestoneCompletion">'
+                   + r.MileStoneName
+                   + ' </td>'
+                   + ' <td style="width: 18%">'
+                    + '<a class="ProjectMilestoneSingleEdTx" title="Edit" id="ed' + r.ProjectMileStoneId + '" onclick="ProjectMilestoneSingleEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a><a class="projectMilestoneSingleDelTx" title="Delete" id="del' + r.ProjectMileStoneId + '" onclick="projectMilestoneSingleDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>'
+                   + ' </td>'
+              + ' </tr>'));
+
+        //Successfull operation
+        $('#brProjectMilestoneSingleProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessSingleProjectMilestones'));
+    }
+    
+</script>
+
+
+
+

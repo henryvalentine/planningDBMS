@@ -1,0 +1,438 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model DPR_DataMigrationEngine.ViewModels.BlockViewModel
+           
+
+
+<style type="text/css">
+    a#btnBulkBlockUpload:link, a#btnBulkBlockUpload:visited, a#btnBulkBlockUpload:active, a#btnBulkBlockUpload:hover {
+        text-decoration: none;
+        background: url(/Images/next.png) 110px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+    }
+</style>
+
+
+
+<form action="@Url.Action("AddBlock", "Block")" id="fsProcessBlocks" class="fsEdit" style="display: none; visibility: visible; width: 40%">
+    <span class="legend22" id="lgEditBlock" style="width: 100%">New Block</span>
+
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div> &nbsp;</div>
+                <div style="margin-left: 5px"><i style="width: auto">Block Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtBlockName" data-valmsg-for="block.Name" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="block.Name" id="txtBlockName" class="form-control" style="margin-left: 2%" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div> &nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Block Type:</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlBlockTypes" data-valmsg-for="block.BlockTypeId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="block.BlockTypeId" id="ddlBlockTypes">
+                    @{
+                        var blockTypes = new ExtensionHelpers().ListOption(Model.BlockTypes, "BlockTypeId", "Name", "-- Select Block Type --");
+
+                        foreach (var blockType in blockTypes.Select(dc => Html.Raw(dc)))
+                        {
+                            @blockType
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Company:</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlCompanies" data-valmsg-for="block.CompanyId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="block.CompanyId" id="ddlCompanies">
+                    @{
+                        var fr = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "-- Select Company --");
+
+                        foreach (var yf in fr.Select(dc => Html.Raw(dc)))
+                        {
+                            @yf
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width:50%">
+                <div style="margin-left: 2%"><i style="width: auto">Area(Kmsq): </i></div>
+                <input type="text" name="block.Area" id="txtArea" class="form-control" style="margin-left: 2%" />
+            </td>
+
+            @*<td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Company:</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlCompanies" data-valmsg-for="block.CompanyId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="block.CompanyId" id="ddlCompanies">
+                    @{
+                    var companies = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "-- Select Company --");
+
+                    foreach (var company in companies.Select(dc => Html.Raw(dc)))
+                    {
+                    @company
+                    }
+                    }
+                </select>
+            </td>*@
+        </tr>
+        
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Lease Type:</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlCompanies" data-valmsg-for="block.CompanyId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="block.CompanyId" id="ddlLeaseTypes">
+                    @{
+                        var fcr = new ExtensionHelpers().ListOption(Model.LeaseTypes, "LeaseTypeId", "Name", "-- Select Lease Type --");
+
+                        foreach (var k in fcr.Select(dc => Html.Raw(dc)))
+                        {
+                            @k
+                        }
+                    }
+                </select> 
+            </td>
+            <td class="form-group" style="width:50%">
+                <div style="margin-left: 2%"><i style="width: auto">Year of Award: </i></div>
+                <input type="text" name="block.YearOfAward" id="txtYearOfAward" class="form-control" style="margin-left: 2%" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessBlock" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessBlock" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+
+<table style="width: 100%">
+    <tr>
+        <td style="width: 85%">
+            <div style="text-align: center; float: right; margin-top: 1%">
+                <a id="btnBulkBlockUpload" class="btn btnNext large" style="width: 140px; float: right" href="/Block/BlockUpload"> Bulk Upload </a>
+            </div>
+        </td>
+        <td style="width: 10%">
+            <div style="width: 100%">
+                <input type="button" id="btnAddNewCompanyBlock" onclick="prepareBlockTemplate()" value="New Block" class="btn btnAdd large" style="width: 190px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+
+<fieldset id="fsBlockList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProcess" style="display: none; visibility: visible"></label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 100%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedback"></div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblBlocks" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 5%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 15%; text-align: left">
+                Block
+            </th>
+            <th style="width: 15%; text-align: left">
+                Block Type
+            </th>
+            <th style="width: 15%; text-align: left">
+                Lease Type
+            </th>
+            <th style="width: 12%; text-align: left">
+                Year Of Award
+            </th>
+            <th style="width: 15%; text-align: left">
+                Company
+            </th>
+            <th style="width: 15%; text-align: left">
+                Area(Kmsq)
+            </th>
+            <th style="width: 13%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Blocks.Count(); i++)
+            {
+                var zxz = Model.Blocks[i];
+                <tr id="tr@(zxz.BlockId)" class="xtcR" style="color: black;">
+                    <td style="width: 5%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdName">
+                        @zxz.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdBlockTypeName">
+                        @zxz.BlockType.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdLeaseType">
+                        @zxz.LeaseType.Name
+                    </td>
+                    <td style="width: 12%; text-align: left" id="tdAwardYear">
+                        @zxz.YearOfAward 
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdCompany">
+                        @zxz.Company.Name
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdArea">
+                        @zxz.Area
+                    </td>
+                   <td style="width: 13%">
+                       <a class="edTx" title="Edit" id="ed@(zxz.BlockId)" onclick="blockEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="delTx" title="Delete" id="del@(zxz.BlockId)" onclick="blockDelTx(this.id)"><img src="~/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>
+
+<script type="text/javascript">
+
+    $(window).load(function ()
+    {
+        //$('#txtYearOfAward').datetimepicker({
+        //    timepicker: false,
+        //    format: 'Y',
+        //    closeOnDateSelect: true
+        //});
+    });
+
+    function feedBackStatus(x, z) {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('success');
+            $("#brFeedback").addClass('error');
+            $("#brFeedback").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('error');
+            $("#brFeedback").addClass('success');
+            $("#brFeedback").fadeIn();
+        }
+    }
+
+    $(document).ready(function () {
+        
+        //$("select").searchable({
+        //     maxListSize: 100,                       // if list size are less than maxListSize, show them all
+        //     maxMultiMatch: 50,                      // how many matching entries should be displayed
+        //    exactMatch: false,                      // Exact matching on search
+        //    wildcards: true,                        // Support for wildcard characters (*, ?)
+        //    ignoreCase: true,                       // Ignore case sensitivity
+        //    latency: 200,                           // how many millis to wait until starting search
+        //    warnMultiMatch: 'top {0} matches ...',  // string to append to a list of entries cut short by maxMultiMatch
+        //    warnNoMatch: 'no matches ...',          // string to show in the list when no entries match
+        //    zIndex: 'auto'                          // zIndex for elements generated by this plugin
+        //});
+
+        toggleValidators('fsProcessBlocks');
+
+        $('#btnCloseProcessBlock').on("click", function ()
+        {
+            $("#brFeedback").fadeOut();
+            closePopModal($('#fsProcessBlocks'));
+        });
+
+        $("#fsProcessBlocks").submit(function (e)
+        {
+            $("#brFeedback").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessBlocks'))
+            {
+                return;
+            }
+            
+            var vx = $('#txtBlockName');
+            var rnx = $('#ddlCompanies');
+            var vxs = $('#ddlBlockTypes');
+            var vxxs = $('#ddlLeaseTypes');
+            var rnxs = $('#txtArea');
+            var rnxxs = $('#txtYearOfAward');
+
+            if (rnxxs.trim().length > 1) {
+                var yrAw = parseInt(vxxs.val());
+                if (yrAw < 1) {
+                    alert('Please provide a valid Year of Award');
+                }
+            }
+
+            var newBlock = {};
+            newBlock.BlockId = rtx;
+            newBlock['Name'] = vx.val();
+            newBlock['CompanyId'] = rnx.val();
+            newBlock['Area'] = rnxs.val();
+            newBlock['BlockTypeId'] = vxs.val();
+            newBlock['YearOfAward'] = rnxxs.val();
+            newBlock['LeaseTypeId'] = vxxs.val();
+
+            newBlock.CompanyName = $("#ddlCompanies option:selected").text();
+            newBlock.BlockTypeName = $("#ddlBlockTypes option:selected").text();
+            newBlock.LeaseTypeName = $("#ddlLeaseTypes option:selected").text();
+  
+            var sdx = JSON.stringify({ block: newBlock });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode === -1 || zxz.ErrorCode === -2 || zxz.ErrorCode === 0 || zxz.ErrorCode === -3) {
+                        $('#brEdError').text(zxz.Error);
+                        $('#brEdError').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProcess').text() === "2") {
+                        updateTable(zxz);
+                    }
+                }
+            });
+        });
+    });
+
+
+    var rtx = 0;
+    function blockEdTx(x) {
+        $('#brProcess').text('');
+        $("#brFeedback").fadeOut();
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/Block/EditBlock?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessBlocks', 'Update');
+        $('#fsProcessBlocks').attr("action", "/Block/EditBlock");
+        $('#txtBlockName').val(data.Name);
+        
+        $('#ddlCompanies').val(data.CompanyId);
+        $('#ddlBlockTypes').val(data.BlockTypeId);
+        
+        $('#ddlLeaseTypes').val(data.LeaseTypeId);
+        $('#txtYearOfAward').val(data.YearOfAward);
+        
+
+        $('#txtArea').val(data.Area);
+        
+        $('#lgEditBlock').text('Update Block');
+        $('#brProcess').text(2);
+        setModal($('#fsProcessBlocks'));
+		
+    }
+
+    function blockDelTx(x) {
+        $("#brFeedback").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/Block/DeleteBlock?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1)
+                {
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblBlocks #tr' + xxid).remove();
+
+                $('#tblBlocks tr.xtcR').each(function (r)
+                {
+                    $(this).children('.xtc').text(r + 1);
+                });
+            }
+        });
+        return;
+    }
+
+    function prepareBlockTemplate()
+    {
+        $('#brEdError').text('');
+        $('#brEdError').hide();
+        refreshForm('fsProcessBlocks', '');
+        $('#fsProcessBlocks').attr("action", "/Block/AddBlock");
+        $('#brProcess').text(1);
+        setModal($('#fsProcessBlocks'));
+    }
+
+    function updateTable(r) {
+        $('#tblBlocks #tr' + rtx).children('#tdName').html(r.Name);
+        $('#tblBlocks #tr' + rtx).children('#tdCompany').html(r.CompanyName);
+        $('#tblBlocks #tr' + rtx).children('#tdBlockTypeName').html(r.BlockTypeName);
+        $('#tblBlocks #tr' + rtx).children('#tdCompanyName').html(r.CompanyName);
+        $('#tblBlocks #tr' + rtx).children('#tdArea').html(r.Area);
+        $('#tblBlocks #tr' + rtx).children('#tdLeaseType').html(r.LeaseTypeName);
+        $('#tblBlocks #tr' + rtx).children('#tdAwardYear').html(r.YearOfAward);
+       
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+        closePopModal($('#fsProcessBlocks'));
+    }
+
+    function refresh(r)
+    {
+        var bv = $('#tblBlocks tr').length - 1;
+
+        var tx = '';
+        if (r.Area === null || r.Area < 1)
+        {
+            tx = ' ';
+        }
+        else
+        {
+            tx = r.Area;
+        }
+        
+        $("#tblBlocks tbody:last").append($('<tr class="xtcR" id="tr' + r.BlockId + '"><td style="width: 5%;text-align: center" class="xtc">' + (bv + 1) + '</td><td style="width: 15%; text-align: left" id="tdName">' + r.Name + '</td><td style="width: 15%; text-align: left" id="tdBlockTypeName">' + r.BlockTypeName + '<td style="width: 15%; text-align: left" id="tdLeaseType">'+ r.LeaseTypeName + '</td><td style="width: 12%; text-align: left" id="tdAwardYear">' + r.YearOfAward + '</td></td><td style="width: 15%; text-align: left" id="tdCompany">' + r.CompanyName + '</td><td style="width: 15%; text-align: left" id="tdArea">' + tx + '</td><td style="width: 13%"><a class="edTx" title="Edit" id="ed' + r.BlockId + '" onclick="blockEdTx(this.id)"><img src="/Images/edit.png" style="cursor: pointer" alt ="Edit"/></a>&nbsp;&nbsp;<a class="delTx" title="Delete" id="del' + r.BlockId + '" onclick="blockDelTx(this.id)"><img src="/Images/delete_opt(1).png" alt="Delete" style=" cursor: pointer"/></a></td></tr>'));
+
+        //Successfull operation
+        $('#brProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessBlocks'));
+    }
+</script>

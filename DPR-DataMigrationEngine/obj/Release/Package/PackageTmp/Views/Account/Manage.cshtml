@@ -1,0 +1,53 @@
+﻿
+
+<label id="pFeedBackStatus" style="display: none">@ViewBag.StatusMessage</label>
+<label style="display: none" id="lblManageFeedBack">@ViewBag.ManageSuccess</label>
+<div class="row">
+    <div class="col-md-12">
+  @{
+     if (ViewBag.HasLocalPassword)
+        {
+            @Html.Partial("_ChangePasswordPartial")
+        }
+        
+         @*else
+        {
+            @Html.Partial("_SetPasswordPartial")
+        }*@
+      }
+  
+
+        @*<section id="externalLogins">
+            @Html.Action("RemoveAccountList")
+            @Html.Partial("_ExternalLoginsListPartial", new { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
+        </section>*@
+    </div>
+</div>
+@section Scripts 
+    {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+    $(window).load(function ()
+    {
+        
+
+        var dx = parseInt($("#lblManageFeedBack").text());
+
+        if (dx === 2) {
+            $("#pFeedBackStatus").removeClass('error');
+            $("#pFeedBackStatus").addClass('success');
+            $("#pFeedBackStatus").fadeIn();
+            //$("#lblManageFeedBack").text('');
+        }
+
+
+        if (dx === -2) {
+            //$("#lblManageFeedBack").text('');
+            $("#pFeedBackStatus").removeClass('success');
+            $("#pFeedBackStatus").addClass('error');
+            $("#pFeedBackStatus").fadeIn();
+        }
+    });
+</script>

@@ -1,0 +1,534 @@
+﻿@using System.Globalization
+@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model DPR_DataMigrationEngine.ViewModels.WellWorkoverViewModel
+<style type="text/css">
+    .wellworkEdTx{}
+    .wellworkDelTx{}
+    .workoverDate{}
+
+    a#btnBulkUpload:link, a#btnBulkUpload:visited, a#btnBulkUpload:active, a#btnBulkUpload:hover {
+        text-decoration: none;
+        background: url(/Images/next.png) 110px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+    }
+</style>
+<form action="@Url.Action("AddWellWorkover", "WellWorkover")" id="fsWellWorkover" class="fsEdit" style="display: none; visibility: visible">
+    <span class="legend22" id="lgEditWellWorkover" style="width: 100%; cursor: move">New Well Workover</span>
+
+    <table style="width: 100%; border: none">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Well: </i><span style="color: red">*</span><span id="spddlWorkOverWells" data-valmsg-for="wellWorkover.WellId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="wellWorkover.WellId" id="ddlWorkOverWells">
+                    @{
+                        var wellExtensions = new ExtensionHelpers().ListOption(Model.WellObjects, "WellId", "Name", "-- Select Well --");
+
+                        foreach (var well in wellExtensions.Select(wellString => Html.Raw(wellString)))
+                        {
+                            @well
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Well Workover Reason: </i><span style="color: red">*</span><span id="spddlWellWorkOverReasons" data-valmsg-for="wellWorkover.WellWorkOverReasonId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="wellWorkover.WellWorkOverReasonId" id="ddlWellWorkOverReasons">
+                    @{
+                        var reasonExtensions = new ExtensionHelpers().ListOption(Model.WellWorkOverReasons, "WellWorkOverReasonId", "Title", "-- Select Well Workover Reason --");
+
+                        foreach (var reason in reasonExtensions.Select(reasonString => Html.Raw(reasonString)))
+                        {
+                            @reason
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Workover Completion Date: </i><span style="color: red">*</span><span id="spworkOverDate" data-valmsg-for="wellWorkover.Year" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <input type="text" name="WorkOverDate" id="workOverDate" class="form-control  datepicker" style="margin-left: 2%; width: 98%" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Equipment: </i><span style="color: red">*</span><span id="spddlEquipments" data-valmsg-for="wellWorkover.EquipmentId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="EquipmentId" id="ddlEquipments">
+                    @{
+                        var equipmentExtensions = new ExtensionHelpers().ListOption(Model.Equipments, "EquipmentId", "Name", "-- Select Equipment --");
+
+                        foreach (var equipment in equipmentExtensions.Select(equipmentString => Html.Raw(equipmentString)))
+                        {
+                            @equipment
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessWellWorkover" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessWellWorkover" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+<table style="width: 100%; border: none">
+    <tr>
+        <td style="width: 80%">
+            <form style="width: 100%" method="POST" id="wellWorkSearch" action="@Url.Action("GetWellWorkoversByMonth", "WellWorkOver")">
+                @*<label style="font-weight: normal; font-size: 10pt; float: left">Retrieve Well Workover by Month:</label>*@
+                <div style="float: left; width: 100%">
+                    <table style="width: 100%">
+                        <tr>
+                            <td class="form-group" style="width: 40%">
+                                @*<div style="margin-left: 2%"><i style="width: auto">Year: </i></div>
+                                <select class="form-control" name="search.Year" id="ddlYearWorkRepo">
+                                    @{
+                                        
+                                        foreach (var year in yearExtensions.Select(yearString => Html.Raw(yearString)))
+                                        {
+                                            @year
+                                        }
+                                    }
+                                </select>*@
+                            </td>
+                            <td class="form-group" style="width: 40%">
+                                @*<div style="margin-left: 2%"><i style="width: auto">Month: </i></div>
+                                <select class="form-control" name="search.MonthStr" id="ddlMonthWorkRepo">
+                                    @{
+                                        foreach (var month in monthExtensions.Select(monthString => Html.Raw(monthString)))
+                                        {
+                                            @month
+                                        }
+                                    }
+                                </select>*@
+
+                            </td>
+                            <td>
+                                <div>&nbsp;</div>
+                                @*<input type="submit" name="searchDate" class="btn large btnSearch" onclick="return verifyworkOverSearchMonth()" style="width: 130px; border: 1px solid green" value="Search" />*@
+                            </td>
+                        </tr>
+                    </table>
+                </div> 
+            </form>
+        </td>
+        <td style="width: 85%">
+            <div style="text-align: center; float: right; margin-top: 1%">
+                <a id="btnBulkUpload" class="btn btnNext large" style="width: 140px; float: right" href="/WellWorkOver/WellWorkoverUpload"> Bulk Upload </a>
+            </div>
+        </td>
+        <td style="width: 10%">
+            @*<div>&nbsp;</div><div>&nbsp;</div><div>&nbsp;</div>*@ 
+            <div style="width: 100%">  
+                <input type="button" id="btnAddWellWorkover" onclick="prepareWellWorkoverTemplate()" value="New Well Workover" class="btn btnAddFX large" style="width: 200px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+<fieldset id="fsWellWorkoverList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brWorkoverProcess" style="display: none; visibility: visible">@ViewBag.ErrorCode</label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 20%">
+        <tr>
+            <td >
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible; margin-top: 5px; margin-bottom: 5px" id="brWorkoverFeedback">@ViewBag.ErrorMessage</div>
+            </td>
+            @*<td style="width: 20%">
+                <div style="width: 100%">
+                    <input type="button" id="btnAddWellWorkover" onclick="prepareWellWorkoverTemplate()" value="New Well Workover" class="btn btnAddFX large" style="width: 200px; float: right" />
+                </div>
+            </td>*@
+        </tr>  
+    </table>
+    <table id="tblWellWorkovers" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 5%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 20%; text-align: left">
+                Well
+            </th>
+            <th style="width: 25%; text-align: left">
+                Workover Reason
+            </th>
+            <th style="width: 20%; text-align: left">
+                Equipment
+            </th>
+            <th style="width: 10%; text-align: left">
+                Year
+            </th>
+            <th style="width: 10%; text-align: left">
+                Month
+            </th>
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.WellWorkOvers.Count(); i++)
+            {
+                var zxz = Model.WellWorkOvers[i];
+                <tr id="tr@(zxz.WellWorkOverId)" class="xtcR" style="color: black;">
+                    <td style="width: 5%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdWellWorkover">
+                        @zxz.WellName
+                    </td>
+                    <td style="width: 25%; text-align: left" id="tdReason">
+                        @zxz.Reason
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdEquipment">
+                        @zxz.EquipmentName
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdYear">
+                        @zxz.Year
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdMonth">
+                        @zxz.MonthStr
+                    </td>
+                    <td style="width: 10%">
+                        <a class="wellworkEdTx" title="Edit" id="ed@(zxz.WellWorkOverId)" onclick="wellworkEdTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="wellworkDelTx" title="Delete" id="del@(zxz.WellWorkOverId)" onclick=" wellworkDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+   
+</fieldset>
+<img src="/Images/select2-spinner.gif" id="imgWorkSpin" class="spinProgress2" />
+
+<script type="text/javascript">
+
+    //$(function () {
+    //    $('#workOverDate').datepicker({
+    //        format: 'yyyy/mm',
+    //        pickTime: false,
+    //        autoclose: true
+    //    }).on('changeDate', function (e) {
+    //        (e.viewMode == 'months') ? $(this).datepicker('hide') : '';
+    //    });
+    //});
+
+    $(window).load(function ()
+    {
+        if (parseInt($('#brWorkoverProcess').text()) < 0)
+        {
+            $("#brWorkoverFeedback").removeClass('success');
+            $("#brWorkoverFeedback").addClass('error');
+            $("#brWorkoverFeedback").fadeIn();
+        }
+        getNormWorkWells();
+
+    }); //workCompFrm
+
+
+ var ttx = 0;
+
+    function getNormWorkWells() {
+        var url = '/WellWorkOver/GetMoreWells';
+
+        if (ttx > 0) {
+            clearTimeout(getNormWorkWells);
+            getNormWorkWells = null;
+        }
+        $.ajax({
+            url: url,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            success: function (zxz) {
+                if (zxz == null || zxz.length < 1) {
+                    ttx = 1;
+                    clearTimeout(getNormWorkWells);
+                    getNormWorkWells = null;
+                }
+                else {
+                    populateWellWorkover(zxz);
+                    setTimeout(getNormWorkWells, 2000);
+                }
+            }
+        });
+    }
+
+    function populateWellWorkover(data) {
+        if (data == null || data.length < 1) {
+            return;
+        }
+
+        $.each(data, function (i, v) {
+            $('#ddlWorkOverWells').append($("<option />").val(v.WellId).text(v.Name));
+        });
+    }
+
+    
+
+    $(function () {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height() - 120) {
+
+                var url = '/WellWorkOver/GetMoreWellWorkOvers';
+                $("#imgWorkSpin").show();
+                $.ajax({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (zxz) {
+                        if (zxz === null) {
+                            $("#imgWorkSpin").hide();
+                        } else {
+                            $.each(zxz, function (i, r) {
+                                refresh2(r);
+                            });
+                            $("#imgWorkSpin").hide();
+                        }
+                    }
+                });
+            }
+        });
+    });
+    
+    $(".page-button").click(function ()
+    {
+        if (!$(this).hasClass('current'))
+        {
+            window.location.href = "http://" +
+                window.location.host + window.location.pathname +
+                '?page=' + $(this).val() + '&pageSize=' + 40;
+        }
+    });
+    function verifyworkOverSearchMonth()
+    {
+       //ddlYearWorkRepoYr ddlMonthWorkRepoMonth spreportDateTitle
+        if (parseInt($('#ddlYearWorkRepoYr').val()) < 1) {
+            alert('Please select a search Year');
+            return false;
+        }
+        return true;
+    }
+    
+    $(document).ready(function () {
+        toggleValidators('workRepoFrm');
+
+    });
+
+    function feedBackStatus(x, z) {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3) {
+            $("#brWorkoverFeedback").text(z);
+            $("#brWorkoverFeedback").removeClass('success');
+            $("#brWorkoverFeedback").addClass('error');
+            $("#brWorkoverFeedback").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brWorkoverFeedback").text(z);
+            $("#brWorkoverFeedback").removeClass('error');
+            $("#brWorkoverFeedback").addClass('success');
+            $("#brWorkoverFeedback").fadeIn();
+        }
+    }
+
+   $(document).ready(function () {
+        toggleValidators('fsWellWorkover');
+        
+        $('#btnCloseProcessWellWorkover').on("click", function ()
+        {
+            $("#brWorkoverFeedback").fadeOut();
+            closePopModal($('#fsWellWorkover'));
+        });
+
+        $("#fsWellWorkover").submit(function (e) {
+            $("#brWorkoverFeedback").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsWellWorkover')) {
+                return;
+            }
+
+            var rnx = $('#ddlWorkOverWells');
+            var rxx = $('#ddlWellWorkOverReasons');
+            var rxvx = $('#ddlEquipments');
+            var rdvx = $('#workOverDate');
+
+            var newWellWorkover = {};
+            newWellWorkover.WellWorkOverId = rtx;
+
+            newWellWorkover['WellId'] = rnx.val();
+            newWellWorkover['EquipmentId'] = rxvx.val();
+            newWellWorkover['WellWorkOverReasonId'] = rxx.val();
+            newWellWorkover['WorkoverDate'] = rdvx.val();
+
+            newWellWorkover.WellName = $("#ddlWorkOverWells option:selected").text();
+            newWellWorkover.Reason = $("#ddlWellWorkOverReasons option:selected").text();
+            newWellWorkover.EquipmentName = $("#ddlEquipments option:selected").text();
+
+            var sdx = JSON.stringify({ wellWorkover: newWellWorkover });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode === -1 || zxz.ErrorCode === -2 || zxz.ErrorCode === 0 || zxz.ErrorCode === -3) {
+                        $('#brEdError').text(zxz.Error);
+                        $('#brEdError').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brWorkoverProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brWorkoverProcess').text() === "2") {
+                        updateTable(zxz);
+                    }
+                }
+            });
+        });
+    });
+
+    var rtx = 0;
+
+    function wellworkEdTx(x) {
+        $('#brWorkoverProcess').text('');
+        $("#brWorkoverFeedback").fadeOut();
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/WellWorkover/EditWellWorkover?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsWellWorkover', 'Update');
+        $('#fsWellWorkover').attr("action", "/WellWorkover/EditWellWorkover");
+
+        $('#ddlWorkOverWells').val(data.WellId);
+        $('#ddlWellWorkOverReasons').val(data.WellWorkOverReasonId);
+        $('#ddlEquipments').val(data.EquipmentId);
+
+        $('#workOverDate').datepicker("setValue", data.WorkoverDatestr);
+
+        $('#lgEditWellWorkover').text('Update Well Workover Reason');
+        $('#brWorkoverProcess').text(2);
+        setModal($('#fsWellWorkover'));
+    }
+
+    function wellworkDelTx(x) {
+        $("#brWorkoverFeedback").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/WellWorkover/DeleteWellWorkover?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    //Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblWellWorkovers #tr' + xxid).remove();
+
+                //$('#tblWellWorkovers tr.xtcR').each(function (r) {
+                //    $(this).children('.xtc').text(r + 1);
+                //});
+            }
+        });
+        return;
+    }
+
+    function prepareWellWorkoverTemplate() {
+        refreshForm('fsWellWorkover', '');
+        $('#fsWellWorkover').attr("action", "/WellWorkover/AddWellWorkover");
+        $('#brWorkoverProcess').text(1);
+        setModal($('#fsWellWorkover'));
+    }
+
+    function updateTable(r) {
+        $('#tblWellWorkovers #tr' + rtx).children('#tdWellWorkover').html(r.WellName);
+        $('#tblWellWorkovers #tr' + rtx).children('#tdReason').html(r.Reason);
+        $('#tblWellWorkovers #tr' + rtx).children('#tdEquipment').html(r.EquipmentName);
+        $('#tblWellWorkovers #tr' + rtx).children('#tdYear').html(r.Year);
+        $('#tblWellWorkovers #tr' + rtx).children('#tdMonth').html(r.MonthStr);
+
+        //$('#tblWellWorkovers .xtcR:even').addClass('gridItem1');
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brWorkoverProcess').text(0);
+        closePopModal($('#fsWellWorkover'));
+    }
+
+    function refresh(r) {
+        var bv = $('#tblWellWorkovers tr').length - 1;
+
+        $("#tblWellWorkovers tbody:last").append($('<tr id="tr' + r.WellWorkOverId + '" class="xtcR" style="color: black;">'
+            + '<td style="width: 5%; text-align: center" class="xtc">'
+            + (bv + 1)
+            + '</td>'
+            +'<td style="width: 20%; text-align: left" id="tdWellWorkover">' + r.WellName
+            + '</td><td style="width: 25%; text-align: left" id="tdReason">' + r.Reason
+            + '</td><td style="width: 20%; text-align: left" id="tdEquipment">' + r.EquipmentName
+            + '<td style="width: 10%; text-align: left" id="tdYear">' + r.Year
+            + '<td style="width: 10%; text-align: left" id="tdMonth">' + r.MonthStr + '</td>'
+            + '</td></td></td><td style="width: 10%"><a class="wellworkEdTx" title="Edit" id="ed' + r.WellWorkOverId + '" onclick="wellworkEdTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;'
+            + '<a class="wellworkDelTx" title="Delete" id="del' + r.WellWorkOverId + '"  onclick=" wellworkDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a></td></tr>'));
+
+        //Successfull operation
+        $('#brWorkoverProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsWellWorkover'));
+    }
+    
+    function refresh2(r) {
+        var bv = $('#tblWellWorkovers tr').length - 1;
+
+        $("#tblWellWorkovers tbody:last").append($('<tr id="tr' + r.WellWorkOverId + '" class="xtcR" style="color: black;">'
+             + '<td style="width: 5%; text-align: center" class="xtc">'
+             + (bv + 1)
+             + '</td>'
+            +'<td style="width: 20%; text-align: left" id="tdWellWorkover">' + r.WellName
+            + '</td><td style="width: 25%; text-align: left" id="tdReason">' + r.Reason
+            + '</td><td style="width: 20%; text-align: left" id="tdEquipment">' + r.EquipmentName
+            + '<td style="width: 10%; text-align: left" id="tdYear">' + r.Year
+            + '<td style="width: 10%; text-align: left" id="tdMonth">' + r.MonthStr + '</td>'
+            + '</td></td></td><td style="width: 10%"><a class="wellworkEdTx" title="Edit" id="ed' + r.WellWorkOverId + '" onclick="wellworkEdTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;'
+            + '<a class="wellworkDelTx" title="Delete" id="del' + r.WellWorkOverId + '"  onclick=" wellworkDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a></td></tr>'));
+        
+    }
+</script>

@@ -1,0 +1,141 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model List<DPR_DataMigrationEngine.EF.Models.WellCompletionType>
+
+
+@{
+    ViewBag.Title = "Well Completion Bulk Upload";
+}
+
+
+<style type="text/css">
+    a#ancClose:link, a#ancClose:visited, a#ancClose:active, a#ancClose:hover
+     {
+        text-decoration: none;
+        background: url(/Images/cancel.png) 80px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+        cursor: pointer;
+        border: none;
+    }
+</style>
+@{
+
+    if (ViewBag.ErrorCode < 0)
+    {
+        var td = @Html.Raw(ViewBag.ErrorMessage);
+        <label style="font-weight: normal; color: black;"> @td </label>
+
+    }
+
+    if (ViewBag.ErrorCode > 0)
+    {
+        var td = @Html.Raw(ViewBag.ErrorMessage);
+        <label style="font-weight: normal; color: green;">@td</label>
+
+    }
+}
+
+
+<table style="width: 65%"> 
+    <tr>
+        <td style="width: 90%">
+            <form class="fsEdit" method="POST" action="@Url.Action("WellCompletionUpload", "WellCompletion")" enctype="multipart/form-data" id="frmWellProcessDocs" style="width: 100%">
+                <span class="legend22" style="width: 100%">Well Completion Bulk Upload</span>
+                @*@Html.AntiForgeryToken()*@
+                @Html.ValidationSummary(true)
+                <table style="width: 100%; background: whitesmoke; border: none;margin-top:0">
+                    <tr>
+                        <td colspan="2">
+                            <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorBulk"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="form-group">
+                            <div>&nbsp;</div>
+                            <br /><i style="width: auto">Select Excel Data File *</i>
+                            <input id="fldDocument" type="file" name="file" style="width: 100%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="form-group" colspan="2">
+                            <div class="formLabel"><i style="width: auto">Well Completion Type *</i></div>
+                           @{
+                               if (!Model.Any())
+                               {
+                                    <select class="form-control" style="width: 100%" name="id" id="ddlBulkCompanies">
+                                      <option value="0">-- List is empty --</option>
+                                    </select>
+                               }
+
+                               else
+                               {
+                                   <select class="form-control" style="width: 100%" name="id" id="ddlBulkCompanies">
+                                       <option value="0">-- Select Well Completion Type --</option>
+                                       @foreach(var m in Model)
+                                       {
+                                         <option value="@m.WellCompletionTypeId">@m.Type</option>
+                                       };
+                                   </select>
+                               }
+}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div>&nbsp;</div>
+                            <div style="width: 100%;">
+                                <div style="text-align: center; float: right; margin-top: 1%">
+                                    <a id="ancClose" style="border: none; float:right; width: 110px" class="btn btnClose large" href="/WellCompletion/WellCompletions"> Close</a> &nbsp; &nbsp; &nbsp;
+                                </div>
+                                <input type="submit" id="btnProcessBulkUpload" class="btn btnUpload large" style=" border: none; float: right; width: 110px" value="Upload" onclick="return valIdateTemplatewx();" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width:10%; padding-right: 8px; vertical-align: top; text-align: center">
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <div style="text-align: center; float: right">
+                            <a title="Download Single Completion Bulk Upload Template" style="cursor: pointer; text-decoration: none" href="@("/Company/DownloadContentFromFolder?path=" + "~/BulkTemplate/SingleIntervalWellCompletionTemplate.xlsx")" id="dnBulkTemplate"><img src="/Images/downloadExcel.png" alt="download Single Completion Bulk Upload Template" style="width: 40px; height: 40px" />Single Completion</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="text-align: center; margin-top: 20%">
+                            <a title="Download  Dual Completion Bulk Upload Template" style="cursor:pointer; text-decoration: none" href="@("/Company/DownloadContentFromFolder?path=" + "~/BulkTemplate/DualIntervalWellCompletionTemplate.xlsx")" id="dnBulkTemplate"><img src="/Images/downloadExcel.png" alt="download Dual Completion Bulk Upload Template" style="width: 40px; height: 40px" />Dual Completion</a>
+                        </div>
+                    </td> 
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">   
+
+    function valIdateTemplatewx()
+    {
+        if ($('#fldDocument').val().trim().length < 1)
+        {
+            alert("Please Select an Excel file to upload!");
+            $('#fldDocument').val('');
+            return false;
+        }
+
+        var ttdc = parseInt($('#ddlBulkCompanies').val());
+        if (ttdc < 1)
+        {
+            alert("Please Select a Well Completion Type!");
+            return false;
+        }
+        
+        return true;
+    }
+   
+</script>
+

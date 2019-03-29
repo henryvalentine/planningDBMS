@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "Activity Dashboard";
+}
+
+<style type="text/css">
+    ul a {
+        text-decoration: none;
+    }
+</style>
+
+<div style="width:100%">
+    <div style="position: relative; width: 30%; float: left;">
+        @{
+            if (Roles.IsUserInRole("Data_Entry"))
+            {
+                <div style="position: relative; top: 10px; width: 100%;">
+                    <fieldset style="width: 100%; border: 1px solid whitesmoke">
+                        <legend class="dashHeader">Data Entry</legend>
+                        <ul style="width: 100%; margin-top: 1%" class="dashDiv">
+                            <li style="width: 100%">@Html.ActionLink("Production", "Productions", "Production")</li>
+                            <li style="width: 100%">@Html.ActionLink("Well Workovers", "WellWorkovers", "WellWorkOver")</li>
+                            <li style="width: 100%">@Html.ActionLink("Well Completion", "WellCompletions", "WellCompletion")</li>
+                            <li style="width: 100%">@Html.ActionLink("Projects", "Projects", "Project")</li>
+                            <li style="width: 100%">@Html.ActionLink("Incidents", "Incidents", "Incident")</li>
+                        </ul>
+                    </fieldset>
+                </div>
+            }
+        }
+    </div>
+    <div style=" width: 30%;top:10px; position: relative; float: left; margin-left: 5%">
+        <fieldset style="width: 100%; border: 1px solid whitesmoke;">
+            <legend class="dashHeader">Reports</legend>
+            <ul style="margin-top:1%;" class="dashDiv">
+                <li>@Html.ActionLink("General Reports", "GeneralReports", "Home")</li>
+                <li>@Html.ActionLink("Report Builders", "ReportBuilders", "Home")</li>
+            </ul>
+        </fieldset>
+    </div>
+</div>
+<br />
+
+<div style="width:100%; margin-top:13%">
+    <div style="width: 30%; float: left;">
+
+        @{
+            if (Roles.IsUserInRole("Admin"))
+            {
+                <fieldset style="width: 100%; border: 1px solid whitesmoke;">
+                    <legend class="dashHeader">Administration</legend>
+                    <ul style="width: 100%; margin-top: 1%" class="dashDiv">
+                        <li class="usfirst">@Html.ActionLink("Users", "ManageUserProfiles", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Companies", "Companies", "Company")</li>
+                        <li>@Html.ActionLink("Fields", "Fields", "Field")</li>
+                        <li>@Html.ActionLink("Wells", "Wells", "Well")</li>
+                        <li>@Html.ActionLink("Blocks", "Blocks", "Block")</li>
+                        <li>@Html.ActionLink("Equipments", "Equipments", "Equipment")</li>
+                    </ul>
+                </fieldset>
+
+            }
+        }
+
+    </div>
+    <div style=" width: 30%;position: relative; float: left; margin-left: 5%">
+
+        @{
+            if (Roles.IsUserInRole("Admin"))
+            {
+                <fieldset style="width: 100%; border: 1px solid whitesmoke;">
+                    <legend class="dashHeader"> Settings</legend>
+                    <ul style="margin-top: 1%;" class="dashDiv">
+                        <li>@Html.ActionLink("Project Types", "ProjectTypes", "ProjectType")</li>
+                        <li>@Html.ActionLink("Equipment Types", "EquipmentTypes", "EquipmentType")</li>
+                        <li>@Html.ActionLink("Well Workover Reason", "WellWorkOverReasons", "WellWorkOverReason")</li>
+                        <li>@Html.ActionLink("Well Classes", "WellClasses", "WellClass")</li>
+                        <li>@Html.ActionLink("Well Classifications", "WellClassifications", "WellClassification")</li>
+                        <li>@Html.ActionLink("Well Type", "WellTypes", "WellType")</li>
+                        <li>@Html.ActionLink("Well Completion Types", "WellCompletionTypes", "WellCompletionType")</li>
+                        <li>@Html.ActionLink("Terrains", "Terrains", "Terrain")</li>
+                        <li>@Html.ActionLink("Zones", "Zones", "Zone")</li>
+                        <li>@Html.ActionLink("Sectors", "Sectors", "Sector")</li>
+                        <li>@Html.ActionLink("Products", "Products", "Product")</li>
+                        <li>@Html.ActionLink("Incident Types", "IncidentTypes", "IncidentType")</li>
+                    </ul>
+                </fieldset>
+            }
+        }
+    </div>
+</div>
+
+@{
+    if (Roles.IsUserInRole("Super_Admin"))
+    {
+        <br />
+        @Html.ActionLink("Milestone Statuses", "MilestoneStatus", "MilestoneStatus")
+        <br />
+    }
+
+}
+
+
+
+
+

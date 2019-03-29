@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QueryBuilderModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="QueryBuilderEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="FieldQueries" EntityType="QueryBuilderModel.FieldQuery" />
+    <EntitySet Name="ProductionQueries" EntityType="QueryBuilderModel.ProductionQuery" />
+    <EntitySet Name="WellCompletionQueries" EntityType="QueryBuilderModel.WellCompletionQuery" />
+    <EntitySet Name="WellWorkoverQueries" EntityType="QueryBuilderModel.WellWorkoverQuery" />
+    <EntitySet Name="WellQueries" EntityType="QueryBuilderModel.WellQuery" />
+    <EntitySet Name="IncidentQueries" EntityType="QueryBuilderModel.IncidentQuery" />
+  </EntityContainer>
+  <EntityType Name="FieldQuery">
+    <Key>
+      <PropertyRef Name="FieldQueryId" />
+    </Key>
+    <Property Name="FieldQueryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TerrainId" Type="Int32" />
+    <Property Name="ZoneId" Type="Int32" />
+    <Property Name="CompanyId" Type="Int32" />
+    <Property Name="FieldQueryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BlockId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ProductionQuery">
+    <Key>
+      <PropertyRef Name="ProductionQueryId" />
+    </Key>
+    <Property Name="ProductionQueryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="TerrainId" Type="Int32" />
+    <Property Name="ZoneId" Type="Int32" />
+    <Property Name="FieldId" Type="Int32" />
+    <Property Name="BlockId" Type="Int32" />
+    <Property Name="ProductionQueryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="WellCompletionQuery">
+    <Key>
+      <PropertyRef Name="WellCompletionQueryId" />
+    </Key>
+    <Property Name="WellCompletionQueryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int32" />
+    <Property Name="WellId" Type="Int32" />
+    <Property Name="WellTypeId" Type="Int32" />
+    <Property Name="TerrainId" Type="Int32" />
+    <Property Name="ZoneId" Type="Int32" />
+    <Property Name="CompletionTypeId" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="EquipmentId" Type="Int32" />
+    <Property Name="WellCompletionQueryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WellClassId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="WellWorkoverQuery">
+    <Key>
+      <PropertyRef Name="WellWorkoverQueryId" />
+    </Key>
+    <Property Name="WellWorkoverQueryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int64" />
+    <Property Name="TerrainId" Type="Int32" />
+    <Property Name="ZoneId" Type="Int32" />
+    <Property Name="WorkoverReasonId" Type="Int32" />
+    <Property Name="EquipmentId" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="WellId" Type="Int32" />
+    <Property Name="WellWorkoverQueryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WellClassId" Type="Int32" />
+    <Property Name="WellTypeId" Type="Int32" />
+  </EntityType>
+  <EntityType Name="WellQuery">
+    <Key>
+      <PropertyRef Name="WellQueryId" />
+    </Key>
+    <Property Name="WellQueryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WellTypeId" Type="Int32" />
+    <Property Name="CompanyId" Type="Int32" />
+    <Property Name="FieldId" Type="Int32" />
+    <Property Name="WellClassId" Type="Int32" Nullable="false" />
+    <Property Name="TerrainId" Type="Int32" />
+    <Property Name="ZoneId" Type="Int32" />
+    <Property Name="WellQueryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="BlockId" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="IncidentQuery">
+    <Key>
+      <PropertyRef Name="IncidentQueryId" />
+    </Key>
+    <Property Name="IncidentQueryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IncidentTypeId" Type="Int32" />
+    <Property Name="CompanyId" Type="Int64" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="IncidentQueryName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

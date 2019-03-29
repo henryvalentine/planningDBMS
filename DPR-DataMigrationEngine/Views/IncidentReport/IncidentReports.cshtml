@@ -1,0 +1,91 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model Tuple<List<DPR_DataMigrationEngine.GenericHelpers.DocObject>, List<DPR_DataMigrationEngine.GenericHelpers.DocObject>>
+
+<table style="width: 100%">
+    <tr>
+        <td colspan="2">
+            <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedbackIncidentReport"></div>
+        </td>
+    </tr>
+    <tr>
+        @*<td class="form-group" style="width: 40%">
+            <div style="margin-left: 2%"><i style="width: auto">Year: </i> </div>
+            <select class="form-control" name="search.Year" id="ddlYearCompRepo">
+                @{
+                    var yearExtensions = new ExtensionHelpers().ListOption(Model.Item2, "DocId", "DocName", "-- Select Year --");
+
+                    foreach (var year in yearExtensions.Select(yearString => Html.Raw(yearString)))
+                    {
+                        @year
+                    }
+                }
+            </select>
+        </td>
+        <td class="form-group" style="width: 40%">
+            <div style="margin-left: 2%"><i style="width: auto">Month: </i> </div>
+            <select class="form-control" name="search.Month" id="ddlMonthCompRepo">
+                @{
+                    var monthExtensions = new ExtensionHelpers().ListOption(Model.Item1, "DocId", "DocName", "-- Select Month --");
+
+                    foreach (var month in monthExtensions.Select(monthString => Html.Raw(monthString)))
+                    {
+                        @month
+                    }
+                }
+            </select>
+
+        </td>*@
+        <td style="padding-right:0; width: 90%">
+            <div style="text-align: center; float: right">
+                <input type="button" id="btnGetIncidentReports" onclick=" prepIncidentRepFiledsTemplate()" class="btn btnGetRepFields large" style="width: 190px; float: right; text-decoration: none" value="Select Query Criteria" />
+            </div>
+        </td>
+        <td style="padding-right:0;width: 10%">
+            <img src="/Images/printer-24_opt.png" style="float: right; cursor: pointer" title="Print Report" onclick="printIncidentReport()" />
+        </td>
+    </tr>
+</table>
+
+<form class="fsEdit xxc" style="display: none; visibility: visible; max-height: 60% " id="dvSelectIncidentReportFields">
+
+    <legend class="legend22" style="width: 100%">Select Query Criteria</legend>
+    <div style="width: 96%; margin: 2%; overflow-y: scroll">
+        <table style="width: 98%; background: transparent; border: none; margin: 2px; margin: 1%">
+            <tr>
+                <td class="form-group">
+                    <br /><i style="width: auto; font-size: 11pt">Incident Report Fields</i>
+                    <div>&nbsp;</div>
+                    <ul id="ulIncidentReports" style="width: 100%; height: auto "></ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div>&nbsp;</div>
+                    <div style="width: 100%; margin-left: 0">
+                        <input type="button" id="btnCloseIncidentRepField" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" onclick="closeIncidentRepFields()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <input type="button" id="btnProcessIncidentRepField" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Generate Rport" onclick="generateIncidentReports();" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
+
+<div style="width: 100%" id="dvIncidentRep">
+    <fieldset id="fsIncidentReport" style="background: whitesmoke; width: 100%" class="allcontent">
+        <legend class="customlegend22" id="lgHeader">Incident Report Builder</legend>
+
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+    function printIncidentReport() {
+        if ($('#tbIncidentReports').html() == null)
+        {
+            alert('Nothing to Print');
+            return;
+        }
+        printReportData('dvIncidentRep');
+    }
+</script>
+

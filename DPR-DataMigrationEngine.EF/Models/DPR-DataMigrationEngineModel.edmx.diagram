@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c6afb9afdff84e4d965923761f6821db" Name="Diagram1" ZoomLevel="100">
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.BlockType" Width="1.5" PointX="0.75" PointY="5.25" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Company" Width="2" PointX="0.5" PointY="7.125" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Equipment" Width="1.5" PointX="9.125" PointY="4.375" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.EquipmentType" Width="1.5" PointX="6.625" PointY="0.75" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.EquipmentUsageHistory" Width="2.125" PointX="8.875" PointY="15.75" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Field" Width="2" PointX="4.375" PointY="9.125" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.IncidentType" Width="1.5" PointX="0.875" PointY="14.75" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.LeaseType" Width="1.5" PointX="0.625" PointY="3" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.MilestoneStatu" Width="1.5" PointX="3.125" PointY="17.375" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Person" Width="1.5" PointX="3.125" PointY="14.375" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Product" Width="1.5" PointX="6.25" PointY="2.5" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.ProjectMileStone" Width="1.75" PointX="5" PointY="15.25" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.ProjectRep" Width="1.5" PointX="5.125" PointY="13" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.ProjectType" Width="1.5" PointX="2.375" PointY="3.5" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Sector" Width="1.5" PointX="0.875" PointY="17" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Sys_Param" Width="1.75" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Terrain" Width="1.5" PointX="4.875" PointY="4.375" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.WellClass" Width="1.875" PointX="9" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.WellClassification" Width="1.5" PointX="8.875" PointY="11" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.WellCompletion" Width="1.875" PointX="6.625" PointY="4.375" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.WellCompletionInterval" Width="2.125" PointX="9" PointY="13.25" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.WellCompletionType" Width="1.875" PointX="9" PointY="7.25" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.WellType" Width="1.5" PointX="7" PointY="16.625" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.WellWorkover" Width="2" PointX="6.625" PointY="8.25" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.WellWorkOverReason" Width="2" PointX="8.25" PointY="2.25" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Zone" Width="1.5" PointX="4.875" PointY="6.625" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Company" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Field_Company" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Person_Company" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Equipment_EquipmentType" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Equipment" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellCompletion_Equipment" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellWorker_Equipment" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_WellCompletion" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Field_Terrain" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Field_Zone" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_ProjectMileStone_MilestoneStatus" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_ProjectRep_Person" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_ProjectMileStone_ProjectMileStone" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellClassification_WellClass" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellCompletion_WellCompletionType" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellCompletionInterval_WellCompletion" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellWorker_WellWorkOverReason" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Production" Width="1.5" PointX="4.5" PointY="0.75" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Project" Width="1.5" PointX="2.75" PointY="9.125" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Project_Company" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Production_Field" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Production_Product" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Project_ProjectType" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Project_Sector" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Project_Terrain" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_ProjectMileStone_Project" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_ProjectRep_Project" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Well" Width="1.75" PointX="6.875" PointY="12.625" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Well" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Well_Field" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Well_WellType" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellClassification_Well" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellCompletion_Well" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_WellWorker_Well" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.IncidentHistory" Width="1.5" PointX="0.875" PointY="10.875" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_IncidentHistory_Company" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_IncidentHistory_IncidentType" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Block" Width="1.5" PointX="2.875" PointY="5.5" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Block_BlockType" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Block_Company" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Block_LeaseType" />
+        <AssociationConnector Association="DataMigrationEngineDBModel.FK_Field_Block" />
+        <EntityTypeShape EntityType="DataMigrationEngineDBModel.Provider" Width="1.5" PointX="2.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

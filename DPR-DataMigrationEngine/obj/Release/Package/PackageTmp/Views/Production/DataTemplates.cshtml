@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Data Templates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table style="width: 50%">
+    <tr>
+        <td colspan="4">
+            <span class="legend2x" style="width: 100%">Bulk Upload Templates - Data Admin </span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"><div>&nbsp;</div></td>
+    </tr>
+    <tr>
+        <td style="width:10%; padding-right: 8px; vertical-align: top; text-align: center">
+            <label class="control-label" style="font-weight: normal; font-size: 9pt">Production Template</label>
+            <div style="text-align: center; margin-top: 20%">
+                <a title="Download Production Bulk Upload Template" style="cursor:pointer" href="@("/Production/DownloadContentFromFolder?path=" + "~/BulkTemplate/ProductionTemplate.xlsx")"><img src="/Images/downloadExcel.png" alt="download Bulk Upload Template" style="width: 40px; height: 40px" /></a>
+            </div>
+        </td>
+        <td style="width:25%; padding-right: 8px; vertical-align: top; text-align: center">
+            <label class="control-label" style="font-weight: normal; font-size: 9pt">Well Workover Template</label>
+            <div style="text-align: center; margin-top: 20%">
+                <a title="Download Bulk Upload Template" id="dnTx" style="cursor:pointer" href="@("/WellWorkOver/DownloadContentFromFolder?path=" + "~/BulkTemplate/WellWorkOverTemplate.xlsx")"><img src="/Images/downloadExcel.png" alt="download Bulk Upload Template" style="width: 40px; height: 40px" /></a>
+            </div>
+        </td>
+        <td style="width:25%; padding-right: 8px; vertical-align: top; text-align: center">
+            <label class="control-label" style="font-weight: normal; font-size: 9pt">Well Completion Template</label>
+            <table style="width: 100%">
+                <tr>
+                    <td>
+                        <div style="text-align: center; float: right">
+                            <a title="Download Single Completion Bulk Upload Template" style="cursor: pointer; text-decoration: none" href="@("/Company/DownloadContentFromFolder?path=" + "~/BulkTemplate/SingleIntervalWellCompletionTemplate.xlsx")" id="dnBulkTemplate"><img src="/Images/downloadExcel.png" alt="download Single Completion Bulk Upload Template" style="width: 40px; height: 40px" />Single Completion</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="text-align: center; margin-top: 20%">
+                            <a title="Download  Dual Completion Bulk Upload Template" style="cursor:pointer; text-decoration: none" href="@("/Company/DownloadContentFromFolder?path=" + "~/BulkTemplate/DualIntervalWellCompletionTemplate.xlsx")" id="dnBulkTemplate"><img src="/Images/downloadExcel.png" alt="download Dual Completion Bulk Upload Template" style="width: 40px; height: 40px" />Dual Completion</a>
+                        </div>
+                    </td>
+                </tr>
+            </table>>
+        </td>
+        <td style="width:25%; padding-right: 8px; vertical-align: top; text-align: center">
+            <label class="control-label" style="font-weight: normal; font-size: 9pt">Well Template</label>
+            <div style="text-align: center; margin-top: 20%">
+                <a title="Download Well Bulk Upload Template" style="cursor:pointer" href="@("/Well/DownloadContentFromFolder?path=" + "~/BulkTemplate/WellTemplate.xlsx")"><img src="/Images/downloadExcel.png" alt="download Bulk Upload Template" style="width: 40px; height: 40px" /></a>
+            </div>
+        </td>
+    </tr>
+</table>
+

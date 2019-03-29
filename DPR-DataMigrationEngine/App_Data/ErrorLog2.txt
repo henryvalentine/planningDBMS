@@ -1,0 +1,75 @@
+Exception Date :: 22/08/2014 01:12:10 PM
+Exception Stack Trace ::    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at DPR_DataMigrationEngine.BulkUploadManagerManager.IncidentUploadManager.Import(String filePath, String sheetName, List`1& mList, String& msg) in c:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\BulkUploadManagerManager\IncidentUploadManager.cs:line 79
+Exception Source :: System.Data
+Exception Message :: Column 'Title' does not belong to table Table.
+
+
+Exception Date :: 22/08/2014 01:25:20 PM
+Exception Stack Trace ::    at System.Data.DataRow.GetDataColumn(String columnName)
+   at System.Data.DataRow.get_Item(String columnName)
+   at DPR_DataMigrationEngine.BulkUploadManagerManager.IncidentUploadManager.Import(String filePath, String sheetName, List`1& mList, String& msg) in c:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\BulkUploadManagerManager\IncidentUploadManager.cs:line 79
+Exception Source :: System.Data
+Exception Message :: Column 'Title' does not belong to table Table.
+
+
+Exception Date :: 25/09/2014 05:56:05 PM
+Exception Stack Trace ::    at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonTextReader.ReadInternal()
+   at Newtonsoft.Json.JsonTextReader.Read()
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.ReadForType(JsonReader reader, JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonSerializer.Deserialize(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   at DPR_DataMigrationEngine.Controllers.AccountController.<Login>d__a.MoveNext() in c:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\Controllers\AccountController.cs:line 116
+Exception Source :: Newtonsoft.Json
+Exception Message :: Unexpected character encountered while parsing value: <. Path '', line 0, position 0.
+
+
+Exception Date :: 25/09/2014 06:44:54 PM
+Exception Stack Trace ::    at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at DPR_DataMigrationEngine.Controllers.AccountController.<Login>d__a.MoveNext() in c:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\Controllers\AccountController.cs:line 114
+Exception Source :: System.Net.Http
+Exception Message :: Response status code does not indicate success: 404 (Not Found).
+
+
+Exception Date :: 25/09/2014 06:52:25 PM
+Exception Stack Trace ::    at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at DPR_DataMigrationEngine.Controllers.AccountController.<Login>d__a.MoveNext() in c:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\Controllers\AccountController.cs:line 115
+Exception Source :: System.Net.Http
+Exception Message :: Response status code does not indicate success: 404 (Not Found).
+
+
+Exception Date :: 25/09/2014 07:12:28 PM
+Exception Stack Trace ::    at System.Net.Http.HttpResponseMessage.EnsureSuccessStatusCode()
+   at DPR_DataMigrationEngine.Controllers.AccountController.<Login>d__a.MoveNext() in c:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\Controllers\AccountController.cs:line 115
+Exception Source :: System.Net.Http
+Exception Message :: Response status code does not indicate success: 404 (Not Found).
+
+
+Exception Date :: 28/09/2014 10:46:59 PM
+Exception Stack Trace ::    at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonTextReader.ReadInternal()
+   at Newtonsoft.Json.JsonTextReader.Read()
+   at Newtonsoft.Json.Linq.JObject.Load(JsonReader reader)
+   at Newtonsoft.Json.Linq.JObject.Parse(String json)
+   at DPR_DataMigrationEngine.Controllers.AccountController.<GetAppChoice>d__1c.MoveNext() in c:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\Controllers\AccountController.cs:line 199
+Exception Source :: Newtonsoft.Json
+Exception Message :: Unexpected character encountered while parsing value: <. Path '', line 0, position 0.
+
+
+Exception Date :: 28/09/2014 10:49:44 PM
+Exception Stack Trace ::    at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonTextReader.ReadInternal()
+   at Newtonsoft.Json.JsonTextReader.Read()
+   at Newtonsoft.Json.Linq.JObject.Load(JsonReader reader)
+   at Newtonsoft.Json.Linq.JObject.Parse(String json)
+   at DPR_DataMigrationEngine.Controllers.AccountController.<GetAppChoice>d__1c.MoveNext() in c:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine\Controllers\AccountController.cs:line 199
+Exception Source :: Newtonsoft.Json
+Exception Message :: Unexpected character encountered while parsing value: <. Path '', line 0, position 0.
+
+

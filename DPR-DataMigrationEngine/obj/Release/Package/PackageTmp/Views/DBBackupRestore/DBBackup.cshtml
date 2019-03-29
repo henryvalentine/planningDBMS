@@ -1,0 +1,69 @@
+﻿@model DPR_DataMigrationEngine.EF.Models.Sys_Param
+
+<h3>Database Settings</h3><br/>
+
+<form style="width: 40%" action="/DBBackupRestore/AddParam" method="POST" class="form-horizontal" role="form" id="frm_Sta">
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @{
+        if (ViewBag.Code < 0)
+        {
+            <label style="font-weight: normal; color: #C52D29;">@ViewBag.StatusMessage</label>
+        }
+
+        if (ViewBag.Code > 0)
+        {
+            <label style="font-weight: normal; color: green">@ViewBag.StatusMessage</label>
+        }
+    }
+    <input type="hidden" id="vw_Sta" value="@ViewBag.LoadStatus" />
+    <div class="form-group">
+        <label class="col-md-2 control-label">Server Name</label>
+        <div class="col-md-10">
+            <input type="text" value="@Model.ServerName" class="form-control" name="plParam.ServerName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Database Name</label>
+        <div class="col-md-10">
+            <input type="text" value="@Model.DBName" class="form-control" name="plParam.DBName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Server Login Name</label>
+        <div class="col-md-10">
+            <input type="text" value="@Model.ServerLoginName" class="form-control" name="plParam.ServerLoginName" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Server Login Password</label>
+        <div class="col-md-10">
+            <input type="password" value="@Model.ServerLoginPassword" class="form-control" name="plParam.ServerLoginPassword" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" style="float: right; width: 25%" class="btn btnNextZX large" value="Submit" />
+        </div>
+    </div>
+</form>
+
+
+
+<script type="text/javascript">
+    $(window).load(function ()
+    {
+        var txx = parseInt($('#vw_Sta').val());
+        if (txx < 1)
+        {
+            $('#frm_Sta').attr('action', '/DBBackupRestore/AddParam');
+        }
+        
+        if (txx > 0)
+        {
+            $('#frm_Sta').attr('action', '/DBBackupRestore/EditParam');
+        }
+    });
+</script>

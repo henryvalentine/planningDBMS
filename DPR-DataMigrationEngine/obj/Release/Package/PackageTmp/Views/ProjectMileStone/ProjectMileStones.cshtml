@@ -1,0 +1,669 @@
+﻿@using System.Globalization
+@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model DPR_DataMigrationEngine.ViewModels.ProjectMilestoneViewModel
+<style type="text/css">
+    .ProjectMilestoneEdTx {
+    }
+
+    .projectMilestoneDelTx 
+    {
+    }
+</style>
+<form action="@Url.Action("AddProjectMilestone", "ProjectMilestone")" id="fsProcessProjectMilestones" class="fsEdit" style="display: none; visibility: visible; width: 45%">
+    <span class="legend22" id="lgEditProjectMilestone" style="width: 100%">Add New Project Milestone</span>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorProjectMilestone"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Project Milestone: </i><span style="color: red">*</span><span id="sptxtProjectMilestoneName" data-valmsg-for="projectMilestone.Name" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <input type="text" name="projectMilestone.Name" id="txtProjectMilestoneName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Parent Milestone: </i>@*<span style="color: red">*</span><span id="spddlParentMilestone" data-valmsg-for="projectMilestone.CompanyId" style="color: red" data-valmsg-replace="true">Invalid Selection</span>*@ </div>
+                <select class="form-control" name="projectMilestone.ParentId" id="ddlParentMilestone">
+                    
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+               <div class="formLabel"><i style="width: auto">Project: </i><span style="color: red">*</span><span id="spddlMilestoneProjects" data-valmsg-for="projectMilestone.ProjectId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="projectMilestone.ProjectId" id="ddlMilestoneProjects">
+                    @{
+                        var projectMilestoneTypeExtensions = new ExtensionHelpers().ListOption(Model.Projects, "ProjectId", "Name", "-- Select Project --");
+
+                        foreach (var projectMilestoneType in projectMilestoneTypeExtensions.Select(projectMilestoneTypeString => Html.Raw(projectMilestoneTypeString)))
+                        {
+                            @projectMilestoneType
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Date Due: </i>@*<span style="color: red">*</span><span id="spddlProjectMilestoneSector" data-valmsg-for="projectMilestone.SectorId" style="color: red" data-valmsg-replace="true">Invalid Selection</span>*@ </div>
+                <input type="text" class="form-control datetimepicker" name="projectMilestone.DueDate" id="dtDateDue">
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" colspan="2">
+                
+                <div class="formLabel"><i style="width: auto">Milestone: </i><span style="color: red">*</span><span id="spddlOrdinaryMilestone" data-valmsg-for="projectMilestone.MileStoneStatusId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="projectMilestone.MileStoneStatusId" id="ddlOrdinaryMilestone">
+                    @{
+                        var mileStoness = new ExtensionHelpers().ListOption(Model.MilestoneStatuses, "MilestoneStatusId", "Name", "-- Select Milestone --");
+
+                        foreach (var projectMilestoneType in mileStoness.Select(projectMilestoneTypeString => Html.Raw(projectMilestoneTypeString)))
+                        {
+                            @projectMilestoneType
+                        }
+                    }
+                </select>
+            </td>
+            @*<td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Completion Status: </i><span style="color: red">*</span><span id="spddlProjectMilestoneCompletionStatus" data-valmsg-for="projectMilestone.CompletionStatus" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="projectMilestone.CompletionStatus" id="ddlProjectMilestoneCompletionStatus">
+                    @{
+                        var completionStatuses = new ExtensionHelpers().ListOption(Model.CompletionStatuses, "DocId", "DocName", "-- Select completion Status --");
+
+                        foreach (var completionStatus in completionStatuses.Select(completionStatusString => Html.Raw(completionStatusString)))
+                        {
+                            @completionStatus
+                        }
+                    }
+                </select>
+            </td>*@
+        </tr>
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div class="formLabel"><i style="width: auto">Project Milestone Description:</i>@*<span style="color: red">*</span><span class="field-validation-valid" id="sptxtProjectMilestoneDescription" data-valmsg-for="projectMilestone.Description" style="color: red" data-valmsg-replace="true">Required</span>*@</div>
+                <textarea name="projectMilestone.Description" id="txtProjectMilestoneDescription" class="form-control"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessProjectMilestone" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessProjectMilestone" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+<form class="fsEdit" style="display: none; visibility: visible" method="POST" action="@Url.Action("SaveToFolder", "ProjectMilestone")" enctype="multipart/form-data" id="frmProcessProjectMilestoneDocs">
+    <span class="legend22" style="width: 100%">Bulk Upload</span>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; background: whitesmoke; border: none;margin-top:0">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorProjectMilestoneBulk"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Project: </i><span style="color: red">*</span><span id="spddlMilestoneProjects" data-valmsg-for="projectMilestone.ProjectId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="projectMilestone.ProjectId" id="ddlMilestoneProjects">
+                    @{
+
+                        foreach (var project in projectMilestoneTypeExtensions.Select(projectString => Html.Raw(projectString)))
+                        {
+                            @project
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Milestone Status: </i><span style="color: red">*</span><span id="spddlBulkMilestone" data-valmsg-for="projectMilestone.MileStoneStatusId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="projectMilestone.MileStoneStatusId" id="ddlBulkMilestone">
+                    @{
+                        foreach (var projectMilestoneStatus in mileStoness.Select(projectMilestoneStatusString => Html.Raw(projectMilestoneStatusString)))
+                        {
+                            @projectMilestoneStatus
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="form-group">
+                <br /><i style="width: auto" class="formLabel">Select Excel Data File</i><span id="spfdProjectMilestoneTemplate" style="color: #FF0000; display: none">*Invalid file format</span>
+                <input id="fdProjectMilestoneTemplate" type="file" name="file" style="width: 98%; margin-left: 1%" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseBulkProjectMilestone" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessBulkProjectMilestone" class="btn btnUpload large" style=" border: none; float: right; width: 110px" value="Upload" onclick="return valIdateProjectMilestoneTemplate();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="width:80%; padding-right: 8px; vertical-align: top">
+            <div style="text-align: center; float: right">
+                <a title="Download Bulk Upload Template" style="cursor:pointer" href="@("/ProjectMilestone/DownloadContentFromFolder?path=" + "~/BulkTemplate/ProjectMilestoneTemplate.xlsx")"><img src="/Images/downloadExcel.png" alt="download Bulk Upload Template" style="width: 40px; height: 40px" /></a>
+            </div>
+        </td>
+        <td style="width: 10%; padding-right: 8px; vertical-align: top">
+            <div style="text-align: center; float: right">
+                <input type="button" id="btnPrepProjectMilestoneBulk" onclick="prepareBulkUploadTemplate()" value="Bulk Upload" class="btn btnNext large" style="width: 140px; float: left" />
+            </div>
+        </td>
+        <td style="width: 10%">
+            <div style="width: 100%">
+                <input type="button" id="btnAddNewProjectMilestone" onclick="prepareProjectMilestoneTemplate()" value="Single Entry" class="btn btnAddP3 large" style="width: 160px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+
+<fieldset id="fsProjectMilestoneList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">Manage Project Milestones</legend>
+    <label id="brProjectMilestoneProcess" style="display: none; visibility: visible">@ViewBag.ErrorCode</label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 100%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedbackProjectMilestone">@ViewBag.ErrorMessage</div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblProjectMilestones" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 3%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 20%; text-align: left">
+                Project
+            </th>
+            <th style="width: 20%; text-align: left">
+                Project Milestone
+            </th>
+            <th style="width: 20%; text-align: left">
+                Project Milestone Parent
+            </th>
+            <th style="width: 12%; text-align: left">
+                Date Due
+            </th>
+            <th style="width: 15%; text-align: left">
+                Completion Status
+            </th>
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.ProjectMileStones.Count(); i++)
+            {
+                var zxz = Model.ProjectMileStones[i];
+                <tr id="tr@(zxz.ProjectMileStoneId)" class="xtcR" style="color: black;">
+                    <td style="width: 3%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdMilestoneProject">
+                        @zxz.ProjectName
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdProjectMilestone">
+
+                        @zxz.Title
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdMilestone">
+                        @zxz.ParentName
+                    </td>
+                    <td style="width: 12%; text-align: left" id="tdProjectMilestonedDueDate">
+                        @zxz.DateDueString
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdMilestoneCompletion">
+                        @zxz.MileStoneName
+                    </td>
+                    <td style="width: 18%">
+                        <a class="ProjectMilestoneEdTx" title="Edit" id="ed@(zxz.ProjectMileStoneId)" onclick="ProjectMilestoneEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a><a class="projectMilestoneDelTx" title="Delete" id="del@(zxz.ProjectMileStoneId)" onclick="projectMilestoneDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <div class="nav-container">
+
+        @*<div style="width: 20%; float: left; position: relative">
+                <table style="width: 100%">
+                    <tr>
+                        <td >
+                            Items per page: <label style="font-weight: normal">50</label>
+                        </td>
+                        @*<td style="width: 30%">
+
+                            @{
+
+                                if (int.Parse(ViewBag.DataCount) < 1)
+                                {
+
+                                    <select class="form-control" name="pageSize" id="ddlLimit" style="height: 28px" disabled="disabled">
+                                        <option value="0">"-- Project list is empty --"</option>
+                                    </select>
+                                    <label id="lblpageSize" style="display: none">@ViewBag.Page</label>
+                                }
+                                else
+                                {
+                                    var pageSizeList = new List<DocObject>
+                                        {
+                                            new DocObject{DocId = 10, DocName = "10"},new DocObject{DocId = 20, DocName = "20"}, new DocObject{DocId = 50, DocName = "50"} , new DocObject{DocId = 100, DocName = "100"}
+                                        };
+                                    <select class="form-control" name="pageSize" id="ddlLimit" style="height: 28px">
+                                        @{
+
+                                    foreach (var size in pageSizeList)
+                                    {
+                                        <option value="@size.DocId">@size.DocName</option>
+                                    }
+
+
+                                        }
+                                    </select>
+                                }
+                            }
+                        </td>
+                    </tr>
+                </table>
+            </div>*@
+
+        @{
+
+            var numPages = ViewBag.TotalPages;
+            var currentPage = ViewBag.Page;
+            if (currentPage > 1)
+            {
+                <button value="@(currentPage-1)" class="page-button">Prev</button>
+            }
+            for (int i = 1; i <= numPages; i++)
+            {
+
+                <button value="@i" class="page-button @if (currentPage == i)
+                                                      {
+                                                          <text>current</text>
+                                                      }">
+                    @i.ToString(CultureInfo.InvariantCulture)
+                </button>
+            }
+            if (currentPage < numPages)
+            {
+
+                <button value="@(currentPage+1)" class="page-button">Next</button>
+            }
+        }
+
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+
+    $(window).load(function ()
+    {
+        var url = '/ProjectMileStone/GetAllProjectMileStones';
+
+        $.get(url, function (retVal) {
+            populateMilestoneDropdown(retVal);
+        });
+        
+        var dx = parseInt($('#brProjectMilestoneProcess').text());
+
+        if (dx === 0 || dx === 2 || dx === -3 || dx === -1) {
+            $("#brFeedbackProjectMilestone").removeClass('success');
+            $("#brFeedbackProjectMilestone").addClass('error');
+            $("#brFeedbackProjectMilestone").fadeIn();
+        }
+
+        if (dx > 0) {
+            $("#brFeedbackProjectMilestone").removeClass('error');
+            $("#brFeedbackProjectMilestone").addClass('success');
+            $("#brFeedbackProjectMilestone").fadeIn();
+        }
+    });
+    
+    $(".page-button").click(function () {
+        if (!$(this).hasClass('current')) {
+            window.location.href = "http://" +
+                window.location.host + window.location.pathname +
+                '?page=' + $(this).val() + '&pageSize=' + 40;
+        }
+    });
+    
+    function populateMilestoneDropdown(data) {
+        if (data == null || data.length < 1) {
+            
+            $('#ddlParentMilestone').html('<option value="0"> -- List is empty -- </option>');
+           
+            return;
+        }
+        $('#ddlParentMilestone').empty();
+        $('#ddlParentMilestone').html('<option value="0"> -- Select Parent Project Milestone -- </option>');
+        $.each(data, function (i, v) {
+            if (v.FieldId < 1) {
+                $('#ddlParentMilestone').empty();
+                $('#ddlParentMilestone').html('<option value="0"> -- List is empty -- </option>');
+                return;
+            }
+
+            $('#ddlParentMilestone').append($("<option />").val(v.ProjectMileStoneId).text(v.Title));
+        });
+
+        $('#ddlParentMilestone').prop('selectedIndex', 0);
+    }
+
+    function feedBackStatus(x, z)
+    {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3 || dx === -1) {
+            $("#brFeedbackProjectMilestone").text(z);
+            $("#brFeedbackProjectMilestone").removeClass('success');
+            $("#brFeedbackProjectMilestone").addClass('error');
+            $("#brFeedbackProjectMilestone").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedbackProjectMilestone").text(z);
+            $("#brFeedbackProjectMilestone").removeClass('error');
+            $("#brFeedbackProjectMilestone").addClass('success');
+            $("#brFeedbackProjectMilestone").fadeIn();
+        }
+    }
+
+    $(document).ready(function () {
+        toggleValidators('fsProcessProjectMilestones');
+        toggleValidators('frmProcessProjectMilestoneDocs');
+
+        $('#btnCloseProcessProjectMilestone').on("click", function () {
+            $('#brEdErrorProjectMilestone').text('');
+            $('#brEdErrorProjectMilestone').hide();
+            closePopModal($('#fsProcessProjectMilestones'));
+        });
+
+        $("#fsProcessProjectMilestones").submit(function (e)
+        {
+            $("#brFeedbackProjectMilestone").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessProjectMilestones'))
+            {
+                return;
+            }
+
+            var vx = $('#txtProjectMilestoneName');
+            var vxx = $('#ddlMilestoneProjects');
+            var rnsx = $('#ddlParentMilestone');
+            var rxy = $('#dtDateDue');
+            var rnxy = $('#txtProjectMilestoneDescription');
+            var rnx = $('#ddlOrdinaryMilestone');
+
+            var newProjectMilestone = {};
+            newProjectMilestone.ProjectMileStoneId = rtx;
+
+            //ProjectName Title  DateDueString Completion
+
+            newProjectMilestone['Title'] = vx.val();
+            newProjectMilestone['ProjectId'] = vxx.val();
+            newProjectMilestone['ParentId'] = rnsx.val();
+            newProjectMilestone['DateDue'] = rxy.val();
+            newProjectMilestone['MileStoneStatusId'] = rnx.val();
+            newProjectMilestone['Description'] = rnxy.val();
+            
+
+            newProjectMilestone.MileStoneName = $("#ddlOrdinaryMilestone option:selected").text();
+            newProjectMilestone.ParentName = $("#ddlParentMilestone option:selected").text();
+            newProjectMilestone.ProjectName = $("#ddlMilestoneProjects option:selected").text();
+
+            var sdx = JSON.stringify({ projectMilestone: newProjectMilestone });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode === -1 || zxz.ErrorCode === -2 || zxz.ErrorCode === 0 || zxz.ErrorCode === -3) {
+                        $('#brEdErrorProjectMilestone').text(zxz.Error);
+                        $('#brEdErrorProjectMilestone').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProjectMilestoneProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProjectMilestoneProcess').text() === "2") {
+                        updateTable(zxz);
+                    }
+
+                    $('#brEdErrorProjectMilestone').text('');
+                    $('#brEdErrorProjectMilestone').hide();
+                }
+            });
+        });
+    });
+
+
+    var rtx = 0;
+    function ProjectMilestoneEdTx(x) {
+        $("#brFeedbackProjectMilestone").fadeOut();
+        $('#brProjectMilestoneProcess').text('');
+
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/ProjectMilestone/EditProjectMilestone?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessProjectMilestones', 'Update');
+        $('#fsProcessProjectMilestones').attr("action", '/ProjectMileStone/EditProjectprojectMileStone');
+        $('#txtProjectMilestoneName').val(data.Title);
+        $('#ddlMilestoneProjects').val(data.ProjectId);
+        $('#ddlParentMilestone').val(data.ParentId);
+        $('#txtProjectMilestoneDescription').val(data.Description);
+        $('#ddlOrdinaryMilestone').val(data.MileStoneStatusId);
+
+        rtx = data.ProjectMileStoneId;
+        
+        $('#dtDateDue').datetimepicker("setDate", data.DateDueString);
+     
+       $('#lgEditProjectMilestone').text('Update Project Milestone Information');
+        $('#brProjectMilestoneProcess').text(2);
+        setModal($('#fsProcessProjectMilestones'));
+    }
+
+    function projectMilestoneDelTx(x) {
+        $("#brFeedbackProjectMilestone").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/ProjectMilestone/DeleteProjectMilestone?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblProjectMilestones #tr' + xxid).remove();
+
+                $('#tblProjectMilestones tr.xtcR').each(function (r) {
+                    $(this).children('.xtc').text(r + 1);
+                });
+            }
+        });
+        return;
+    }
+
+    function prepareProjectMilestoneTemplate() {
+        $('#brEdErrorProjectMilestone').text('');
+        $('#brEdErrorProjectMilestone').hide();
+        refreshForm('fsProcessProjectMilestones', '');
+        $('#fsProcessProjectMilestones').attr("action", "/ProjectMilestone/AddProjectMilestone");
+        $('#brProjectMilestoneProcess').text(1);
+        setModal($('#fsProcessProjectMilestones'));
+    }
+
+    function updateTable(r) {
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorProjectMilestone').text(r.Error);
+            $('#brEdErrorProjectMilestone').fadeIn('slow');
+            return;
+        }
+
+        $('#tblProjectMilestones #tr' + rtx).children('#tdMilestoneProject').html(r.ProjectName);
+        $('#tblProjectMilestones #tr' + rtx).children('#tdMilestone').html(r.ParentName);
+        $('#tblProjectMilestones #tr' + rtx).children('#tdProjectMilestonedDueDate').html(r.DateDueString);
+        $('#tblProjectMilestones #tr' + rtx).children('#tdMilestoneCompletion').html(r.Completion);
+        $('#tblProjectMilestones #tr' + rtx).children('#tdProjectMilestone').html(r.Title);
+
+       
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProjectMilestoneProcess').text(0);
+        closePopModal($('#fsProcessProjectMilestones'));
+    }
+
+    function refresh(r)
+    {
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3)
+        {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorProjectMilestone').text(r.Error);
+            $('#brEdErrorProjectMilestone').fadeIn('slow');
+            return;
+        }
+        var bv = $('#tblProjectMilestones tr').length - 1;
+
+        $("#tblProjectMilestones tbody:last").append($('<tr id="tr' + r.ProjectMileStoneId + '" class="xtcR" style="color: black;">'
+                   + '<td style="width: 3%; text-align: center" class="xtc">'
+                      + (bv + 1)
+                   + ' </td>'
+                   + '<td style="width: 20%; text-align: left" id="tdMilestoneProject">'
+                     +   r.ProjectName
+                   + ' </td>'
+                   + ' <td style="width: 20%; text-align: left" id="tdProjectMilestone">'
+                   +     r.Title
+                   + ' </td>'
+                   + '  <td style="width: 20%; text-align: left" id="tdMilestone">'
+                   +   r.ParentName
+                   + ' </td>'
+                   + ' <td style="width: 12%; text-align: left" id="tdProjectMilestonedDueDate">'
+                    +    r.DateDueString
+                   + ' </td>'
+                   + ' <td style="width: 15%; text-align: left" id="tdMilestoneCompletion">'
+                   +    r.Completion
+                   + ' </td>'
+                   + ' <td style="width: 18%">'
+                    + '<a class="ProjectMilestoneEdTx" title="Edit" id="ed' + r.ProjectMileStoneId + '" onclick="ProjectMilestoneEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a><a class="projectMilestoneDelTx" title="Delete" id="del' + r.ProjectMileStoneId + '" onclick="projectMilestoneDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>'
+                   + ' </td>'
+              + ' </tr>'));
+
+        //Successfull operation
+        $('#brProjectMilestoneProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessProjectMilestones'));
+    }
+
+
+    function valIdateProjectMilestoneTemplate() {
+        if ($('#fdProjectMilestoneTemplate').val().trim().length < 1)
+        {
+            alert("Please Select an Excel file to upload!");
+            $('#fdProjectMilestoneTemplate').val('');
+            return false;
+        }
+
+        if (!validateTemplate('frmProcessProjectMilestoneDocs')) {
+            $('#brEdErrorProjectMilestoneBulk').text('Validation failed. Please check the input fileds and try again')
+                .fadeIn();
+            return false;
+        }
+        return true;
+        // $('#btnProcessBulkUpload').unbind('click').click();
+    }
+
+    $('#btnCloseBulkProjectMilestone').on("click", function () {
+        closePopModal($('#frmProcessProjectMilestoneDocs'));
+    });
+
+    function prepareBulkUploadTemplate() {
+        //refreshForm('frmProcessProjectMilestoneDocs', '');
+        setModal($('#frmProcessProjectMilestoneDocs'));
+    }
+
+    function downloadFile(d) {
+        if (d.length < 1) {
+            alert('Invalid Selection!');
+            return;
+        }
+        $.get(d);
+    }
+
+    $('#fdProjectMilestoneTemplate').on('change', validateProjectMilestoneBulk);
+
+    function validateProjectMilestoneBulk(z) {
+        var content = $('#fdProjectMilestoneTemplate');
+        var input = z.target.files;
+
+        if (input.length > 0) {
+            var extension = content.val().split('.').pop();
+            // str.substring(str.lastIndexOf('~'));
+            var cdg = $('#fdProjectMilestoneTemplate');
+            if (extension === 'xlsx' || extension === 'xls') {
+                $('#spfdProjectMilestoneTemplate').fadeOut();
+            }
+            else {
+                $('#spfdProjectMilestoneTemplate').fadeIn();
+                cdg.val('');
+            }
+            return;
+        }
+        else {
+            alert("Please select an Excel file to upload!");
+        }
+    }
+</script>
+
+
+
+

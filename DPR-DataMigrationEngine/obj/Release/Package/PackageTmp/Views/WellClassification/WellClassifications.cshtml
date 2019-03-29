@@ -1,0 +1,342 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model Tuple<List<DPR_DataMigrationEngine.EF.Models.WellClass>, List<DPR_DataMigrationEngine.EF.CustomizedModels.WellObject>,  List<DPR_DataMigrationEngine.EF.Models.WellClassification>>
+  
+<form action="@Url.Action("AddWellClassification", "WellClassification")" id="fsProcessWellClassification" class="fsEdit" style="display: none; visibility: visible">
+    <span class="legend22" id="lgEditWellClassification" style="width: 100%">Add New Well Class</span>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorWellClassification"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group">
+                <div style="margin-left: 2%"><i style="width: auto">Well:</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlWell" data-valmsg-for="wellClassification.WellId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" style="height: 34px" name="wellClassification.WellId" id="ddlWell">
+                    @{
+                        var wellExtensions = new ExtensionHelpers().ListOption(Model.Item2, "WellId", "Name", "-- Select Well --");
+
+                        foreach (var wellExtension in wellExtensions.Select(wellExtensionStr => Html.Raw(wellExtensionStr)))
+                        {
+                            @wellExtension
+                        }
+
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group">
+                <div style="margin-left: 2%"><i style="width: auto">Well Class</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlWellClass" data-valmsg-for="wellClassification.WellClassId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" style="height: 34px" name="wellClassification.WellClassId" id="ddlWellClass">
+                    @{
+                        var wellClassExtensions = new ExtensionHelpers().ListOption(Model.Item1, "WellClassId", "Name", "-- Select Well Class --");
+
+                        foreach (var wellClass in wellClassExtensions.Select(wellClassStr => Html.Raw(wellClassStr)))
+                        {
+                            @wellClass
+                        } 
+
+                    }
+                </select>
+            </td>
+        </tr>        
+        <tr>
+            <td>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessWellClassification" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessWellClassification" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<fieldset id="fsWellClassificationList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProcess" style="display: none; visibility: visible"></label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 80%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedbackWellClassification"></div>
+            </td>
+            <td style="width: 20%">
+                <div style="width: 100%">
+                    <input type="button" id="btnAddNewCompanyWellClassification" onclick="prepareWellClassificationTemplate()" value="New Well Classification" class="btn btnAddWC large" style="width: 200px; float: right" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblWellClassification" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 5%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 45%; text-align: left">
+                Well 
+            </th>
+            <th style="width: 40%; text-align: left">
+                Well Class
+            </th>
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Item3.Count(); i++)
+            {
+                var zxz = Model.Item3[i];
+                <tr id="tr@(zxz.WellClassificationId)" class="xtcR" style="color: black;">
+                    <td style="width: 5%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 45%; text-align: left" id="tdWellName">
+                        @zxz.WellName
+                    </td>
+                    <td style="width: 40%; text-align: left" id="tdWellClass">
+                        @zxz.WellClassName
+                    </td>
+                    <td style="width: 10%">
+                        <a class="classifEdTx" title="Edit" id="ed@(zxz.WellClassificationId)" onclick="classifEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="wellClassDelTx" title="Delete" id="del@(zxz.WellClassificationId)" onclick="wellClassDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>
+
+<script type="text/javascript">
+
+    $(window).load(function () {
+       
+        getClassWells();
+
+    });
+    
+
+
+    function getClassWells() {
+        var url = '/WellClassification/GetMoreWells';
+        $.ajax({
+            url: url,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            type: 'POST',
+            success: function (zxz) {
+                if (zxz.length < 1) {
+                    clearTimeout(getClassWells());
+                    return;
+                }
+                else {
+                    populateWellClassWell(zxz);
+                    setTimeout(getClassWells(), 2000);
+                }
+            }
+        });
+
+    }
+
+
+    function populateWellClassWell(data) {
+        if (data == null || data.length < 1) {
+            return;
+        }
+
+        $.each(data, function (i, v) {
+            $('#ddlWell').append($("<option />").val(v.WellId).text(v.Name));
+        });
+    }
+    function feedBackStatus(x, z) {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3) {
+            $("#brFeedbackWellClassification").text(z);
+            $("#brFeedbackWellClassification").removeClass('success');
+            $("#brFeedbackWellClassification").addClass('error');
+            $("#brFeedbackWellClassification").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedbackWellClassification").text(z);
+            $("#brFeedbackWellClassification").removeClass('error');
+            $("#brFeedbackWellClassification").addClass('success');
+            $("#brFeedbackWellClassification").fadeIn();
+        }
+    }
+
+    $(document).ready(function () {
+        toggleValidators('fsProcessWellClassification');
+        
+        $('#btnCloseProcessWellClassification').on("click", function () {
+            $("#brFeedbackWellClassification").fadeOut();
+            closePopModal($('#fsProcessWellClassification'));
+            $('#brEdErrorWellClassification').text('');
+            $('#brEdErrorWellClassification').hide();
+        });
+
+        $("#fsProcessWellClassification").submit(function (e) {
+            $("#brFeedbackWellClassification").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessWellClassification')) {
+                return;
+            }
+
+            var vx = $('#ddlWell');
+            var rnx = $('#ddlWellClass');
+
+            var newWellClassification = {};
+            newWellClassification.WellClassificationId = rtx;
+
+            newWellClassification['WellId'] = vx.val();
+            newWellClassification['WellClassId'] = rnx.val();
+            newWellClassification.WellName = $("#ddlWell option:selected").text();
+            newWellClassification.WellClassName = $("#ddlWellClass option:selected").text();
+
+            var sdx = JSON.stringify({ wellClassification: newWellClassification });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode === -1 || zxz.ErrorCode === -2 || zxz.ErrorCode === 0 || zxz.ErrorCode === -3) {
+                        $('#brEdErrorWellClassification').text(zxz.Error);
+                        $('#brEdErrorWellClassification').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProcess').text() === "2") {
+                        updateTable(zxz);
+                    }
+
+                    $('#brEdErrorWellClassification').text('');
+                    $('#brEdErrorWellClassification').hide();
+                }
+            });
+        });
+    });
+
+
+    var rtx = 0;
+    function classifEdTx(x) {
+        $('#brProcess').text('');
+        $("#brFeedbackWellClassification").fadeOut();
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/WellClassification/EditWellClassification?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessWellClassification', 'Update');
+        $('#fsProcessWellClassification').attr("action", "/WellClassification/EditWellClassification");
+
+        $('#ddlWell').val(data.WellId);
+        $('#ddlWellClass').val(data.WellClassId);
+
+        $('#lgEditWellClassification').text('Update Well Classification');
+        $('#brProcess').text(2);
+        setModal($('#fsProcessWellClassification'));
+    }
+
+    function wellClassDelTx(x) {
+        $("#brFeedbackWellClassification").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/WellClassification/DeleteWellClassification?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblWellClassification #tr' + xxid).remove();
+
+                $('#tblWellClassification tr.xtcR').each(function (r) {
+                    $(this).children('.xtc').text(r + 1);
+                });
+                $('#tblWellClassification .xtcR:even').addClass('gridItem1');
+            }
+        });
+        return;
+    }
+
+    function prepareWellClassificationTemplate() {
+        $('#brEdErrorWellClassification').text('');
+        $('#brEdErrorWellClassification').hide();
+        refreshForm('fsProcessWellClassification', '');
+        $('#fsProcessWellClassification').attr("action", "/WellClassification/AddWellClassification");
+        $('#brProcess').text(1);
+        setModal($('#fsProcessWellClassification'));
+    }
+
+    function updateTable(r) {
+        $('#tblWellClassification #tr' + rtx).children('#tdWellName').html(r.WellName);
+        $('#tblWellClassification #tr' + rtx).children('#tdWellClass').html(r.WellClassName);
+
+        //$('#tblWellClassification .xtcR:even').addClass('gridItem1');
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+        closePopModal($('#fsProcessWellClassification'));
+    }
+
+    function refresh(r) {
+        var bv = $('#tblWellClassification tr').length - 1;
+
+        $("#tblWellClassification tbody:last").append($('<tr id="tr' + r.WellClassificationId + '" class="xtcR" style="color: black;">'
+                   + '<td style="width: 5%; text-align: center" class="xtc">'
+                   + (bv + 1)
+                   + ' </td>'
+                   + ' <td style="width: 45%; text-align: left" id="tdWellName">'
+                   + r.WellName
+                   + ' </td>'
+                   + ' <td style="width: 40%; text-align: left" id="tdWellClass">'
+                   + r.WellClassName
+                   + ' </td>'
+                   + ' <td style="width: 10%">'
+                   + '<a class="classifEdTx" title="Edit" id="ed' + r.WellClassificationId + '" onclick="classifEdTx(this.id);"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="wellClassDelTx" title="Delete" id="del' + r.WellClassificationId + '" onclick="wellClassDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>'
+                   + ' </td>'
+                   + ' </tr>'));
+
+        //Successfull operation
+      
+        $('#brProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessWellClassification'));
+    }
+</script>
+
+

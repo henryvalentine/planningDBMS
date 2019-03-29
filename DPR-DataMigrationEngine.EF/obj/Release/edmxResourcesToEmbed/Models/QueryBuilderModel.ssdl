@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QueryBuilderModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="FieldQuery">
+    <Key>
+      <PropertyRef Name="FieldQueryId" />
+    </Key>
+    <Property Name="FieldQueryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TerrainId" Type="int" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="FieldQueryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BlockId" Type="int" />
+  </EntityType>
+  <EntityType Name="IncidentQuery">
+    <Key>
+      <PropertyRef Name="IncidentQueryId" />
+    </Key>
+    <Property Name="IncidentQueryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IncidentTypeId" Type="int" />
+    <Property Name="CompanyId" Type="bigint" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="IncidentQueryName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductionQuery">
+    <Key>
+      <PropertyRef Name="ProductionQueryId" />
+    </Key>
+    <Property Name="ProductionQueryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="TerrainId" Type="int" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="FieldId" Type="int" />
+    <Property Name="BlockId" Type="int" />
+    <Property Name="ProductionQueryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+  </EntityType>
+  <EntityType Name="WellCompletionQuery">
+    <Key>
+      <PropertyRef Name="WellCompletionQueryId" />
+    </Key>
+    <Property Name="WellCompletionQueryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="WellId" Type="int" />
+    <Property Name="WellTypeId" Type="int" />
+    <Property Name="TerrainId" Type="int" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="CompletionTypeId" Type="int" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="EquipmentId" Type="int" />
+    <Property Name="WellCompletionQueryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="WellClassId" Type="int" />
+  </EntityType>
+  <EntityType Name="WellQuery">
+    <Key>
+      <PropertyRef Name="WellQueryId" />
+    </Key>
+    <Property Name="WellQueryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WellTypeId" Type="int" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="FieldId" Type="int" />
+    <Property Name="WellClassId" Type="int" Nullable="false" />
+    <Property Name="TerrainId" Type="int" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="WellQueryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BlockId" Type="int" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+  </EntityType>
+  <EntityType Name="WellWorkoverQuery">
+    <Key>
+      <PropertyRef Name="WellWorkoverQueryId" />
+    </Key>
+    <Property Name="WellWorkoverQueryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="bigint" />
+    <Property Name="TerrainId" Type="int" />
+    <Property Name="ZoneId" Type="int" />
+    <Property Name="WorkoverReasonId" Type="int" />
+    <Property Name="EquipmentId" Type="int" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+    <Property Name="WellId" Type="int" />
+    <Property Name="WellWorkoverQueryName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="WellClassId" Type="int" />
+    <Property Name="WellTypeId" Type="int" />
+  </EntityType>
+  <EntityContainer Name="QueryBuilderModelStoreContainer">
+    <EntitySet Name="FieldQuery" EntityType="Self.FieldQuery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IncidentQuery" EntityType="Self.IncidentQuery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionQuery" EntityType="Self.ProductionQuery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellCompletionQuery" EntityType="Self.WellCompletionQuery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellQuery" EntityType="Self.WellQuery" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellWorkoverQuery" EntityType="Self.WellWorkoverQuery" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

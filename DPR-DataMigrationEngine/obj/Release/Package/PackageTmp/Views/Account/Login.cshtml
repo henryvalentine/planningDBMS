@@ -1,0 +1,77 @@
+﻿@model DPR_DataMigrationEngine.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html style="background-color: #fff">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body style="background-color: #fff">
+    <header>
+        <div class="content-wrapper">
+            <section id="login">
+                &nbsp;
+            </section>
+            <nav>
+               &nbsp;
+            </nav>
+            @*</div>*@
+        </div>
+    </header>
+    @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "fsLogin", role = "form" }))
+    {
+        <span class="legend2 backDb" style="width: 100%"> User Login
+         </span>
+      
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <table style="width: 100%">
+            <tr>
+                <td colspan="2">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 1%" colspan="2">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.UserName, new { @style = "padding-left:2%" }) @Html.ValidationMessageFor(m => m.UserName)
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @style = "padding-left:2%; padding-right:2%; width:96%" })
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 1%" colspan="2">
+                    <div class="form-group" style="margin-bottom: 2%">
+                        @Html.LabelFor(m => m.Password, new { @style = "padding-left:2%" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @style = "padding-left:2%; padding-right:2%; width:96%" })
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                    </div>
+                   </td>
+            </tr>
+            <tr>
+                <td>
+                    <p style="font-size: 7pt; color: green; font-weight: bold; margin-bottom: -5%; position: relative">Powered by <a style="text-decoration: none; color: #C52D29; " href="http://www.maxfront.com">MAXFRONT&trade;</a></p>
+                </td>
+                <td style="padding: 1%">
+                    <input type="submit" value="Log in" class="btn btnLogin large" style="float: right; width: 100px; margin-right: 2%" />
+                </td>
+            </tr>
+        </table>
+                
+            }
+    
+</body>
+</html>

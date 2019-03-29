@@ -1,0 +1,238 @@
+﻿@using System.Globalization
+@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model  DPR_DataMigrationEngine.ViewModels.WellCompletionViewModel
+
+
+<form style="width: 100%" method="POST" id="productionRepoFrm" action="@Url.Action("GetWellCompletionsByQueryDateDate", "WellCompletion")">
+    <table style="width: 100%">
+        <tr>
+            <td colspan="3">
+                <label style="font-weight: normal; font-size: 10pt; float: left; width: 100%; ">Retrieve Well Completion Reports by Month:</label>
+                @*<input type="hidden" value="@ViewBag.SearchMonth"/>
+                    <input type="hidden" value="@ViewBag.SearchYear" />*@
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 35%">
+                <div style="margin-left: 2%"><i style="width: auto">Year: </i> </div>
+                <select class="form-control" name="search.Year" id="ddlWellCompYearRepo">
+                    @{
+                        var yearExtensions = new ExtensionHelpers().ListOption(Model.YearList, "DocId", "DocName", "-- Select Year --");
+
+                        foreach (var year in yearExtensions.Select(yearString => Html.Raw(yearString)))
+                        {
+                            @year
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 35%">
+                <div style="margin-left: 2%"><i style="width: auto">Month: </i> </div>
+                <select class="form-control" name="search.Month" id="ddlMonthCompRepo">
+                    @{
+                        var monthExtensions = new ExtensionHelpers().ListOption(Model.MonthList, "DocId", "DocName", "-- Select Month --");
+
+                        foreach (var month in monthExtensions.Select(monthString => Html.Raw(monthString)))
+                        {
+                            @month
+                        }
+                    }
+                </select>
+
+            </td>
+            <td style="width: 20%">
+                <div>&nbsp;</div>
+                <input type="submit" name="searchDate" class="btn large btnSearch" onclick="return verifyCompletionRepoSearchMonth()" style="width: 130px; border: 1px solid green; float: left" value="Search" />
+            </td>
+            <td style="padding-right:0; width: 5%"><div>&nbsp;</div><div>&nbsp;</div>
+                <a onclick="tableToExcel('tblWellCompRepos', 'Well Completion Report')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" alt="Export to Excel" /></a>
+            </td>
+            <td style="width: 10%"><div>&nbsp;</div><div>&nbsp;</div>
+                <img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer; padding-bottom: 7px" alt="Print Report" title="Print Report" onclick="printCompletionStatReport()" />
+            </td>
+        </tr>
+    </table>
+</form>
+   
+<div style="width: 100%;" id="dvStatCompletionReport">
+    <fieldset id="fsWellWorkoverList" style="background: whitesmoke; width: 100%" class="allcontent">
+        <legend class="customlegend22" id="lgHeader">Well Completion Report for :&nbsp; <span id="spreportDateTitle">@ViewBag.SearchPeriod</span></legend>
+      <table id="tblWellCompRepos" style="width: 100%" class="fils-border newTable">
+            <tr class="customGridHeader">
+                <th style="width: 5%; text-align: center"> 
+                    S/N
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Company
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Well
+                </th>
+                <th style="width: 9%; text-align: left">
+                    Well Type
+                </th>
+                <th style="width: 8%; text-align: left">
+                    Terrain
+                </th>
+                <th style="width: 8%; text-align: left">
+                    Zone
+                </th>
+                <th style="width: 12%; text-align: left">
+                    Completion Interval(FT ss)
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Completion Type
+                </th>
+                <th style="width: 12%; text-align: left">
+                    Date Completed
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Equipment
+                </th>
+            </tr>
+            @{
+
+                for (var i = 0; i < Model.WellCompletionReportObjects.Count; i++)
+                {
+                    var zxz = Model.WellCompletionReportObjects[i];
+                    <tr class="xtcR" style="color: black;">
+                        <td style="width: 5%; text-align: center" class="xtc">
+                            @(i + 1)
+                        </td>
+                        <td style="width: 10%; text-align: left">
+                            @zxz.CompanyName
+                        </td>
+                        <td style="width: 10%; text-align: left">
+                            @zxz.WellName
+                        </td>
+                        <td style="width: 9%; text-align: left">
+                            @zxz.WellTypeName
+                        </td>
+                        <td style="width: 8%; text-align: left">
+                            @zxz.TerrainName
+                        </td>
+                        <td style="width: 8%; text-align: left">
+                            @zxz.ZoneName
+                        </td>
+                        <td style="width: 12%; text-align: left">
+                            @zxz.CompletionIntervalStr
+                        </td>
+                        <td style="width: 10%; text-align: left">
+                            @zxz.WellCompletionTypeName
+                        </td>
+                        <td style="width: 12%; text-align: left">
+                            @zxz.DatecomPletedString
+                        </td>
+                        <td style="width: 8%; text-align: left">
+                            @zxz.EquipmentName
+                        </td>
+
+                    </tr>
+                }
+            }
+        </table>
+    </fieldset>
+</div>
+
+<img src="/Images/select2-spinner.gif" id="imgWellCopletionRepoSpin" class="spinProgress2" />
+<script type="text/javascript">
+    $(window).load(function() {
+
+        //$(".page-button").click(function () {
+        //    if (!$(this).hasClass('current')) {
+        //        window.location.href = "http://" +
+        //            window.location.host + window.location.pathname +
+        //            '?page=' + $(this).val() + '&pageSize=' + 40;
+        //    }
+        //});
+    });
+
+        function printCompletionStatReport()
+        {
+            if ($('#tblWellCompRepos').html() == null)
+            {
+                alert('Nothing to Print');
+                return;
+            }
+            printReportData('fsWellWorkoverList');
+        }
+        
+        function verifyCompletionRepoSearchMonth() {
+            var year = parseInt($('#ddlWellCompYearRepo').val());
+            if (year < 1) {
+                alert('Please select a report year.');
+                return false;
+            }
+            return true;
+        }
+
+        $(function () {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() >= $(document).height() - $(window).height() - 180) {
+                     
+                    var url = '/WellCompletion/GetMoreStaticWellCompletionReports';
+                    $("#imgWellCopletionRepoSpin").show();
+                    $.ajax({
+                        url: url,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (zxz) {
+                            if (zxz === null) {
+                                $("#imgWellCopletionRepoSpin").hide();
+                            } else {
+                                $.each(zxz, function (i, r) {
+                                    refreshWellCompRepo2(r);
+                                });
+                                $("#imgWellCopletionRepoSpin").hide();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        function refreshWellCompRepo2(r) {
+
+            var bv = $('#tblWellCompRepos tr').length - 1;
+
+
+            $("#tblWellCompRepos tbody:last").append($(
+
+                       ' <tr class="xtcR" style="color: black;">'
+                       +' <td style="width: 5%; text-align: center" class="xtc">'
+                          +  (bv + 1)
+                         +'</td>'
+                        +' <td style="width: 10%; text-align: left">'
+                         +  r.CompanyName
+                        +' </td>'
+                        +' <td style="width: 10%; text-align: left">'
+                          + r.WellName
+                        +' </td>'
+                        +' <td style="width: 9%; text-align: left">'
+                         + r.WellTypeName
+                        +' </td>'
+                         +'<td style="width: 8%; text-align: left">'
+                         +  r.TerrainName
+                        +' </td>'
+                        +' <td style="width: 8%; text-align: left">'
+                         + r.ZoneName
+                        +' </td>'
+                         +'<td style="width: 12%; text-align: left">'
+                         + r.CompletionIntervalStr
+                         +'</td>'
+                         +'<td style="width: 10%; text-align: left">'
+                          + r.WellCompletionTypeName
+                         +'</td>'
+                         +'<td style="width: 12%; text-align: left">'
+                           + r.DatecomPletedString
+                        +' </td>'
+                        +' <td style="width: 8%; text-align: left">'
+                         + r.EquipmentName
+                        +' </td>'
+                    + ' </tr>'));
+
+        }
+         
+
+    </script>

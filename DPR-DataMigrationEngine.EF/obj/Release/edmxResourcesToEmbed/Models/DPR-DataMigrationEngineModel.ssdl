@@ -1,0 +1,937 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DataMigrationEngineDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Block">
+    <Key>
+      <PropertyRef Name="BlockId" />
+    </Key>
+    <Property Name="BlockId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BlockTypeId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Area" Type="float" />
+    <Property Name="LeaseTypeId" Type="int" Nullable="false" />
+    <Property Name="YearOfAward" Type="bigint" />
+    <Property Name="CompanyId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BlockType">
+    <Key>
+      <PropertyRef Name="BlockTypeId" />
+    </Key>
+    <Property Name="BlockTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="200" />
+    <Property Name="RCNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="CanonialName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Equipment">
+    <Key>
+      <PropertyRef Name="EquipmentId" />
+    </Key>
+    <Property Name="EquipmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EquipmentTypeId" Type="int" Nullable="false" />
+    <Property Name="LicenseStatus" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EquipmentType">
+    <Key>
+      <PropertyRef Name="EquipmentTypeId" />
+    </Key>
+    <Property Name="EquipmentTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EquipmentUsageHistory">
+    <Key>
+      <PropertyRef Name="EquipmentUsageHistoryId" />
+    </Key>
+    <Property Name="EquipmentUsageHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="bigint" Nullable="false" />
+    <Property Name="EquipmentId" Type="int" Nullable="false" />
+    <Property Name="WellId" Type="int" Nullable="false" />
+    <Property Name="DateUsed" Type="date" Nullable="false" />
+    <Property Name="WellCompletionId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Field">
+    <Key>
+      <PropertyRef Name="FieldId" />
+    </Key>
+    <Property Name="FieldId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="bigint" Nullable="false" />
+    <Property Name="ZoneId" Type="int" Nullable="false" />
+    <Property Name="TerrainId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TechnicalAllowable" Type="float" />
+    <Property Name="BlockId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IncidentHistory">
+    <Key>
+      <PropertyRef Name="IncidentHistoryId" />
+    </Key>
+    <Property Name="IncidentHistoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CompanyId" Type="bigint" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IncidentTypeId" Type="int" Nullable="false" />
+    <Property Name="IncidentDate" Type="date" Nullable="false" />
+    <Property Name="Location" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ReportedBy" Type="nvarchar" MaxLength="150" />
+    <Property Name="CraetedBy" Type="nvarchar(max)" />
+    <Property Name="TimeCreated" Type="timestamp" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="IncidentType">
+    <Key>
+      <PropertyRef Name="IncidentTypeId" />
+    </Key>
+    <Property Name="IncidentTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LeaseType">
+    <Key>
+      <PropertyRef Name="LeaseTypeId" />
+    </Key>
+    <Property Name="LeaseTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="MilestoneStatus">
+    <Key>
+      <PropertyRef Name="MilestoneStatusId" />
+    </Key>
+    <Property Name="MilestoneStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PersonId" />
+    </Key>
+    <Property Name="PersonId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="CompanyId" Type="bigint" Nullable="false" />
+    <Property Name="Designation" Type="varchar" MaxLength="45" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Production">
+    <Key>
+      <PropertyRef Name="ProductionId" />
+    </Key>
+    <Property Name="ProductionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="FieldId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="bigint" Nullable="false" />
+    <Property Name="Remark" Type="text" />
+    <Property Name="APIGravity" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" />
+    <Property Name="TimeCreated" Type="timestamp" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TerrainId" Type="int" Nullable="false" />
+    <Property Name="SectorId" Type="int" Nullable="false" />
+    <Property Name="CompanyId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="text" />
+    <Property Name="ProjectTypeId" Type="int" Nullable="false" />
+    <Property Name="Duration" Type="int" Nullable="false" />
+    <Property Name="Cost" Type="float" Nullable="false" />
+    <Property Name="DateCompleted" Type="date" />
+    <Property Name="ProjectObjectives" Type="text" />
+    <Property Name="CompletionStatus" Type="int" Nullable="false" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" />
+    <Property Name="TimeCreated" Type="timestamp" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="ProjectMileStone">
+    <Key>
+      <PropertyRef Name="ProjectMileStoneId" />
+    </Key>
+    <Property Name="ProjectMileStoneId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParentId" Type="bigint" Nullable="false" />
+    <Property Name="ProjectId" Type="bigint" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DateDue" Type="date" Nullable="false" />
+    <Property Name="LastUpdated" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MileStoneStatusId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectRep">
+    <Key>
+      <PropertyRef Name="ProjectRepId" />
+    </Key>
+    <Property Name="ProjectRepId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="bigint" Nullable="false" />
+    <Property Name="PersonId" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectType">
+    <Key>
+      <PropertyRef Name="ProjectTypeId" />
+    </Key>
+    <Property Name="ProjectTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Sector">
+    <Key>
+      <PropertyRef Name="SectorId" />
+    </Key>
+    <Property Name="SectorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sys_Param">
+    <Key>
+      <PropertyRef Name="Sys_ParamId" />
+    </Key>
+    <Property Name="Sys_ParamId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ServerName" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="ServerLoginName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ServerLoginPassword" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DBName" Type="nvarchar" MaxLength="250" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Terrain">
+    <Key>
+      <PropertyRef Name="TerrainId" />
+    </Key>
+    <Property Name="TerrainId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Well">
+    <Key>
+      <PropertyRef Name="WellId" />
+    </Key>
+    <Property Name="WellId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WellTypeId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="TechnicalAllowable" Type="float" />
+    <Property Name="TotalDept" Type="float" />
+    <Property Name="SpudDate" Type="date" />
+    <Property Name="Remarks" Type="text" />
+    <Property Name="FieldId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WellClass">
+    <Key>
+      <PropertyRef Name="WellClassId" />
+    </Key>
+    <Property Name="WellClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="text" />
+  </EntityType>
+  <EntityType Name="WellClassification">
+    <Key>
+      <PropertyRef Name="WellClassificationId" />
+    </Key>
+    <Property Name="WellClassificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WellId" Type="int" Nullable="false" />
+    <Property Name="WellClassId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WellCompletion">
+    <Key>
+      <PropertyRef Name="WellCompletionId" />
+    </Key>
+    <Property Name="WellCompletionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WellId" Type="int" Nullable="false" />
+    <Property Name="EquipmentId" Type="int" Nullable="false" />
+    <Property Name="WellCompletionTypeId" Type="int" Nullable="false" />
+    <Property Name="IsInitial" Type="bit" Nullable="false" />
+    <Property Name="DateCompleted" Type="date" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" />
+    <Property Name="TimeCreated" Type="timestamp" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="WellCompletionInterval">
+    <Key>
+      <PropertyRef Name="WellCompletionIntervalId" />
+    </Key>
+    <Property Name="WellCompletionIntervalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WellCompletionId" Type="int" Nullable="false" />
+    <Property Name="LowerInterval" Type="float" Nullable="false" />
+    <Property Name="UpperInterval" Type="float" Nullable="false" />
+    <Property Name="DateCompleted" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastUpdatedTime" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WellCompletionType">
+    <Key>
+      <PropertyRef Name="WellCompletionTypeId" />
+    </Key>
+    <Property Name="WellCompletionTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WellType">
+    <Key>
+      <PropertyRef Name="WellTypeId" />
+    </Key>
+    <Property Name="WellTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WellWorkover">
+    <Key>
+      <PropertyRef Name="WellWorkOverId" />
+    </Key>
+    <Property Name="WellWorkOverId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WellId" Type="int" Nullable="false" />
+    <Property Name="WellWorkOverReasonId" Type="int" Nullable="false" />
+    <Property Name="EquipmentId" Type="int" Nullable="false" />
+    <Property Name="Month" Type="int" Nullable="false" />
+    <Property Name="Year" Type="bigint" Nullable="false" />
+    <Property Name="DateCompleted" Type="nvarchar" MaxLength="20" />
+    <Property Name="CreatedBy" Type="nvarchar(max)" />
+    <Property Name="TimeCreated" Type="timestamp" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="WellWorkOverReason">
+    <Key>
+      <PropertyRef Name="WellWorkOverReasonId" />
+    </Key>
+    <Property Name="WellWorkOverReasonId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Zone">
+    <Key>
+      <PropertyRef Name="ZoneId" />
+    </Key>
+    <Property Name="ZoneId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Block_BlockType">
+    <End Role="BlockType" Type="Self.BlockType" Multiplicity="1" />
+    <End Role="Block" Type="Self.Block" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BlockType">
+        <PropertyRef Name="BlockTypeId" />
+      </Principal>
+      <Dependent Role="Block">
+        <PropertyRef Name="BlockTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Block_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Block" Type="Self.Block" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Block">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Block_LeaseType">
+    <End Role="LeaseType" Type="Self.LeaseType" Multiplicity="1" />
+    <End Role="Block" Type="Self.Block" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LeaseType">
+        <PropertyRef Name="LeaseTypeId" />
+      </Principal>
+      <Dependent Role="Block">
+        <PropertyRef Name="LeaseTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Equipment_EquipmentType">
+    <End Role="EquipmentType" Type="Self.EquipmentType" Multiplicity="1" />
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipmentType">
+        <PropertyRef Name="EquipmentTypeId" />
+      </Principal>
+      <Dependent Role="Equipment">
+        <PropertyRef Name="EquipmentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentUsageHistory_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="EquipmentUsageHistory" Type="Self.EquipmentUsageHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="EquipmentUsageHistory">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentUsageHistory_Equipment">
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+    <End Role="EquipmentUsageHistory" Type="Self.EquipmentUsageHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="EquipmentId" />
+      </Principal>
+      <Dependent Role="EquipmentUsageHistory">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentUsageHistory_Well">
+    <End Role="Well" Type="Self.Well" Multiplicity="1" />
+    <End Role="EquipmentUsageHistory" Type="Self.EquipmentUsageHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Well">
+        <PropertyRef Name="WellId" />
+      </Principal>
+      <Dependent Role="EquipmentUsageHistory">
+        <PropertyRef Name="WellId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentUsageHistory_WellCompletion">
+    <End Role="WellCompletion" Type="Self.WellCompletion" Multiplicity="1" />
+    <End Role="EquipmentUsageHistory" Type="Self.EquipmentUsageHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellCompletion">
+        <PropertyRef Name="WellCompletionId" />
+      </Principal>
+      <Dependent Role="EquipmentUsageHistory">
+        <PropertyRef Name="WellCompletionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Field_Block">
+    <End Role="Block" Type="Self.Block" Multiplicity="1" />
+    <End Role="Field" Type="Self.Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Block">
+        <PropertyRef Name="BlockId" />
+      </Principal>
+      <Dependent Role="Field">
+        <PropertyRef Name="BlockId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Field_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Field" Type="Self.Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Field">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Field_Terrain">
+    <End Role="Terrain" Type="Self.Terrain" Multiplicity="1" />
+    <End Role="Field" Type="Self.Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Terrain">
+        <PropertyRef Name="TerrainId" />
+      </Principal>
+      <Dependent Role="Field">
+        <PropertyRef Name="TerrainId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Field_Zone">
+    <End Role="Zone" Type="Self.Zone" Multiplicity="1" />
+    <End Role="Field" Type="Self.Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zone">
+        <PropertyRef Name="ZoneId" />
+      </Principal>
+      <Dependent Role="Field">
+        <PropertyRef Name="ZoneId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncidentHistory_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="IncidentHistory" Type="Self.IncidentHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="IncidentHistory">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncidentHistory_IncidentType">
+    <End Role="IncidentType" Type="Self.IncidentType" Multiplicity="1" />
+    <End Role="IncidentHistory" Type="Self.IncidentHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IncidentType">
+        <PropertyRef Name="IncidentTypeId" />
+      </Principal>
+      <Dependent Role="IncidentHistory">
+        <PropertyRef Name="IncidentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Person" Type="Self.Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Production_Field">
+    <End Role="Field" Type="Self.Field" Multiplicity="1" />
+    <End Role="Production" Type="Self.Production" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Field">
+        <PropertyRef Name="FieldId" />
+      </Principal>
+      <Dependent Role="Production">
+        <PropertyRef Name="FieldId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Production_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Production" Type="Self.Production" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="Production">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_ProjectType">
+    <End Role="ProjectType" Type="Self.ProjectType" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectType">
+        <PropertyRef Name="ProjectTypeId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="ProjectTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Sector">
+    <End Role="Sector" Type="Self.Sector" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sector">
+        <PropertyRef Name="SectorId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="SectorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Terrain">
+    <End Role="Terrain" Type="Self.Terrain" Multiplicity="1" />
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Terrain">
+        <PropertyRef Name="TerrainId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="TerrainId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectMileStone_MilestoneStatus">
+    <End Role="MilestoneStatus" Type="Self.MilestoneStatus" Multiplicity="1" />
+    <End Role="ProjectMileStone" Type="Self.ProjectMileStone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MilestoneStatus">
+        <PropertyRef Name="MilestoneStatusId" />
+      </Principal>
+      <Dependent Role="ProjectMileStone">
+        <PropertyRef Name="MileStoneStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectMileStone_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="ProjectMileStone" Type="Self.ProjectMileStone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectId" />
+      </Principal>
+      <Dependent Role="ProjectMileStone">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectMileStone_ProjectMileStone">
+    <End Role="ProjectMileStone" Type="Self.ProjectMileStone" Multiplicity="1" />
+    <End Role="ProjectMileStone1" Type="Self.ProjectMileStone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectMileStone">
+        <PropertyRef Name="ProjectMileStoneId" />
+      </Principal>
+      <Dependent Role="ProjectMileStone1">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRep_Person">
+    <End Role="Person" Type="Self.Person" Multiplicity="1" />
+    <End Role="ProjectRep" Type="Self.ProjectRep" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonId" />
+      </Principal>
+      <Dependent Role="ProjectRep">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRep_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="ProjectRep" Type="Self.ProjectRep" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectId" />
+      </Principal>
+      <Dependent Role="ProjectRep">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Well_Field">
+    <End Role="Field" Type="Self.Field" Multiplicity="1" />
+    <End Role="Well" Type="Self.Well" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Field">
+        <PropertyRef Name="FieldId" />
+      </Principal>
+      <Dependent Role="Well">
+        <PropertyRef Name="FieldId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Well_WellType">
+    <End Role="WellType" Type="Self.WellType" Multiplicity="1" />
+    <End Role="Well" Type="Self.Well" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellType">
+        <PropertyRef Name="WellTypeId" />
+      </Principal>
+      <Dependent Role="Well">
+        <PropertyRef Name="WellTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellClassification_Well">
+    <End Role="Well" Type="Self.Well" Multiplicity="1" />
+    <End Role="WellClassification" Type="Self.WellClassification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Well">
+        <PropertyRef Name="WellId" />
+      </Principal>
+      <Dependent Role="WellClassification">
+        <PropertyRef Name="WellId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellClassification_WellClass">
+    <End Role="WellClass" Type="Self.WellClass" Multiplicity="1" />
+    <End Role="WellClassification" Type="Self.WellClassification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellClass">
+        <PropertyRef Name="WellClassId" />
+      </Principal>
+      <Dependent Role="WellClassification">
+        <PropertyRef Name="WellClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellCompletion_Equipment">
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+    <End Role="WellCompletion" Type="Self.WellCompletion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="EquipmentId" />
+      </Principal>
+      <Dependent Role="WellCompletion">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellCompletion_Well">
+    <End Role="Well" Type="Self.Well" Multiplicity="1" />
+    <End Role="WellCompletion" Type="Self.WellCompletion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Well">
+        <PropertyRef Name="WellId" />
+      </Principal>
+      <Dependent Role="WellCompletion">
+        <PropertyRef Name="WellId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellCompletion_WellCompletionType">
+    <End Role="WellCompletionType" Type="Self.WellCompletionType" Multiplicity="1" />
+    <End Role="WellCompletion" Type="Self.WellCompletion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellCompletionType">
+        <PropertyRef Name="WellCompletionTypeId" />
+      </Principal>
+      <Dependent Role="WellCompletion">
+        <PropertyRef Name="WellCompletionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellCompletionInterval_WellCompletion">
+    <End Role="WellCompletion" Type="Self.WellCompletion" Multiplicity="1" />
+    <End Role="WellCompletionInterval" Type="Self.WellCompletionInterval" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellCompletion">
+        <PropertyRef Name="WellCompletionId" />
+      </Principal>
+      <Dependent Role="WellCompletionInterval">
+        <PropertyRef Name="WellCompletionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellWorker_Equipment">
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+    <End Role="WellWorkover" Type="Self.WellWorkover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="EquipmentId" />
+      </Principal>
+      <Dependent Role="WellWorkover">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellWorker_Well">
+    <End Role="Well" Type="Self.Well" Multiplicity="1" />
+    <End Role="WellWorkover" Type="Self.WellWorkover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Well">
+        <PropertyRef Name="WellId" />
+      </Principal>
+      <Dependent Role="WellWorkover">
+        <PropertyRef Name="WellId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellWorker_WellWorkOverReason">
+    <End Role="WellWorkOverReason" Type="Self.WellWorkOverReason" Multiplicity="1" />
+    <End Role="WellWorkover" Type="Self.WellWorkover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellWorkOverReason">
+        <PropertyRef Name="WellWorkOverReasonId" />
+      </Principal>
+      <Dependent Role="WellWorkover">
+        <PropertyRef Name="WellWorkOverReasonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DataMigrationEngineDBModelStoreContainer">
+    <EntitySet Name="Block" EntityType="Self.Block" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BlockType" EntityType="Self.BlockType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EquipmentType" EntityType="Self.EquipmentType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EquipmentUsageHistory" EntityType="Self.EquipmentUsageHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Field" EntityType="Self.Field" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IncidentHistory" EntityType="Self.IncidentHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IncidentType" EntityType="Self.IncidentType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LeaseType" EntityType="Self.LeaseType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MilestoneStatus" EntityType="Self.MilestoneStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Production" EntityType="Self.Production" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectMileStone" EntityType="Self.ProjectMileStone" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectRep" EntityType="Self.ProjectRep" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectType" EntityType="Self.ProjectType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sector" EntityType="Self.Sector" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sys_Param" EntityType="Self.Sys_Param" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Terrain" EntityType="Self.Terrain" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Well" EntityType="Self.Well" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellClass" EntityType="Self.WellClass" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellClassification" EntityType="Self.WellClassification" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellCompletion" EntityType="Self.WellCompletion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellCompletionInterval" EntityType="Self.WellCompletionInterval" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellCompletionType" EntityType="Self.WellCompletionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellType" EntityType="Self.WellType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellWorkover" EntityType="Self.WellWorkover" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WellWorkOverReason" EntityType="Self.WellWorkOverReason" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zone" EntityType="Self.Zone" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Block_BlockType" Association="Self.FK_Block_BlockType">
+      <End Role="BlockType" EntitySet="BlockType" />
+      <End Role="Block" EntitySet="Block" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Block_Company" Association="Self.FK_Block_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Block" EntitySet="Block" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Block_LeaseType" Association="Self.FK_Block_LeaseType">
+      <End Role="LeaseType" EntitySet="LeaseType" />
+      <End Role="Block" EntitySet="Block" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Equipment_EquipmentType" Association="Self.FK_Equipment_EquipmentType">
+      <End Role="EquipmentType" EntitySet="EquipmentType" />
+      <End Role="Equipment" EntitySet="Equipment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentUsageHistory_Company" Association="Self.FK_EquipmentUsageHistory_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="EquipmentUsageHistory" EntitySet="EquipmentUsageHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentUsageHistory_Equipment" Association="Self.FK_EquipmentUsageHistory_Equipment">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="EquipmentUsageHistory" EntitySet="EquipmentUsageHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentUsageHistory_Well" Association="Self.FK_EquipmentUsageHistory_Well">
+      <End Role="Well" EntitySet="Well" />
+      <End Role="EquipmentUsageHistory" EntitySet="EquipmentUsageHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentUsageHistory_WellCompletion" Association="Self.FK_EquipmentUsageHistory_WellCompletion">
+      <End Role="WellCompletion" EntitySet="WellCompletion" />
+      <End Role="EquipmentUsageHistory" EntitySet="EquipmentUsageHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Field_Block" Association="Self.FK_Field_Block">
+      <End Role="Block" EntitySet="Block" />
+      <End Role="Field" EntitySet="Field" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Field_Company" Association="Self.FK_Field_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Field" EntitySet="Field" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Field_Terrain" Association="Self.FK_Field_Terrain">
+      <End Role="Terrain" EntitySet="Terrain" />
+      <End Role="Field" EntitySet="Field" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Field_Zone" Association="Self.FK_Field_Zone">
+      <End Role="Zone" EntitySet="Zone" />
+      <End Role="Field" EntitySet="Field" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncidentHistory_Company" Association="Self.FK_IncidentHistory_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="IncidentHistory" EntitySet="IncidentHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncidentHistory_IncidentType" Association="Self.FK_IncidentHistory_IncidentType">
+      <End Role="IncidentType" EntitySet="IncidentType" />
+      <End Role="IncidentHistory" EntitySet="IncidentHistory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Company" Association="Self.FK_Person_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Person" EntitySet="Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Production_Field" Association="Self.FK_Production_Field">
+      <End Role="Field" EntitySet="Field" />
+      <End Role="Production" EntitySet="Production" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Production_Product" Association="Self.FK_Production_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Production" EntitySet="Production" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_Company" Association="Self.FK_Project_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Project" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_ProjectType" Association="Self.FK_Project_ProjectType">
+      <End Role="ProjectType" EntitySet="ProjectType" />
+      <End Role="Project" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_Sector" Association="Self.FK_Project_Sector">
+      <End Role="Sector" EntitySet="Sector" />
+      <End Role="Project" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_Terrain" Association="Self.FK_Project_Terrain">
+      <End Role="Terrain" EntitySet="Terrain" />
+      <End Role="Project" EntitySet="Project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectMileStone_MilestoneStatus" Association="Self.FK_ProjectMileStone_MilestoneStatus">
+      <End Role="MilestoneStatus" EntitySet="MilestoneStatus" />
+      <End Role="ProjectMileStone" EntitySet="ProjectMileStone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectMileStone_Project" Association="Self.FK_ProjectMileStone_Project">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectMileStone" EntitySet="ProjectMileStone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectMileStone_ProjectMileStone" Association="Self.FK_ProjectMileStone_ProjectMileStone">
+      <End Role="ProjectMileStone" EntitySet="ProjectMileStone" />
+      <End Role="ProjectMileStone1" EntitySet="ProjectMileStone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRep_Person" Association="Self.FK_ProjectRep_Person">
+      <End Role="Person" EntitySet="Person" />
+      <End Role="ProjectRep" EntitySet="ProjectRep" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRep_Project" Association="Self.FK_ProjectRep_Project">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectRep" EntitySet="ProjectRep" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Well_Field" Association="Self.FK_Well_Field">
+      <End Role="Field" EntitySet="Field" />
+      <End Role="Well" EntitySet="Well" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Well_WellType" Association="Self.FK_Well_WellType">
+      <End Role="WellType" EntitySet="WellType" />
+      <End Role="Well" EntitySet="Well" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellClassification_Well" Association="Self.FK_WellClassification_Well">
+      <End Role="Well" EntitySet="Well" />
+      <End Role="WellClassification" EntitySet="WellClassification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellClassification_WellClass" Association="Self.FK_WellClassification_WellClass">
+      <End Role="WellClass" EntitySet="WellClass" />
+      <End Role="WellClassification" EntitySet="WellClassification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellCompletion_Equipment" Association="Self.FK_WellCompletion_Equipment">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="WellCompletion" EntitySet="WellCompletion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellCompletion_Well" Association="Self.FK_WellCompletion_Well">
+      <End Role="Well" EntitySet="Well" />
+      <End Role="WellCompletion" EntitySet="WellCompletion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellCompletion_WellCompletionType" Association="Self.FK_WellCompletion_WellCompletionType">
+      <End Role="WellCompletionType" EntitySet="WellCompletionType" />
+      <End Role="WellCompletion" EntitySet="WellCompletion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellCompletionInterval_WellCompletion" Association="Self.FK_WellCompletionInterval_WellCompletion">
+      <End Role="WellCompletion" EntitySet="WellCompletion" />
+      <End Role="WellCompletionInterval" EntitySet="WellCompletionInterval" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellWorker_Equipment" Association="Self.FK_WellWorker_Equipment">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="WellWorkover" EntitySet="WellWorkover" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellWorker_Well" Association="Self.FK_WellWorker_Well">
+      <End Role="Well" EntitySet="Well" />
+      <End Role="WellWorkover" EntitySet="WellWorkover" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellWorker_WellWorkOverReason" Association="Self.FK_WellWorker_WellWorkOverReason">
+      <End Role="WellWorkOverReason" EntitySet="WellWorkOverReason" />
+      <End Role="WellWorkover" EntitySet="WellWorkover" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

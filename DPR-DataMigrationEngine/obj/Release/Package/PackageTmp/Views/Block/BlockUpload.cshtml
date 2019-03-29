@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Block Bulk Upload";
+}
+
+<style type="text/css">
+    a#ancClose:link, a#ancClose:visited, a#ancClose:active, a#ancClose:hover {
+        text-decoration: none;
+        background: url(/Images/cancel.png) 80px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+        cursor: pointer;
+        border: none;
+    }
+</style>
+
+
+
+@{
+
+    if (ViewBag.ErrorCode < 0)
+    {
+        var td = @Html.Raw(ViewBag.ErrorMessage);
+        <label style="font-weight: normal; color: black;"> @td </label>
+
+    }
+
+    if (ViewBag.ErrorCode > 0)
+    {
+        var td = @Html.Raw(ViewBag.ErrorMessage);
+        <label style="font-weight: normal; color: green;">@td</label>
+
+    }
+}
+
+
+
+
+<table style="width: 65%">
+    <tr>
+        <td style="width: 90%">
+            <form class="fsEdit" method="POST" action="@Url.Action("BlockUpload", "Block")" enctype="multipart/form-data" id="frmWellProcessDocs" style="width: 100%">
+                <span class="legend22" style="width: 100%">Block Bulk Upload</span>
+                @*@Html.AntiForgeryToken()*@
+                @Html.ValidationSummary(true)
+                <table style="width: 100%; background: whitesmoke; border: none; margin-top:0">
+                    <tr>
+                        <td colspan="2">
+                            <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorBulk"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="form-group">
+                            <div>&nbsp;</div>
+                            <br /><i style="width: auto">Select Excel Data File *</i>
+                            <input id="fldDocument" type="file" name="file" style="width: 100%" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div>&nbsp;</div>
+                            <div style="width: 100%;">
+                                <div style="text-align: center; float: right; margin-top: 1%">
+                                    <a id="ancClose" style="border: none; float:right; width: 110px" class="btn btnClose large" href="/Block/Blocks"> Close</a> &nbsp; &nbsp; &nbsp;
+                                </div>
+                                <input type="submit" id="btnProcessBulkUpload" class="btn btnUpload large" style=" border: none; float: right; width: 110px" value="Upload" onclick="return valIdateTemplatewx();" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </td>
+        <td style="width:10%; padding-right: 8px; vertical-align: top; text-align: center">
+            <div style="text-align: center; margin-top: 20%">
+                <a title="Download Block Bulk Upload Template" style="cursor:pointer; text-decoration: none" href="@("/Company/DownloadContentFromFolder?path=" + "~/BulkTemplate/BlockBulkTemplate.xlsx")" id="dnBulkTemplate"><img src="/Images/downloadExcel.png" alt="download Block Bulk Upload Template" style="width: 40px; height: 40px" /></a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<script type="text/javascript">
+
+    function valIdateTemplatewx() {
+        if ($('#fldDocument').val().trim().length < 1) {
+            alert("Please Select an Excel file to upload!");
+            $('#fldDocument').val('');
+            return false;
+        }
+        return true;
+    }
+
+</script>

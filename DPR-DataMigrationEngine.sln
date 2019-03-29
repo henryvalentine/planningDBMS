@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPR-DataMigrationEngine", "DPR-DataMigrationEngine\DPR-DataMigrationEngine.csproj", "{624E15E8-BA8A-4E2B-B17F-F2117009D562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPR-DataMigrationEngine.EF", "DPR-DataMigrationEngine.EF\DPR-DataMigrationEngine.EF.csproj", "{2A9CCF12-7D9A-49C3-9FBF-AA0B15B94615}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DPR-DataMigrationEngine.Services", "DPR-DataMigrationEngine.Services\DPR-DataMigrationEngine.Services.csproj", "{87A4A128-AD36-4A00-BB1F-5FEC7BA832EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{624E15E8-BA8A-4E2B-B17F-F2117009D562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624E15E8-BA8A-4E2B-B17F-F2117009D562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624E15E8-BA8A-4E2B-B17F-F2117009D562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624E15E8-BA8A-4E2B-B17F-F2117009D562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A9CCF12-7D9A-49C3-9FBF-AA0B15B94615}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A9CCF12-7D9A-49C3-9FBF-AA0B15B94615}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A9CCF12-7D9A-49C3-9FBF-AA0B15B94615}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A9CCF12-7D9A-49C3-9FBF-AA0B15B94615}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A4A128-AD36-4A00-BB1F-5FEC7BA832EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A4A128-AD36-4A00-BB1F-5FEC7BA832EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A4A128-AD36-4A00-BB1F-5FEC7BA832EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A4A128-AD36-4A00-BB1F-5FEC7BA832EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

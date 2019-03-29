@@ -1,0 +1,188 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+
+@model DPR_DataMigrationEngine.ViewModels.ProductionViewModel
+
+<style type="text/css">
+    a {
+        color: whitesmoke;
+        text-decoration: underline;
+    }
+
+        a:hover {
+            color: whitesmoke;
+            text-decoration: underline;
+        }
+</style>
+
+<form class="fsEdit xxc xzcComp" style="display: none; visibility: visible; max-height: 70%" id="dvSelectReportFields">
+
+    <legend class="legend22" style="width: 100%; cursor: pointer">Select Production Report Fields</legend>
+    <table style="width: 100%">
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Company: </i> </div>
+                <select class="form-control" name="queryBuilder.CompanyId" id="ddlProductionDynamicComp">
+                    @{
+                        var companyExtensions = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "< All >");
+
+                        foreach (var company in companyExtensions.Select(companyString => Html.Raw(companyString)))
+                        {
+                            @company
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Block : </i> </div>
+                <select class="form-control" name="queryBuilder.BlockId" id="ddlProductionDynamicBlock">
+                    <option value="0">-- List is empty --</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Field: </i> </div>
+                <select class="form-control" name="queryBuilder.FieldId" id="ddlProductionDynamicField">
+                    <option value="0">-- List is empty --</option>
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Product: </i> </div>
+                <select class="form-control" name="queryBuilder.ProductId" id="ddlProductionDynamicProduct">
+                    @{
+                        var productionTypes = new ExtensionHelpers().ListOption(Model.Products, "ProductId", "Name", "< All >");
+
+                        foreach (var productionType in productionTypes.Select(productionTypeString => Html.Raw(productionTypeString)))
+                        {
+                            @productionType
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; margin-top: 1%; margin-bottom: 1%">
+                    <span style="color: brown">Query Range</span>
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Start Date: </i> </div>
+                <div style="width: 100%; margin-left: 0">
+                    @*<select class="form-control" name="queryBuilder.Year" id="ddlProductionDynamicYear">
+                            @{
+                                var years = new ExtensionHelpers().ListOption(Model.YearList, "DocId", "DocName", " < All >");
+
+                                foreach (var year in years.Select(yearString => Html.Raw(yearString)))
+                                {
+                                    @year
+                                }
+                            }
+                        </select>*@
+                    <input type="text" name="queryBuilder.StartDate" id="StartDate" class="form-control datepicker" />
+                </div>
+            </td>
+            <td style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">End Date: </i> </div>
+                <div style="width: 100%; margin-left: 0">
+
+                    <input type="text" name="queryBuilder.EndDate" id="endDate" class="form-control datepicker" />
+                    @*<select class="form-control" name="queryBuilder.Month" id="ddlProductionDynamicMonth">
+                            @{
+                                var months = new ExtensionHelpers().ListOption(Model.MonthList, "DocId", "DocName", " < All >");
+
+                                foreach (var month in months.Select(monthString => Html.Raw(monthString)))
+                                {
+                                    @month
+                                }
+                            }
+                        </select>*@
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseRepField" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" onclick="closeProductionRepFields()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="button" id="btnProcessRepField" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Generate Rport" onclick="generateProductionReports();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="padding-right:0; width: 35%">
+            <div style="margin-left: 2%"><i style="width: auto">Use a previous query: </i> </div>
+            <select class="form-control" name="queryBuilder.QueryId" id="ddlproductionPreviousQueries">
+                @{
+                    var previousQueries = new ExtensionHelpers().ListOption(Model.ProductionQueries, "ProductionQueryId", "ProductionQueryName", "-- Select Previous Query --");
+
+                    foreach (var productionQuery in previousQueries.Select(previousQuerString => Html.Raw(previousQuerString)))
+                    {
+                        @productionQuery
+                    }
+                }
+            </select>
+        </td>
+        <td style="padding-right:0; width: 7%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: left">
+                <input type="button" id="btnGetPreviousReports" onclick=" generateProductionReports2()" class="btn btnGetPrevQuery large" style="width: 190px; float: right; text-decoration: none" value="Go" />
+            </div>
+        </td>
+        <td style="padding-right:0; width: 10%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: right">
+                <input type="button" id="btnGetReports" onclick=" prepProductionRepFiledsTemplate()" class="btn btnGetRepFields large" style="width: 190px; float: right; text-decoration: none" value="Select Query Criteria" />
+            </div>
+        </td>
+        <td style="padding-right:0; width: 5%">
+            <div>&nbsp;</div>
+            <a onclick="tableToExcel('tbProductionReports', 'Production Report')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" /></a>
+        </td>
+        <td style="padding-right:0;width: 5%">
+            <div>&nbsp;</div>
+            <img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer" title="Print Report" onclick="printProductionReport()" />
+        </td>
+    </tr>
+</table>
+
+<img src="/Images/ProgressLoader.gif" id="imgProductionRepoSpin" class="spinProgress" />
+
+<form class="fsEdit xxc" style="display: none; visibility: visible; margin-left: 2%" id="frmSaveProductionQuery">
+    <legend class="legend22" style="width: 100%">Save report query</legend>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="width: 100%">
+                    <div style="margin-left: 5px"><i style="width: auto">Query Name:</i></div>
+                    <input type="text" name="queryName" id="txtProductionQueryName" class="form-control" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="dft" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Cancel" onclick="closeProductionQuery()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="button" id="sxd" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Save" onclick="saveProductionReportQuery();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<fieldset id="dvProductionRep">
+    <legend class="customlegend22" id="lgHeader">Production Report <span style="float: right; font-weight: normal"><a id="ancSaveProductionQuery" onclick="showProductionQuerySaver()" style="display:none; float: right">Save Query</a></span></legend>
+   
+</fieldset>
+
+
+

@@ -1,0 +1,198 @@
+﻿@using DPR_DataMigrationEngine.GenericHelpers
+@model List<DPR_DataMigrationEngine.EF.Models.ProjectReportObject>
+@{
+    ViewBag.Title = "Project Report";
+}
+
+<table style="width: 100%">
+    <tr>
+        <td style="padding-right:0; width: 90%"></td>
+        <td style="padding-right:0; width: 5%">
+            <a onclick="tableToExcel('tblStatProjects', 'Project Report Data')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" /></a>
+        </td>
+        <td style="width: 10%">
+            <img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer; padding-bottom: 7px" alt="Print Report" title="Print Report" onclick="printProjectStatReport()" />
+        </td>
+    </tr>
+</table>
+
+<div style="width: 100%;">
+        <fieldset id="fsProjectList" style="background: whitesmoke; width: 100%" class="allcontent">
+            <legend class="customlegend22" id="lgHeader">Project Report Data</legend>
+        
+            <table id="tblStatProjects" style="width: 100%; min-height: 70%" class="fils-border newTable">
+                <tr class="customGridHeader">
+                    <th style="width: 3%; text-align: center">
+                    S/N
+                </th>
+                    <th style="width: 15%; text-align: left">
+                        Project
+                    </th>
+                    <th style="width: 7%; text-align: left">
+                        Type
+                    </th>
+                    <th style="width: 7%; text-align: left">
+                        Duration(Months)
+                    </th>
+                    <th style="width: 10%; text-align: left">
+                        Cost(Million)
+                    </th>
+
+                    <th style="width: 10%; text-align: left">
+                        Sector
+                    </th>
+                    <th style="width: 10%; text-align: left">
+                        Terrain
+                    </th>
+                    <th style="width: 10%; text-align: left">
+                        Completion Status
+                    </th>
+                    <th style="width: 15%; text-align: left">
+                        Company
+                    </th>
+                    <th style="width: 10%">
+                        Action
+                    </th>
+                </tr>
+                @{
+                    for (var i = 0; i < Model.Count(); i++)
+                    {
+                        var zxz = Model[i];
+                        <tr  class="xtcR" style="color: black;">
+
+                     @{
+                        if (zxz.ProjectId != (int)OtherNotAvailable.Not_Available)
+                        {
+                            <td style="width: 3%; text-align: center" class="xtc">
+                            @(i + 1)
+                           </td>
+                                <td style="width: 15%; text-align: left" id="tdProjectName">
+                                    <a title="Manage Milestones" href="/Project/ProjectMileStonesReports?projectId=@(zxz.ProjectId)" style="color: green; text-decoration: none; cursor: pointer"> @zxz.ProjectName</a>
+                                </td>
+
+                                <td style="width: 10%; text-align: left" id="tdProjectTypeName">
+                                    @zxz.ProjectTypeName
+                                </td>
+                                <td style="width: 10%; text-align: left" id="tdProjectDuration">
+                                    @zxz.Duration
+                                </td>
+                                <td style="width: 10%; text-align: left" id="tdProjectCost">
+                                    @zxz.Cost
+                                </td>
+                                <td style="width: 10%; text-align: left" id="tdProjectSector">
+                                    @zxz.SectorName
+                                </td>
+                                <td style="width: 10%; text-align: left" id="tdProjectTerrainName">
+                                    @zxz.TerrainName
+                                </td>
+                                <td style="width: 10%; text-align: left" id="tdProjectCompletion">
+                                    @zxz.CompletionStatus
+                                </td>
+                                <td style="width: 15%; text-align: left" id="tdProjectCompany">
+                                    @zxz.CompanyName
+                                </td>
+                                <td style="width: 18%">
+                                    <a class="ProjectEdTx" title="Edit" id="ed@(zxz.ProjectId)" onclick="ProjectEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a><a class="projectDelTx" title="Delete" id="del@(zxz.ProjectId)" onclick="projectDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+                                </td>
+
+                                }
+
+                           }
+                        </tr>
+                    }
+                }
+            </table>
+        </fieldset>
+      
+    </div>
+<img src="/Images/select2-spinner.gif" id="imgProjectRepoSpin" class="spinProgress2" />
+
+<script type="text/javascript">
+    function printProjectStatReport() {
+        if ($('#tblStatProjects').html() == null) {
+            alert('Nothing to Print');
+            return;
+        }
+        printReportData('fsProjectList');
+    }
+
+    $(window).load(function() {
+
+
+        //$(".page-button").click(function() {
+        //    if (!$(this).hasClass('current')) {
+
+        //        window.location.href = "http://" +
+        //            window.location.host + window.location.pathname +
+        //            '?page=' + $(this).val() + '&pageSize=' + 50;
+
+        //    }
+        //});
+    });
+
+    $(function() {
+        $(window).scroll(function() {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height() - 180) {
+
+
+                var url = '/Project/GetMoreStaticProJectReports';
+                $("#imgProjectRepoSpin").show();
+                $.ajax({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function(zxz) {
+                        if (zxz === null) {
+                            $("#imgProjectRepoSpin").hide();
+                        } else {
+                            $.each(zxz, function(i, r) {
+                                refreshProjectRepo2(r);
+                            });
+                            $("#imgProjectRepoSpin").hide();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    function refreshProjectRepo2(r) {
+
+        var bv = $('#tblStatProjects tr').length - 1;
+
+
+        $("#tblStatProjects tbody:last").append($(
+            '  <tr  class="xtcR" style="color: black;">'                   
+                + ' <td style="width: 3%; text-align: center" class="xtc">'
+                + (bv + 1)
+                + ' </td>'
+                + ' <td style="width: 15%; text-align: left" id="tdProjectName">'
+                + '<a title="Manage Milestones" href="/Project/ProjectMileStones?projectId=' + r.ProjectId + '" style="color: green; text-decoration: none; cursor: pointer">' + r.ProjectName + '</a>'
+                + '  </td>'
+                + ' <td style="width: 10%; text-align: left" id="tdProjectTypeName">'
+                + r.ProjectTypeName
+                + '  </td>'
+                + '  <td style="width: 10%; text-align: left" id="tdProjectDuration">'
+                + r.Duration
+                + '   </td>'
+                + '  <td style="width: 10%; text-align: left" id="tdProjectCost">'
+                + r.Cost
+                + '   </td>'
+                + ' <td style="width: 10%; text-align: left" id="tdProjectSector">'
+                + r.SectorName
+                + ' </td>'
+                + '  <td style="width: 10%; text-align: left" id="tdProjectTerrainName">'
+                + r.TerrainName
+                + ' </td>'
+                + ' <td style="width: 10%; text-align: left" id="tdProjectCompletion">'
+                + r.Completion
+                + ' </td>'
+                + '  <td style="width: 15%; text-align: left" id="tdProjectCompany">'
+                + r.CompanyName
+                + ' </td>'                                    
+                + ' </tr>'));
+
+    }
+    
+</script>

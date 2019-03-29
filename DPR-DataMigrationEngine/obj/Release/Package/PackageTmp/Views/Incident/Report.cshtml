@@ -1,0 +1,86 @@
+﻿@model List<DPR_DataMigrationEngine.EF.Models.IncidentHistory>
+@{
+    ViewBag.Title = "Report";
+}
+
+<table style="width: 100%">
+    <tr>
+        <td>
+            <img src="/Images/printer-24_opt.png" style="float: right; cursor: pointer; padding-bottom: 7px" alt="Print Report" title="Print Report" onclick="printIncidentStatReport()" />
+        </td>
+    </tr>
+</table>
+
+<div style="width: 100%" id="dvIncidentStatReport">
+    <fieldset id="fsIncidentList" style="background: whitesmoke; width: 100%" class="allcontent">
+        <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+        <label id="brIncidentFeedBackStatus" style="display: none; visibility: visible"></label>
+        <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 20%">
+            <tr>
+                <td style="width: 70%">
+                    <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedbackIncident">@ViewBag.IncidentMessage</div>
+                </td>
+            </tr>
+        </table>
+        <table id="tbStatIncidents" class="fils-border newTable">
+            <tr class="customGridHeader">
+                <th style="width: 5%; text-align: center">
+                    S/N
+                </th>
+                <th style="width: 25%; text-align: left">
+                    Incident
+                </th>
+                <th style="width: 15%; text-align: left">
+                    Type
+                </th>
+                <th style="width: 20%; text-align: left">
+                    Location
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Incident Date
+                </th>
+                <th style="width: 25%; text-align: left">
+                    Company
+                </th>
+            </tr>
+            @{
+                for (var i = 0; i < Model.Count(); i++)
+                {
+                    var zxz = Model[i];
+                    <tr id="tr@(zxz.IncidentHistoryId)" class="xtcR">
+                        <td style="width: 5%; text-align: center" class="xtc">
+                            @(i + 1)
+                        </td>
+                        <td style="width: 25%; text-align: left" id="tdIncidentTitle">
+                            @zxz.Title
+                        </td>
+                        <td style="width: 15%; text-align: left" id="tdIncidentType">
+                            @zxz.IncidentTypeName
+                        </td>
+                        <td style="width: 20%; text-align: left" id="tdIncidentLocation">
+                            @zxz.Location
+                        </td>
+                        <td style="width: 10%; text-align: left" id="tdIncidentDate">
+                            @zxz.Date
+                        </td>
+                        <td style="width: 25%; text-align: left" id="tdCompany">
+                            @zxz.CompanyName
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+    function printIncidentStatReport() {
+        if ($('#tbStatIncidents').html() == null)
+        {
+            alert('Nothing to Print');
+            return;
+        }
+        printReportData('dvIncidentStatReport');
+    }
+</script>
+

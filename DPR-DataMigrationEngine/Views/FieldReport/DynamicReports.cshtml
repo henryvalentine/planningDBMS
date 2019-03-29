@@ -1,0 +1,200 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+
+@model DPR_DataMigrationEngine.ViewModels.FieldViewModel
+
+<style type="text/css">
+    a {
+        color: whitesmoke;
+        text-decoration: underline;
+    }
+
+        a:hover {
+            color: whitesmoke;
+            text-decoration: underline;
+        }
+</style>
+
+<form class="fsEdit xxc" style="display: none; visibility: visible; max-height: 70%" id="dvSelectFieldReportItems">
+
+    <legend class="legend22" style="width: 100%">Select Field Report Criteria</legend>
+    <table style="width: 100%">
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Company: </i> </div>
+                <select class="form-control" name="queryBuilder.CompanyId" id="ddlFieldDynamicComp">
+                    @{
+                        var companyExtensions = new ExtensionHelpers().ListOption(Model.Companies, "CompanyId", "Name", "< All >");
+
+                        foreach (var company in companyExtensions.Select(companyString => Html.Raw(companyString)))
+                        {
+                            @company
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+
+                <div style="margin-left: 2%"><i style="width: auto">Block: </i> </div>
+                <select class="form-control" name="queryBuilder.BlockId" id="ddlFieldDynamicBlock">
+                    @*@{
+                        var blocks = new ExtensionHelpers().ListOption(Model.Blocks, "BlockId", "Name", "< All >");
+
+                        foreach (var block in blocks.Select(blockString => Html.Raw(blockString)))
+                        {
+                            @block
+                        }
+                    }*@
+                    <option value="0">-- List is empty --</option>
+                </select>
+            </td>         
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                
+                <div style="margin-left: 2%"><i style="width: auto">Terrain: </i> </div>
+                <select class="form-control" name="queryBuilder.Terrain" id="ddlFieldDynamicTerrain">
+                    @{
+                        var terrains = new ExtensionHelpers().ListOption(Model.Terrains, "TerrainId", "Name", "< All >");
+
+                        foreach (var terrain in terrains.Select(terrainString => Html.Raw(terrainString)))
+                        {
+                            @terrain
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div style="margin-left: 2%"><i style="width: auto">Zone: </i> </div>
+                <select class="form-control" name="queryBuilder.ZoneId" id="ddlFieldDynamicZone">
+                    @{
+                        var zones = new ExtensionHelpers().ListOption(Model.Zones, "ZoneId", "Name", "< All >");
+
+                        foreach (var zone in zones.Select(zoneString => Html.Raw(zoneString)))
+                        {
+                            @zone
+                        }
+                    }
+                </select>
+            </td>  
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseRepField" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" onclick="closeFieldRepFields()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="button" id="btnProcessRepField" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Generate Rport" onclick="generateFieldReports();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="padding-right:0; width: 30%">
+            <div style="margin-left: 2%"><i style="width: auto">Use a previous query: </i> </div>
+            <select class="form-control" name="queryBuilder.QueryId" id="ddlfieldPreviousQueries">
+                @{
+                    var previousQueries = new ExtensionHelpers().ListOption(Model.FieldQueries, "FieldQueryId", "FieldQueryName", "-- Select Previous Query --");
+
+                    foreach (var fieldQuery in previousQueries.Select(previousQuerString => Html.Raw(previousQuerString)))
+                    {
+                        @fieldQuery
+                    }
+                }
+            </select>
+        </td>
+        <td style="padding-right:0; width: 7%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: left">
+                <input type="button" id="btnGetPreviousFieldReports" onclick=" generateFieldReports2()" class="btn btnGetPrevQuery large" style="width: 190px; float: right; text-decoration: none" value="Go" />
+            </div>
+        </td>
+        <td style="padding-right:0; width: 10%">
+            <div>&nbsp;</div>
+            <div style="text-align: center; float: left">
+                <input type="button" id="btnGetReports" onclick=" prepFieldRepFiledsTemplate()" class="btn btnGetRepFields large" style="width: 190px; float: right; text-decoration: none" value="Select Query Criteria" />
+            </div>
+        </td>
+        <td style="padding-right:0; width: 5%">
+            <div>&nbsp;</div>
+            <a onclick="tableToExcel('tbFieldReports', 'Field Report')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" /></a>
+        </td>
+        <td style="padding-right:0;width: 5%">
+            <div>&nbsp;</div>
+            <img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer" title="Print Report" onclick="printFieldReport()" />
+        </td>
+    </tr>
+</table>
+
+<img src="/Images/ProgressLoader.gif" id="imgFieldRepoSpin" class="spinProgress" />
+
+<form class="fsEdit xxc" style="display: none; visibility: visible; margin-left: 2%" id="frmSaveFieldQuery">
+    <legend class="legend22" style="width: 100%">Save report query</legend>
+    <table style="width: 100%">
+        <tr>
+            <td>
+                <div style="width: 100%">
+                    <div style="margin-left: 5px"><i style="width: auto">Query Name:</i></div>
+                    <input type="text" name="queryName" id="txtFieldQueryName" class="form-control" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="dft" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Cancel" onclick="closeFieldQuery()" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="button" id="sxd" class="btn btnUpdate large" style=" border: none; float: right; width: 110px" value="Save" onclick="saveFieldReportQuery();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<fieldset style="width: 100%" id="dvFieldRep">
+    <legend class="customlegend22" id="lgHeader">Field Report<span style="float: right"><a id="ancSaveFieldQuery" onclick="showFieldQuerySaver()" style="display:none">Save Query</a></span></legend>
+</fieldset>
+
+<script type="text/javascript">
+    $('#ddlFieldDynamicComp').on('change', function () {
+        var rxv = parseInt($(this).val());
+
+        if (rxv < 1) {
+            alert('Invalid selection');
+            return;
+        }
+
+        var url = '/Well/GetBlocksByCompany?companyId=' + rxv;
+
+        $.get(url, function (retVal) {
+            getCompanyBlocks(retVal);
+        });
+
+    });
+
+
+
+    function getCompanyBlocks(data) {
+        if (data == null || data.length < 1) {
+
+            $('#ddlFieldDynamicBlock').html('<option value="0"> -- List is empty -- </option>');
+            $('#ddlFieldDynamicBlock').prop('disabled', true);
+            return;
+        }
+        $('#ddlFieldDynamicBlock').empty();
+        $('#ddlFieldDynamicBlock').append($("<option />").val(0).text(' -- <All> --'));
+        $.each(data, function (i, v) {
+            if (v.BlockId < 1) {
+                $('#ddlFieldDynamicBlock').empty();
+                $('#ddlFieldDynamicBlock').html('<option value="0"> -- List is empty -- </option>');
+                $('#ddlFieldDynamicBlock').prop('disabled', 'disabled');
+                return;
+            }
+
+            $('#ddlFieldDynamicBlock').append($("<option />").val(v.BlockId).text(v.Name));
+        });
+        
+        $('#ddlFieldDynamicBlock').prop('disabled', false);
+    }
+</script>

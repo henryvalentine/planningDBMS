@@ -1,0 +1,449 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model Tuple<List<DPR_DataMigrationEngine.EF.Models.Company>, List<DPR_DataMigrationEngine.EF.Models.Person>>
+<style type="text/css">
+    .personEdTx{}
+</style>
+<form action="@Url.Action("AddPerson", "Person")" id="fsProcessPersons" class="fsEdit" style="display: none; visibility: visible">
+    <span class="legend22" id="lgEditCompany" style="width: 100%">Add New Person</span>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorPerson"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group newItemTd" style="width: 50%">
+                <div>&nbsp;</div>
+                <div style="padding-left: 5px"><i style="width: auto">Last Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtLastName" data-valmsg-for="person.LastName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="person.LastName" id="txtLastName" class="form-control"/>
+            </td>
+            <td class="form-group newItemTd" style="width: 50%">
+                <div>&nbsp;</div>
+                <div><i style="width: auto">First Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtFirstName" data-valmsg-for="person.FirstName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="person.FirstName" id="txtFirstName" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 50%" class="newItemTd">
+                <div><i style="width: auto">Designation: </i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtDesignation" data-valmsg-for="person.Designation" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="person.Designation" id="txtDesignation" class="form-control" />
+            </td>
+            <td class="form-group newItemTd" style="width: 50%">
+                <div><i style="width: auto">Company:</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlCompany" data-valmsg-for="person.CountryId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="person.CompanyId" id="ddlCompany">
+                    @{
+                        var fr = new ExtensionHelpers().ListOption(Model.Item1, "CompanyId", "Name", "-- Select Company --");
+
+                        foreach (var yf in fr.Select(dc => Html.Raw(dc)))
+                        {
+                            @yf
+                        }
+
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessPerson" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessPerson" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<form class="fsEdit" style="display: none; visibility: visible" method="POST" action="@Url.Action("SaveToFolder", "Person")" enctype="multipart/form-data" id="frmProcessPersonDocs">
+    <span class="legend22" style="width: 100%">Bulk Upload</span>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; background: whitesmoke; border: none;margin-top:0">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorPersonBulk"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="form-group">
+                <div>&nbsp;</div>
+                <br /><i style="width: auto">Select Excel Data File</i><span id="spfdPersonTemplate" style="color: #FF0000; display: none">*Invalid file format</span>
+                <input id="fdPersonTemplate" type="file" name="file" style="width: 100%" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group newItemTd" style="width: 50%">
+                <div><i style="width: auto">Company:</i><span style="color: red">*</span><span class="field-validation-valid" id="spddlBulkPerson" data-valmsg-for="person.CountryId" style="color: red" data-valmsg-replace="true">Invalid Selection</span> </div>
+                <select class="form-control" name="companyId" id="ddlBulkPerson">
+                    @{
+                        foreach (var yf in fr.Select(dc => Html.Raw(dc)))
+                        {
+                            @yf
+                        }
+
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseBulkPerson" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessBulkPerson" class="btn btnUpload large" style=" border: none; float: right; width: 110px" value="Upload" onclick="return valIdatePersonTemplate();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="width:10%; padding-right: 8px;" valign="top" align="center">
+            <div style="text-align: center; float: left">
+                <a title="Download Bulk Upload Template" id="dnTx" style="cursor:pointer" href="@("/Person/DownloadContentFromFolder?path=" + "~/BulkTemplate/PersonTemplate.xlsx")"><img src="/Images/downloadExcel.png" alt="download Bulk Upload Template" style="width: 40px; height: 40px" /></a>
+            </div>
+
+        </td>
+        <td style="width:70%; padding-right: 8px;" valign="top" align="center">
+            <div style="text-align: center; float: left">
+                <input type="button" id="btnPrepCompBulk" onclick="prepareBulkUploadTemplate()" value="Bulk Upload" class="btn btnNext large" style="width: 140px; float: left" />
+            </div>
+        </td>
+        <td style="width: 20%">
+            <div style="width: 100%">
+                <input type="button" id="btnAddNewPerson" onclick="preparePersonTemplate()" value="Single Entry" class="btn btnAddP large" style="width: 160px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+
+<fieldset id="fsCompanyList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProcess" style="display: none; visibility: visible"></label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 80%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedbackPerson"></div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblPersons" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 7%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 29%; text-align: left">
+                Person
+            </th>
+            <th style="width: 27%; text-align: left">
+                Designation
+            </th>
+            <th style="width: 27%; text-align: left">
+                Company
+            </th>
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Item2.Count(); i++)
+            {
+                var zxz = Model.Item2[i];
+                <tr id="tr@(zxz.PersonId)" class="xtcR" style="color: black;">
+                    <td style="width: 7%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 29%; text-align: left" id="tdName">
+                        
+                        @{
+                var str = zxz.LastName + " " + zxz.FirstName; 
+                            @str
+                        }
+                    </td>
+                    <td style="width: 27%; text-align: left" id="tdDesignation">
+                        @zxz.Designation
+                    </td>
+                    <td style="width: 27%; text-align: left" id="tdCompanyName">
+                        @zxz.CompanyName
+                    </td>
+                    <td style="width: 10%">
+                        <a class="personEdTx" title="Edit" id="ed@(zxz.PersonId)" onclick=" personEdTx(this.id);"><img src="~/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="personDelTx" title="Delete" id="del@(zxz.PersonId)" onclick="personDelTx(this.id);"><img src="~/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>
+
+<script type="text/javascript">
+
+    $(window).load(function () {
+    });
+
+    function feedBackStatus(x, z)
+    {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3 || dx === -1) {
+            $("#brFeedbackPerson").text(z);
+            $("#brFeedbackPerson").removeClass('success');
+            $("#brFeedbackPerson").addClass('error');
+            $("#brFeedbackPerson").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedbackPerson").text(z);
+            $("#brFeedbackPerson").removeClass('error');
+            $("#brFeedbackPerson").addClass('success');
+            $("#brFeedbackPerson").fadeIn();
+        }
+    }
+
+    $(document).ready(function () {
+        toggleValidators('fsProcessPersons');
+        toggleValidators('frmProcessPersonDocs');
+        
+        $('#btnCloseProcessPerson').on("click", function ()
+        {
+            $('#brEdErrorPerson').text('');
+            $('#brEdErrorPerson').hide();
+            closePopModal($('#fsProcessPersons'));
+        });
+
+        $("#fsProcessPersons").submit(function (e)
+        {
+            $("#brFeedbackPerson").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessPersons')) {
+                return;
+            }
+
+            var vx = $('#txtLastName');
+            var vxx = $('#txtFirstName');
+            var rx = $('#txtDesignation');
+            var rnx = $('#ddlCompany');
+
+            var newPerson = {};
+            newPerson.PersonId = rtx;
+
+            newPerson['LastName'] = vx.val();
+            newPerson['FirstName'] = vxx.val();
+            newPerson['Designation'] = rx.val();
+            newPerson['CompanyId'] = rnx.val();
+            newPerson.CompanyName = $("#ddlCompany option:selected").text();
+     
+            var sdx = JSON.stringify({ person: newPerson });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode === -1 || zxz.ErrorCode === -2 || zxz.ErrorCode === 0 || zxz.ErrorCode === -3)
+                    {
+                        $('#brEdErrorPerson').text(zxz.Error);
+                        $('#brEdErrorPerson').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProcess').text() === "2")
+                    {
+                        updateTable(zxz);
+                    }
+                    
+                    $('#brEdErrorPerson').text('');
+                    $('#brEdErrorPerson').hide();
+                }
+            });
+        });
+    });
+
+
+    var rtx = 0;
+    function personEdTx(x)
+    {
+        $('#brProcess').text('');
+        $("#brFeedbackPerson").fadeOut();
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/Person/EditPerson?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessPersons', 'Update');
+        $('#fsProcessPersons').attr("action", "/Person/EditPerson");
+        $('#txtLastName').val(data.LastName);
+        $('#txtFirstName').val(data.FirstName);
+        $('#txtDesignation').val(data.Designation);
+        $('#ddlCompany').val(data.CompanyId);
+        $('#lgEditCompany').text('Update Person Information');
+        $('#brProcess').text(2);
+        setModal($('#fsProcessPersons'));
+    }
+
+    function personDelTx(x) {
+        $("#brFeedbackPerson").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/Person/DeletePerson?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblPersons #tr' + xxid).remove();
+
+                $('#tblPersons tr.xtcR').each(function (r) {
+                    $(this).children('.xtc').text(r + 1);
+                });
+                $('#tblPersons .xtcR:even').addClass('gridItem1');
+            }
+        });
+        return;
+    }
+
+    function preparePersonTemplate()
+    {
+        $('#brEdErrorPerson').text('');
+        $('#brEdErrorPerson').hide();
+        refreshForm('fsProcessPersons', '');
+        $('#fsProcessPersons').attr("action", "/Person/AddPerson");
+        $('#brProcess').text(1);
+        setModal($('#fsProcessPersons'));
+    }
+
+    function updateTable(r)
+    {
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorPerson').text(r.Error);
+            $('#brEdErrorPerson').fadeIn('slow');
+            return;
+        }
+        
+        $('#tblPersons #tr' + rtx).children('#tdName').html(r.LastName + " " + r.FirstName);
+        $('#tblPersons #tr' + rtx).children('#tdDesignation').html(r.Designation);
+        $('#tblPersons #tr' + rtx).children('#tdCompanyName').html(r.CompanyName);
+
+        //$('#tblPersons .xtcR:even').addClass('gridItem1');
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+        closePopModal($('#fsProcessPersons'));
+    }
+
+    function refresh(r)
+    {
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorPerson').text(r.Error);
+            $('#brEdErrorPerson').fadeIn('slow');
+            return;
+        }
+        var bv = $('#tblPersons tr').length - 1;
+
+        $("#tblPersons tbody:last").append($('<tr class="xtcR" id="tr' + r.PersonId + '"><td style="width: 7%;text-align: center" class="xtc">' + (bv + 1) + '</td><td style="width: 29%; text-align: left" id="tdName">' + r.LastName + " " + r.FirstName + '</td><td style="width: 27%; text-align: left" id="tdDesignation">' + r.Designation + '</td><td style="width: 27%; text-align: left" id="tdCompanyName">' + r.CompanyName + '</td><td style="width: 10%"><a class="personEdTx" title="Edit" id="ed' + r.PersonId + '" onclick=" personEdTx(this.id);"><img src="/Images/edit.png" style="cursor: pointer" alt ="Edit"/></a>&nbsp;&nbsp;<a class="personDelTx" title="Delete" id="del' + r.PersonId + '" onclick="personDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" style="cursor: pointer"/></a></td></tr>'));
+
+        //Successfull operation
+        $('#tblPersons .xtcR:even').addClass('gridItem1');
+        $('#brProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessPersons'));
+    }
+    
+
+    function valIdatePersonTemplate()
+    {
+        if ($('#fdPersonTemplate').val().trim().length < 1)
+        {
+            alert("Please Select an Excel file to upload!");
+            $('#fdPersonTemplate').val('');
+            return false;
+        }
+
+        if (!validateTemplate('frmProcessPersonDocs'))
+        {
+            $('#brEdErrorPersonBulk').text('Validation failed. Please check the input fileds and try again')
+                .fadeIn();
+            return false;
+        }
+        return true;
+        // $('#btnProcessBulkUpload').unbind('click').click();
+    }
+
+    $('#btnCloseBulkPerson').on("click", function () {
+        closePopModal($('#frmProcessPersonDocs'));
+    });
+
+    function prepareBulkUploadTemplate() {
+        //refreshForm('frmProcessPersonDocs', '');
+        setModal($('#frmProcessPersonDocs'));
+    }
+
+    function downloadFile(d) {
+        if (d.length < 1) {
+            alert('Invalid Selection!');
+            return;
+        }
+        $.get(d);
+    }
+
+    $('#fdPersonTemplate').on('change', validatePersonBulk);
+
+    function validatePersonBulk(z) {
+        var content = $('#fdPersonTemplate');
+        var input = z.target.files;
+
+        if (input.length > 0) {
+            var extension = content.val().split('.').pop();
+            // str.substring(str.lastIndexOf('~'));
+            var cdg = $('#fdPersonTemplate');
+            if (extension === 'xlsx' || extension === 'xls') {
+                $('#spfdPersonTemplate').fadeOut();
+            }
+            else {
+                $('#spfdPersonTemplate').fadeIn();
+                cdg.val('');
+            }
+            return;
+        }
+        else {
+            alert("Please select an Excel file to upload!");
+        }
+    }
+</script>

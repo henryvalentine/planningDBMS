@@ -1,0 +1,90 @@
+﻿@using System.Web.UI.WebControls
+@model DPR_DataMigrationEngine.Models.RegisterViewModel
+
+<style type="text/css">
+    ul#rolList li {
+        text-decoration: none;display: inline;
+    }
+</style>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "fsRegister", role = "form", @style = "width: 40%" }))
+{
+   <span class="legend2" style="width: 100%">Create New User</span>
+     @Html.AntiForgeryToken()
+   
+    <hr />
+    @Html.ValidationSummary()
+    
+    <table style="width: 100%; border: none">
+        <tr>
+            <td>
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">First Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtFirstName" data-valmsg-for="model.FirstName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.FirstName" id="txtFirstName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Last Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtLastName" data-valmsg-for="model.LastName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.LastName" id="txtLastName" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">User Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtUserName" data-valmsg-for="model.UserName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="model.UserName" id="txtUserName" class="form-control" />
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Email:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtEmail" data-valmsg-for="model.Email" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="email" name="model.Email" id="txtEmail" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" colspan="2">
+                <div class="formLabel"><i style="width: auto">Password:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtPassword" data-valmsg-for="model.Password" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="password" name="model.Password" id="txtPassword" class="form-control" />
+            </td>
+            <td class="form-group" colspan="2">
+                <div class="formLabel"><i style="width: auto">Confirm Password:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtConfirmPassword" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="password" id="txtConfirmPassword" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+              <div class="formLabel"><i style="width: auto">User Role(s)</i></div>
+                <div class="col-md-10">
+                    <ul id="rolList">
+                        @{
+                            foreach (var role in Model.UserRoles)
+                            {
+                               <li>
+                                <input type="checkbox" value="@role.Id" />@role.Name
+                               </li>
+
+                            }
+                        }
+                    </ul>
+
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btncloseRegister" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessRegister" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+</table>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

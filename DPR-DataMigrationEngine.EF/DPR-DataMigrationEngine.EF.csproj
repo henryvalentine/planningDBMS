@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2A9CCF12-7D9A-49C3-9FBF-AA0B15B94615}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DPR_DataMigrationEngine.EF</RootNamespace>
+    <AssemblyName>DPR-DataMigrationEngine.EF</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.7.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomizedModels\CustomizedProductionQuery.cs" />
+    <Compile Include="CustomizedModels\CustomizedLeaseType.cs" />
+    <Compile Include="CustomizedModels\ErrorLogger.cs" />
+    <Compile Include="CustomizedModels\IncidentReportObject.cs" />
+    <Compile Include="CustomizedModels\DBBackupObject.cs" />
+    <Compile Include="CustomizedModels\BlockObject.cs" />
+    <Compile Include="CustomizedModels\ProfileRole.cs" />
+    <Compile Include="CustomizedModels\ProjectReportObject.cs" />
+    <Compile Include="CustomizedModels\WellObject.cs" />
+    <Compile Include="CustomizedModels\WellCompletionReportObject.cs" />
+    <Compile Include="CustomizedModels\FieldReportObject.cs" />
+    <Compile Include="CustomizedModels\WellWorkoverbject.cs" />
+    <Compile Include="CustomizedModels\ProductionObject.cs" />
+    <Compile Include="CustomizedModels\ProjectMilestoneObject.cs" />
+    <Compile Include="CustomizedModels\CompanyObject.cs" />
+    <Compile Include="CustomizedModels\CustomizedProjectMilestone.cs" />
+    <Compile Include="CustomizedModels\CustomizedSector.cs" />
+    <Compile Include="CustomizedModels\CustomizedProjectType.cs" />
+    <Compile Include="CustomizedModels\PersonObject.cs" />
+    <Compile Include="CustomizedModels\WellCompletionObject.cs" />
+    <Compile Include="CustomizedModels\WellReportObject.cs" />
+    <Compile Include="CustomizedModels\CustomizedBlock.cs" />
+    <Compile Include="CustomizedModels\CustomizedCompany.cs" />
+    <Compile Include="CustomizedModels\CustomizedEquipment.cs" />
+    <Compile Include="CustomizedModels\CustomizedEquipmentType.cs" />
+    <Compile Include="CustomizedModels\CustomizedField.cs" />
+    <Compile Include="CustomizedModels\CustomizedIncidentType.cs" />
+    <Compile Include="CustomizedModels\CustomizedMileStoneStatus.cs" />
+    <Compile Include="CustomizedModels\CustomizedPerson.cs" />
+    <Compile Include="CustomizedModels\CustomizedProduct.cs" />
+    <Compile Include="CustomizedModels\CustomizedIncidentHistory.cs" />
+    <Compile Include="CustomizedModels\CustomizedProject.cs" />
+    <Compile Include="CustomizedModels\CustomizedProduction.cs" />
+    <Compile Include="CustomizedModels\CustomizedTerrain.cs" />
+    <Compile Include="CustomizedModels\CustomizedWell.cs" />
+    <Compile Include="CustomizedModels\CustomizedWellClass.cs" />
+    <Compile Include="CustomizedModels\CustomizedWellClassification.cs" />
+    <Compile Include="CustomizedModels\CustomizedWellCompletion.cs" />
+    <Compile Include="CustomizedModels\CustomizedWellCompletionInterval.cs" />
+    <Compile Include="CustomizedModels\CustomizedWellCompletionType.cs" />
+    <Compile Include="CustomizedModels\CustomizedWellType.cs" />
+    <Compile Include="CustomizedModels\CustomizedWellWorkover.cs" />
+    <Compile Include="CustomizedModels\CustomizedWellWorkOverReason.cs" />
+    <Compile Include="CustomizedModels\CustomizedZone.cs" />
+    <Compile Include="Models\Block.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BlockType.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Company.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DPR-DataMigrationEngineModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DPR-DataMigrationEngineModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DPR-DataMigrationEngineModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DPR-DataMigrationEngineModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DPR-DataMigrationEngineModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Equipment.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EquipmentType.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EquipmentUsageHistory.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Field.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FieldQuery.cs">
+      <DependentUpon>QueryBuilderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidentHistory.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidentQuery.cs">
+      <DependentUpon>QueryBuilderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IncidentType.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LeaseType.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MilestoneStatu.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Person.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Production.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductionQuery.cs">
+      <DependentUpon>QueryBuilderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Project.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectMileStone.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectRep.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectType.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Provider.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QueryBuilderModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QueryBuilderModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QueryBuilderModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QueryBuilderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QueryBuilderModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>QueryBuilderModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sector.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sys_Param.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Terrain.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Well.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellClass.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellClassification.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellCompletion.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellCompletionInterval.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellCompletionQuery.cs">
+      <DependentUpon>QueryBuilderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellCompletionType.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellQuery.cs">
+      <DependentUpon>QueryBuilderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellType.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellWorkover.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellWorkoverQuery.cs">
+      <DependentUpon>QueryBuilderModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WellWorkOverReason.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Zone.cs">
+      <DependentUpon>DPR-DataMigrationEngineModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Models\DPR-DataMigrationEngineModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DPR-DataMigrationEngineModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\DPR-DataMigrationEngineModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DPR-DataMigrationEngineModel.edmx</DependentUpon>
+      <LastGenOutput>DPR-DataMigrationEngineModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Models\DPR-DataMigrationEngineModel.edmx.diagram">
+      <DependentUpon>DPR-DataMigrationEngineModel.edmx</DependentUpon>
+    </None>
+    <None Include="Models\DPR-DataMigrationEngineModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DPR-DataMigrationEngineModel.edmx</DependentUpon>
+      <LastGenOutput>DPR-DataMigrationEngineModel.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Models\QueryBuilderModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QueryBuilderModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\QueryBuilderModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QueryBuilderModel.edmx</DependentUpon>
+      <LastGenOutput>QueryBuilderModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Models\QueryBuilderModel.edmx.diagram">
+      <DependentUpon>QueryBuilderModel.edmx</DependentUpon>
+    </None>
+    <None Include="Models\QueryBuilderModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>QueryBuilderModel.edmx</DependentUpon>
+      <LastGenOutput>QueryBuilderModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\PagedList.css" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

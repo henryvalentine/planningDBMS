@@ -1,0 +1,243 @@
+﻿@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+@model  DPR_DataMigrationEngine.ViewModels.WellWorkoverViewModel
+
+
+<form style="width: 100%" method="POST" id="productionRepoFrm" action="@Url.Action("GetWorkoversByQueryDate", "WellWorkOver")">
+    <table style="width: 100%">
+        <tr>
+            <td colspan="3">
+                <label style="font-weight: normal; font-size: 10pt; float: left; width: 100%; ">Retrieve Well Completion Reports by Period:</label>
+                @*<input type="hidden" value="@ViewBag.SearchMonth"/>
+                    <input type="hidden" value="@ViewBag.SearchYear" />*@
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 35%">
+                <div style="margin-left: 2%"><i style="width: auto">Year: </i> </div>
+                <select class="form-control" name="search.Year" id="ddlWellWorkYearRepo">
+                    @{
+                        var yearExtensions = new ExtensionHelpers().ListOption(Model.YearList, "DocId", "DocName", "-- Select Year --");
+
+                        foreach (var year in yearExtensions.Select(yearString => Html.Raw(yearString)))
+                        {
+                            @year
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 35%">
+                <div style="margin-left: 2%"><i style="width: auto">Month: </i> </div>
+                <select class="form-control" name="search.Month" id="ddlMonthCompRepo">
+                    @{
+                        var monthExtensions = new ExtensionHelpers().ListOption(Model.MonthList, "DocId", "DocName", "-- Select Month --");
+
+                        foreach (var month in monthExtensions.Select(monthString => Html.Raw(monthString)))
+                        {
+                            @month
+                        }
+                    }
+                </select>
+
+            </td>
+            <td style="width: 20%">
+                <div>&nbsp;</div>
+                <input type="submit" name="searchDate" class="btn large btnSearch" onclick="return verifyworkOverSearchMonth()" style="width: 130px; border: 1px solid green; float: left" value="Search" />
+            </td>
+            <td style="padding-right:0; width: 5%">
+                <div>&nbsp;</div><div>&nbsp;</div>
+                <a onclick="tableToExcel('tblStatWorkovers', 'Well Work Over Report')"><img src="/Images/export2Excel2.jpg" style="float: right; margin-right: -2%; cursor: pointer" title="Export to Excel" /></a>
+            </td>
+            <td style="width: 10%">
+                <div>&nbsp;</div><div>&nbsp;</div>
+                <img src="/Images/printer-24_opt.png" style="float: left; cursor: pointer; padding-bottom: 7px" alt="Print Report" title="Print Report" onclick="printWorkoverStatStatReport()" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<div style="width: 100%;" id="dvStatWorkoverReport">
+    <fieldset id="fsWellWorkoverList" style="background: whitesmoke; width: 100%" class="allcontent">
+        <legend class="customlegend22" id="lgHeader">Well Workoved Over Report for :&nbsp; <span id="spreportDateTitle">@ViewBag.SearchPeriod</span></legend>
+        <table id="tblStatWorkovers" style="width: 100%" class="fils-border newTable">
+            <tr class="customGridHeader">
+                <th style="width: 5%; text-align: center">
+                    S/N
+                </th>
+                <th style="width: 20%; text-align: left">
+                    Company
+                </th>
+                <th style="width: 20%; text-align: left">
+                    Well
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Terrain
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Zone
+                </th>
+                <th style="width: 15%; text-align: left">
+                    Workover Reason
+                </th>
+                <th style="width: 15%; text-align: left">
+                    Workover Completion Date
+                </th>
+                <th style="width: 10%; text-align: left">
+                    Equipment Used
+                </th>
+            </tr>
+            @{
+                for (var i = 0; i < Model.WellWorkoverReportObjects.Count(); i++)
+                {
+                    var zxz = Model.WellWorkoverReportObjects[i];
+                    <tr class="xtcR" style="color: black;">
+                        <td style="width: 5%; text-align: center" class="xtc">
+                            @(i + 1)
+                        </td>
+                        <td style="width: 20%; text-align: left">
+                            @zxz.CompanyName
+                        </td>
+                        <td style="width: 20%; text-align: left">
+                            @zxz.WellName
+                        </td>
+                        <td style="width: 10%; text-align: left">
+                            @zxz.TerrainName
+                        </td>
+                        <td style="width: 10%; text-align: left">
+                            @zxz.ZoneName
+                        </td>
+                        <td style="width: 15%; text-align: left" id="tdReason">
+                            @zxz.Reason
+                        </td>
+                        <td style="width: 15%; text-align: left" id="tdYear">
+                            @zxz.DatecomPletedString
+                        </td>
+                        <td style="width: 10%; text-align: left" id="tdEquipment">
+                            @zxz.EquipmentName
+                        </td> 
+                    </tr>
+                }  
+            }
+        </table>
+    </fieldset>
+</div>
+
+<img src="/Images/select2-spinner.gif" id="imgWorkRepoSpin" class="spinProgress2" />
+
+<script type="text/javascript">
+        $(window).load(function () {
+
+            //$(".page-button").click(function () {
+            //    if (!$(this).hasClass('current')) {
+            //        window.location.href = "http://" +
+            //            window.location.host + window.location.pathname +
+            //            '?page=' + $(this).val() + '&pageSize=' + 40;
+            //    }
+            //});
+            
+        });
+    
+        function verifyworkOverSearchMonth()
+        {
+            var year = parseInt($('#ddlWellWorkYearRepo').val());
+            if (year < 1) {
+                alert('Please select a report year.');
+                return false;
+            }
+            return true;
+        }
+
+        function feedBackStatus(x, z) {
+            var dx = parseInt(x);
+
+            if (dx < 1) {
+                $("#lblWorkoverFeedback").text(z);
+                $("#lblWorkoverFeedback").removeClass('success');
+                $("#lblWorkoverFeedback").addClass('error');
+                $("#lblWorkoverFeedback").fadeIn();
+            }
+
+            if (dx > 0) {
+                $("#lblWorkoverFeedback").text(z);
+                $("#lblWorkoverFeedback").removeClass('error');
+                $("#lblWorkoverFeedback").addClass('success');
+                $("#lblWorkoverFeedback").fadeIn();
+            }
+        }
+
+        function printWorkoverStatStatReport()
+        {
+            if ($('#tblStatWorkovers').html() == null)
+            {
+                alert('Nothing to Print');
+                return;
+            }
+            printReportData('fsWellWorkoverList');
+        }
+         
+
+        $(function () {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() >= $(document).height() - $(window).height() - 180) {
+                    
+                    var url = '/WellWorkOver/GetMoreStaticWorkOverReports';
+                    $("#imgWorkRepoSpin").show();
+                    $.ajax({
+                        url: url,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        type: 'POST',
+                        success: function (zxz) {
+                            if (zxz === null) {
+                                $("#imgWorkRepoSpin").hide();
+                            } else {
+                                $.each(zxz, function (i, r) {
+                                    refreshWorkRepo2(r);
+                                });
+                                $("#imgWorkRepoSpin").hide();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        function refreshWorkRepo2(r) {
+
+            var bv = $('#tblStatWorkovers tr').length - 1;
+
+         
+            $("#tblStatWorkovers tbody:last").append($(
+
+                       '<tr class="xtcR" style="color: black;">'
+                       + '<td style="width: 5%; text-align: center" class="xtc">'
+                        + (bv + 1)
+                        + '</td>'
+                       + ' <td style="width: 15%; text-align: left" id="tdProdName">'
+                         + r.CompanyName
+                        + '</td>'
+                       + ' <td style="width: 10%; text-align: left" id="tdProdName">'
+
+                        + r.WellName
+                       + ' </td>'
+                        + '<td style="width: 10%; text-align: left" id="tdProdName">'
+                         + r.TerrainName
+                       + ' </td>'
+                       + ' <td style="width: 7%; text-align: left" id="tdProdName"> '
+
+                           + r.ZoneName
+                        + '</td>'
+                        + '<td style="width: 7%; text-align: left" id="tdProdName">'
+
+                          + r.Reason
+                        + ' </td>'
+                        + ' <td style="width: 10%; text-align: left" id="tdProdFieldName">'
+                         + r.DatecomPletedString
+                        + ' </td>'
+                        + ' <td style="width: 7%; text-align: left" id="tdProdQuantity">'
+                         + r.EquipmentName
+                        + ' </td>'
+                    + ' </tr>'));
+
+        }
+
+    </script>

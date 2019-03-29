@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataMigrationEngineDBModelStoreContainer" CdmEntityContainer="DPRDataMigrationEngineDBEntities">
+    <EntitySetMapping Name="BlockTypes">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.BlockType">
+        <MappingFragment StoreEntitySet="BlockType">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BlockTypeId" ColumnName="BlockTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="CanonialName" ColumnName="CanonialName" />
+          <ScalarProperty Name="RCNumber" ColumnName="RCNumber" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Equipments">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Equipment">
+        <MappingFragment StoreEntitySet="Equipment">
+          <ScalarProperty Name="LicenseStatus" ColumnName="LicenseStatus" />
+          <ScalarProperty Name="EquipmentTypeId" ColumnName="EquipmentTypeId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquipmentTypes">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.EquipmentType">
+        <MappingFragment StoreEntitySet="EquipmentType">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EquipmentTypeId" ColumnName="EquipmentTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquipmentUsageHistories">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.EquipmentUsageHistory">
+        <MappingFragment StoreEntitySet="EquipmentUsageHistory">
+          <ScalarProperty Name="WellCompletionId" ColumnName="WellCompletionId" />
+          <ScalarProperty Name="DateUsed" ColumnName="DateUsed" />
+          <ScalarProperty Name="WellId" ColumnName="WellId" />
+          <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="EquipmentUsageHistoryId" ColumnName="EquipmentUsageHistoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fields">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Field">
+        <MappingFragment StoreEntitySet="Field">
+          <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+          <ScalarProperty Name="TechnicalAllowable" ColumnName="TechnicalAllowable" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TerrainId" ColumnName="TerrainId" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="FieldId" ColumnName="FieldId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IncidentTypes">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.IncidentType">
+        <MappingFragment StoreEntitySet="IncidentType">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IncidentTypeId" ColumnName="IncidentTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LeaseTypes">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.LeaseType">
+        <MappingFragment StoreEntitySet="LeaseType">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LeaseTypeId" ColumnName="LeaseTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MilestoneStatus">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.MilestoneStatu">
+        <MappingFragment StoreEntitySet="MilestoneStatus">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="MilestoneStatusId" ColumnName="MilestoneStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Person">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectMileStones">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.ProjectMileStone">
+        <MappingFragment StoreEntitySet="ProjectMileStone">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="MileStoneStatusId" ColumnName="MileStoneStatusId" />
+          <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+          <ScalarProperty Name="DateDue" ColumnName="DateDue" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="ProjectMileStoneId" ColumnName="ProjectMileStoneId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectReps">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.ProjectRep">
+        <MappingFragment StoreEntitySet="ProjectRep">
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="ProjectRepId" ColumnName="ProjectRepId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectTypes">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.ProjectType">
+        <MappingFragment StoreEntitySet="ProjectType">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ProjectTypeId" ColumnName="ProjectTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sectors">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Sector">
+        <MappingFragment StoreEntitySet="Sector">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sys_Param">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Sys_Param">
+        <MappingFragment StoreEntitySet="Sys_Param">
+          <ScalarProperty Name="DBName" ColumnName="DBName" />
+          <ScalarProperty Name="ServerLoginPassword" ColumnName="ServerLoginPassword" />
+          <ScalarProperty Name="ServerLoginName" ColumnName="ServerLoginName" />
+          <ScalarProperty Name="ServerName" ColumnName="ServerName" />
+          <ScalarProperty Name="Sys_ParamId" ColumnName="Sys_ParamId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Terrains">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Terrain">
+        <MappingFragment StoreEntitySet="Terrain">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="TerrainId" ColumnName="TerrainId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellClasses">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.WellClass">
+        <MappingFragment StoreEntitySet="WellClass">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="WellClassId" ColumnName="WellClassId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellClassifications">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.WellClassification">
+        <MappingFragment StoreEntitySet="WellClassification">
+          <ScalarProperty Name="WellClassId" ColumnName="WellClassId" />
+          <ScalarProperty Name="WellId" ColumnName="WellId" />
+          <ScalarProperty Name="WellClassificationId" ColumnName="WellClassificationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellCompletions">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.WellCompletion">
+        <MappingFragment StoreEntitySet="WellCompletion">
+          <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="DateCompleted" ColumnName="DateCompleted" />
+          <ScalarProperty Name="IsInitial" ColumnName="IsInitial" />
+          <ScalarProperty Name="WellCompletionTypeId" ColumnName="WellCompletionTypeId" />
+          <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+          <ScalarProperty Name="WellId" ColumnName="WellId" />
+          <ScalarProperty Name="WellCompletionId" ColumnName="WellCompletionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellCompletionIntervals">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.WellCompletionInterval">
+        <MappingFragment StoreEntitySet="WellCompletionInterval">
+          <ScalarProperty Name="LastUpdatedTime" ColumnName="LastUpdatedTime" />
+          <ScalarProperty Name="DateCompleted" ColumnName="DateCompleted" />
+          <ScalarProperty Name="UpperInterval" ColumnName="UpperInterval" />
+          <ScalarProperty Name="LowerInterval" ColumnName="LowerInterval" />
+          <ScalarProperty Name="WellCompletionId" ColumnName="WellCompletionId" />
+          <ScalarProperty Name="WellCompletionIntervalId" ColumnName="WellCompletionIntervalId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellCompletionTypes">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.WellCompletionType">
+        <MappingFragment StoreEntitySet="WellCompletionType">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="WellCompletionTypeId" ColumnName="WellCompletionTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellTypes">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.WellType">
+        <MappingFragment StoreEntitySet="WellType">
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="WellTypeId" ColumnName="WellTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellWorkovers">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.WellWorkover">
+        <MappingFragment StoreEntitySet="WellWorkover">
+          <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="DateCompleted" ColumnName="DateCompleted" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="EquipmentId" ColumnName="EquipmentId" />
+          <ScalarProperty Name="WellWorkOverReasonId" ColumnName="WellWorkOverReasonId" />
+          <ScalarProperty Name="WellId" ColumnName="WellId" />
+          <ScalarProperty Name="WellWorkOverId" ColumnName="WellWorkOverId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WellWorkOverReasons">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.WellWorkOverReason">
+        <MappingFragment StoreEntitySet="WellWorkOverReason">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="WellWorkOverReasonId" ColumnName="WellWorkOverReasonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Zones">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Zone">
+        <MappingFragment StoreEntitySet="Zone">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ZoneId" ColumnName="ZoneId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Productions">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Production">
+        <MappingFragment StoreEntitySet="Production">
+          <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="APIGravity" ColumnName="APIGravity" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="FieldId" ColumnName="FieldId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductionId" ColumnName="ProductionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Project">
+        <MappingFragment StoreEntitySet="Project">
+          <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CompletionStatus" ColumnName="CompletionStatus" />
+          <ScalarProperty Name="ProjectObjectives" ColumnName="ProjectObjectives" />
+          <ScalarProperty Name="DateCompleted" ColumnName="DateCompleted" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="ProjectTypeId" ColumnName="ProjectTypeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+          <ScalarProperty Name="TerrainId" ColumnName="TerrainId" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Wells">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Well">
+        <MappingFragment StoreEntitySet="Well">
+          <ScalarProperty Name="FieldId" ColumnName="FieldId" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="SpudDate" ColumnName="SpudDate" />
+          <ScalarProperty Name="TotalDept" ColumnName="TotalDept" />
+          <ScalarProperty Name="TechnicalAllowable" ColumnName="TechnicalAllowable" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="WellTypeId" ColumnName="WellTypeId" />
+          <ScalarProperty Name="WellId" ColumnName="WellId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IncidentHistories">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.IncidentHistory">
+        <MappingFragment StoreEntitySet="IncidentHistory">
+          <ScalarProperty Name="TimeCreated" ColumnName="TimeCreated" />
+          <ScalarProperty Name="CraetedBy" ColumnName="CraetedBy" />
+          <ScalarProperty Name="ReportedBy" ColumnName="ReportedBy" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="IncidentDate" ColumnName="IncidentDate" />
+          <ScalarProperty Name="IncidentTypeId" ColumnName="IncidentTypeId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="IncidentHistoryId" ColumnName="IncidentHistoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Blocks">
+      <EntityTypeMapping TypeName="DataMigrationEngineDBModel.Block">
+        <MappingFragment StoreEntitySet="Block">
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="YearOfAward" ColumnName="YearOfAward" />
+          <ScalarProperty Name="LeaseTypeId" ColumnName="LeaseTypeId" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BlockTypeId" ColumnName="BlockTypeId" />
+          <ScalarProperty Name="BlockId" ColumnName="BlockId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

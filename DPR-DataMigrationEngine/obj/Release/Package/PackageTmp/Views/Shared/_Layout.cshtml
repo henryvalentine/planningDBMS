@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - DPR-Planning DBMS</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/jquery")
+        <!--[if IE]>
+    <script src="~/Scripts/html5.js"></script>
+        <![endif]-->
+       
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper" >
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        <ul id="menu">
+                            <li>@Html.ActionLink("Dashboard", "Index", "Home")</li>
+                            <li><a title="Download User Manual" style="cursor:pointer" href="@("/Home/DownloadContentFromFolder?path=" + "~/Help/PLANNINGDBMS-manual.pdf")">Help</a></li>
+                            @*<li><a href="http://dprnigeria.org.ng/contact-us/main-office">Contact</a></li>*@
+                            <li>@Html.ActionLink("My Profile", "MyProfile", "Account", routeValues: null, htmlAttributes: new { id = "manageLink" })</li>
+                        </ul>
+                    </nav>
+                @*</div>*@
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+           
+            <table style="width: 100%; min-height: 60%; border-top: 1px solid #EFEEEF; padding: 0">
+                <tr>
+                    <td style="width: 20%; vertical-align: top; border-right: 1px solid #EFEEEF;" id="dvSideBar">
+                        <table style="width: 100%; height:auto; padding-top: 2%; min-height: 65%">
+                            <tr>
+                                <td style="width: 100%">
+                                    @{
+                                        if (Roles.IsUserInRole("Data_Entry") || Roles.IsUserInRole("Super_Admin"))
+                                        {
+                                            <div id="sFirst">
+                                                <span class="vvs sFirst dfirst" id="DE" onclick="toggleUl(this.id)">Data Entry</span>
+                                                <ul id="DEUl" style="display: none">
+                                                    <li>@Html.ActionLink("Production", "Productions", "Production")</li>
+                                                    <li>@Html.ActionLink("Well Workovers", "WellWorkovers", "WellWorkOver")</li>
+                                                    <li>@Html.ActionLink("Well Completion", "WellCompletions", "WellCompletion")</li>
+                                                    <li>@Html.ActionLink("Projects", "Projects", "Project")</li>
+                                                    <li>@Html.ActionLink("Incidents", "Incidents", "Incident")</li>
+                                                    @*<li>@Html.ActionLink("Project Milestones", "ProjectMilestones", "ProjectMilestone")</li>*@
+                                                </ul>
+                                            </div>
+                                        }
+                                    }
+                                    <br/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100%">
+                                    @{
+                                        if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("Super_Admin"))
+                                        {
+                                    <div class="vvs sFirst rdfirst" id="ddx">
+                                        <a style="color: green; text-decoration: none" href="/Home/Reports">Reports</a>
+                                    </div>
+                                    <br/>
+                                    }
+                                    }
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100%">
+                                    
+                                    @{
+                                        if (Roles.IsUserInRole("Admin") || Roles.IsUserInRole("Super_Admin"))
+                                        {
+                                            <div id="sSecond">
+                                                <span style="width: auto;height:25px" class="vvs adfirst" id="AD" onclick="toggleUl(this.id)">Administration</span>
+                                                <ul id="ADUl" style="display: none">
+                                                    <li>@Html.ActionLink("Users", "ManageUserProfiles", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                                                    <li>@Html.ActionLink("Companies", "Companies", "Company")</li>
+                                                    <li>@Html.ActionLink("Fields", "Fields", "Field")</li>
+                                                    <li>@Html.ActionLink("Wells", "Wells", "Well")</li>
+                                                    <li>@Html.ActionLink("Blocks", "Blocks", "Block")</li>
+                                                    <li>@Html.ActionLink("Equipments", "Equipments", "Equipment")</li>
+                                                    <li>@Html.ActionLink("Bulk Upload Templates", "AdminBulkTemplates", "AdminUx2")</li>
+                                                    <li> <a href="@("/DBBackupRestore/Backup?sdc=ddcv")">Back up Database</a></li>
+                                                    @{
+                                                        if (Roles.IsUserInRole("Super_Admin"))
+                                                        {
+                                                            <li>@Html.ActionLink("Milestone Statuses", "MilestoneStatus", "MilestoneStatus")</li>
+                                                        }
+                                                    
+                                                    }
+                                                    
+                                                </ul>
+                                            </div>
+                                            <br/>
+                                        }
+                                    }
+                                   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 100%">
+
+                                    @{
+                                        if (Roles.IsUserInRole("Admin"))
+                                        {
+                                            <div id="sSecond">
+                                                <span class="vvs first sfirst" id="sets" style="cursor: pointer" onclick="toggleUl(this.id)"> Settings</span>
+                                                <ul style="display: none" id="setsUl">
+                                                    <li>@Html.ActionLink("Project Types", "ProjectTypes", "ProjectType")</li>
+                                                    <li>@Html.ActionLink("Equipment Types", "EquipmentTypes", "EquipmentType")</li>
+                                                    <li>@Html.ActionLink("Well Workover Reason", "WellWorkOverReasons", "WellWorkOverReason")</li>
+                                                    <li>@Html.ActionLink("Well Classes", "WellClasses", "WellClass")</li>
+                                                    <li>@Html.ActionLink("Well Classifications", "WellClassifications", "WellClassification")</li>
+                                                    <li>@Html.ActionLink("Well Type", "WellTypes", "WellType")</li>
+                                                    <li>@Html.ActionLink("Well Completion Types", "WellCompletionTypes", "WellCompletionType")</li>
+                                                    <li>@Html.ActionLink("Terrains", "Terrains", "Terrain")</li>
+                                                    <li>@Html.ActionLink("Zones", "Zones", "Zone")</li>
+                                                    <li>@Html.ActionLink("Sectors", "Sectors", "Sector")</li>
+                                                    <li>@Html.ActionLink("Products", "Products", "Product")</li>
+                                                    <li>@Html.ActionLink("Incident Types", "IncidentTypes", "IncidentType")</li>
+                                                    <li>@Html.ActionLink("Lease Types", "LeaseTypes", "LeaseType")</li>
+                                                    <li>@Html.ActionLink("Database Settings", "DBBackup", "DBBackupRestore")</li>
+                                                </ul> 
+                                            </div>
+                                        }
+                                    }
+
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                    <td style="width: 80%; vertical-align: top; background-color: #FFF;" id="dvMain">
+                        <fieldset style="width: 100%; height: auto; border: none; -ms-border-radius: 0; border-radius: 0; margin: 5px">
+                            <section class="content-wrapper main-content clear-fix" style="vertical-align: top">
+                                @RenderBody()
+                            </section>
+                        </fieldset>
+                    </td>
+                </tr>
+            </table>
+            <div id="backFs" style=" display: none"  class="overlay"> </div>
+        </div>
+        <div style="min-height: 10%"><br /><br /><br /><br /><br /><br /></div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left" style="position: relative">
+                    <p>&copy; @DateTime.Now.Year - Planning-DBMS</p>
+                </div>
+                <div class="float-right" style="position: relative; margin-right: 2%">
+                    <p>Powered by <a href="http://www.maxfront.com">MAXFRONT&trade;</a></p>
+                </div>
+            </div>
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
+
+<script type="text/javascript">
+
+    var container = '';
+    var sideBar = '';
+    var originalWidth = '';
+    var originalWidth2 = '';
+
+    $(document).load(function ()
+    {
+      
+    });
+    
+    function toggleUl(id) {
+        var tx = id + "Ul";
+        $('#' + tx).slideToggle(400);
+
+        //if ($('#' + id).hasClass('plus')) {
+        //    $('#' + id).removeClass("plus");
+        //    $('#' + id).addClass("minus");
+        //} else {
+        //    $('#' + id).removeClass("minus");
+        //    $('#' + id).addClass("plus");
+        //}
+    }
+
+    $(document).ready(function ()
+    {
+        //$('select').prop('selectedIndex', 0);
+        //container = $('#dvMain');
+        //sideBar = $('#dvSideBar');
+
+        //originalWidth = container.width();
+        //originalWidth2 = sideBar.width();
+
+        //container.data({
+        //    width: parseInt(container.css("width")),
+        //});
+
+        //sideBar.data({
+        //    width: parseInt(sideBar.css("width")),
+        //});
+
+        
+        //$('#sSecond').on('click', function ()
+        //{
+        //    $('#menuTxs').slideToggle(400);
+
+        //    if ($('#setUpS').hasClass('plus')) {
+        //        $('#setUpS').removeClass("plus");
+        //        $('#setUpS').addClass("minus");
+        //    } else {
+        //        $('#setUpS').removeClass("minus");
+        //        $('#setUpS').addClass("plus");
+        //    }
+        //});
+
+        //    $('#dvSideBar')
+        //        .mouseenter(function ()
+        //        {
+        //            setCurrentSize();
+        //            $('#setUp').css({ 'display': 'block' });
+        //            //$('#setUp').animate({ opacity: 1 }, 1000);
+        //        })
+        //        .mouseleave(function () {
+        //            fadeOuts(function ()
+        //            {
+        //                restorDefaultSize();
+        //            });
+        //        });
+        //});
+
+        //function setCurrentSize() 
+        //{
+        //    container.stop()
+        //        .animate(
+        //            {
+        //                width: 500 + 'px',
+
+        //            }, 250, function ()
+        //            {
+        //              sideBar.css({ 'width': '20%' });
+        //            });
+
+        //}
+
+        //function restorDefaultSize()
+        //{
+        //    sideBar.stop()
+        //    .animate(
+        //        {
+        //            width: originalWidth2 + 'px',
+
+        //        },
+        //        250, function ()
+        //        {
+        //            container.css({ 'width': originalWidth + 'px' });
+        //        });
+        //}
+
+        //function fadeOuts()
+        //{
+        //    $('#menuTx').fadeOut('slow');
+        //    $('#setUp').removeClass("minus");
+        //    $('#setUp').addClass("plus");
+        //    $('#setUp').css({ 'display': 'none' });
+        //    //$('#setUp').fadeOut();
+        //    // $('#setUp').animate({ opacity: 0 }, 1000);
+
+        //}
+
+        $('.xzcComp')
+            .draggable();
+    });
+
+    //$('.datetimepicker').datetimepicker({
+    //    timepicker: false,
+    //    format: 'Y/m/d',
+    //    closeOnDateSelect: true
+    //});
+    
+
+    $(function () {
+        $('.datepicker').datepicker({
+            format: 'yyyy/mm/dd',
+            pickTime: false,
+            autoclose: true
+        }).on('changeDate', function (e)
+        {
+            (e.viewMode == 'days') ? $(this).datepicker('hide') : '';
+        });
+    });
+    
+</script>
+
+<style type="text/css">
+    .menuTx{}
+    .sFirst{cursor: pointer;}
+    #ddx a {
+        color: green;
+    }
+
+    /*#ADUl li a{color: darkcyan;}*/
+</style>

@@ -1,0 +1,277 @@
+﻿@model List<DPR_DataMigrationEngine.EF.Models.Zone>
+
+<form action="@Url.Action("AddZone", "Zone")" id="fsProcessZones" class="fsEdit" style="display: none; visibility: visible">
+    <span class="legend22" id="lgEditZone" style="width: 100%">Add New Zone</span>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr id="trBrEdError" style="display: none; visibility: visible">
+            <td colspan="2">
+                <div style="width: 100%; font-weight:normal; font-size: 12pt" class="error label" id="brEdError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" colspan="2">
+                <div>&nbsp;</div>
+                <div style="margin-left: 2%"><i style="width: auto">Zone</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtZoneName" data-valmsg-for="zone.Name" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="zone.Name" id="txtZoneName" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 90%">
+                <div style="width: 100%">
+                    <input type="button" id="btnCloseProcessZone" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessZone" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<fieldset id="fsZoneList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProcess" style="display: none; visibility: visible"></label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 80%">
+                <div style="width: 100%; font-weight: normal; font-size: 10pt; display: none; visibility: visible" id="brFeedback"></div>
+            </td>
+            <td style="width: 20%">
+                <div style="width: 100%">
+                    <input type="button" id="btnAddNewZone" onclick="prepareZoneTemplate()" value="Add New Zone" class="btn btnAdd large" style="width: 190px; float: right" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblZonees" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 7%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 80%; text-align: left">
+                Zone
+            </th>
+            <th style="width: 7%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Count(); i++)
+            {
+                var zxz = Model[i];
+
+                <tr id="tr@(zxz.ZoneId)" class="xtcR" style="color: black;">
+                    <td style="width: 3%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 70%; text-align: left" id="tdName">
+                        @zxz.Name
+                    </td>
+                    <td style="width: 10%">
+                        <a class="zoneEdTx" title="Edit" id="ed@(zxz.ZoneId)" onclick=" zoneEdTx(this.id);"><img src="~/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="zoneDelTx" title="Delete" id="del@(zxz.ZoneId)" onclick=" zoneDelTx(this.id);"><img src="~/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>
+
+<script type="text/javascript">
+
+    $(window).load(function () {
+        //$('#tblZonees .xtcR:even').addClass('gridItem1');
+    });
+
+    function feedBackStatus(x, z) {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3 || dx === -1) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('success');
+            $("#brFeedback").addClass('error');
+            $("#brFeedback").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('error');
+            $("#brFeedback").addClass('success');
+            $("#brFeedback").fadeIn();
+        }
+    }
+
+    $(document).ready(function () {
+        toggleValidators('fsProcessZones');
+
+        $('#btnCloseProcessZone').on("click", function () {
+            closePopModal($('#fsProcessZones'));
+        });
+
+        $("#fsProcessZones").submit(function (e) {
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessZones')) {
+                return;
+            }
+
+            var data = $(this).serialize();
+
+            if ($('#brProcess').text() === "1") {
+                var url = $(this).attr('action');
+                //submit
+                $.post(url, data, function (x) {
+                    refresh(x);
+                });
+            }
+
+            if ($('#brProcess').text() === "2") {
+                //update
+                upDateQ();
+            }
+
+        });
+
+    });
+
+    var rtx = '';
+
+    function zoneEdTx(x) {
+        $('#brProcess').text('');
+
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/Zone/EditZone?id=' + xxid;
+
+        $.get(url, function (data) { edGet(data); });
+
+    }
+
+    function edGet(data) {
+
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessZones', 'Update');
+        $('#fsProcessZones').attr("action", "/Zone/EditZone");
+        $('#txtZoneName').val(data.Name);
+        $('#lgEditZone').text('Update Zone');
+        $('#brProcess').text(2);
+        setModal($('#fsProcessZones'));
+    }
+
+    function zoneDelTx(x) {
+
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/Zone/DeleteZone?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblZonees #tr' + xxid).remove();
+
+                $('#tblZonees tr.xtcR').each(function (r) {
+                    $(this).children('.xtc').text(r + 1);
+                });
+                $('#tblZonees .xtcR:even').addClass('gridItem1');
+            }
+        });
+        return;
+    }
+
+    function prepareZoneTemplate() {
+        refreshForm('fsProcessZones', '');
+        $('#fsProcessZones').attr("action", "/Zone/AddZone");
+        $('#brProcess').text(1);
+        setModal($('#fsProcessZones'));
+    }
+
+    function upDateQ() {
+        var frm = $('#fsProcessZones');
+        var url = frm.attr('action');
+        var data = frm.serialize();
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: url,
+            data: data,
+            success: function (r) {
+                updateTable(r);
+
+            }
+        });
+    }
+
+    function updateTable(r) {
+
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdError').text(r.Error);
+            $('#trBrEdError').fadeIn('slow');
+            return;
+        }
+
+        closePopModal($('#fsProcessZones'));
+
+        if (r.ErrorCode === 0) {
+            //Session has expired/Unknown Error was encountered => when an Exception was caught/Database operation failed
+            feedBackStatus(r.ErrorCode, r.Error);
+            return;
+        }
+
+        $('#tblZonees #tr' + rtx).children('#tdName').html(r.Name);
+
+        //$('#tblZonees .xtcR:even').addClass('gridItem1');
+
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+    }
+
+    function refresh(r) {
+
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdError').text(r.Error);
+            $('#trBrEdError').fadeIn('slow');
+            return;
+        }
+
+        closePopModal($('#fsProcessZones'));
+
+        if (r.ErrorCode === 0) {
+            //Session has expired/Unknown Error was encountered => when an Exception was caught/Database operation failed
+            feedBackStatus(r.ErrorCode, r.Error);
+            return;
+        }
+
+        var bv = $('#tblZonees tr').length - 1;
+
+        $("#tblZonees tbody:last").append($('<tr class="xtcR" id="tr' + r.ZoneId + '"><td style="width: 7%;text-align: center" class="xtc">' + (bv + 1) + '</td><td style="width: 80%"  id="tdName">' + r.Name + '</td><td style="width: 10%"><a class="zoneEdTx" title="Edit" id="ed' + r.ZoneId + '" onclick=" zoneEdTx(this.id);"><img src="/Images/edit.png" style="width: 16px; height: 16px; cursor: pointer" alt ="Edit"/></a>&nbsp;&nbsp;<a class="zoneDelTx" title="Delete" id="del' + r.ZoneId + '" onclick=" zoneDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" style="width: 16px; height: 16px; cursor: pointer"/></a></td></tr>'));
+
+        //Successfull operation
+        $('#tblZonees .xtcR:even').addClass('gridItem1');
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+    }
+</script>
+
+

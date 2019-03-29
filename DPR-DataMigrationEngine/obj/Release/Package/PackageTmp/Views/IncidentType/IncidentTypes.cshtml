@@ -1,0 +1,290 @@
+﻿@model List<DPR_DataMigrationEngine.EF.Models.IncidentType>
+
+<form action="@Url.Action("AddIncidentType", "IncidentType")" id="fsProcessIncidentTypes" class="fsEdit" style="display: none; visibility: visible">
+    <span class="legend22" id="lgEditIncidentType" style="width: 100%">New Incident Type</span>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: normal; font-size: 12pt; display: none; visibility: visible" class="error label" id="brEdError"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" colspan="2">
+                <div>&nbsp;</div>
+                <div style="margin-left: 5PX"><i style="width: auto">IncidentType</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtIncidentTypeName" data-valmsg-for="incidentType.Name" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="incidentType.Name" id="txtIncidentTypeName" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" colspan="2">
+                <div>&nbsp;</div>
+                <div style="margin-left: 5px"><i style="width: auto">Description</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtDescription" data-valmsg-for="incidentType.Description" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="incidentType.Description" id="txtDescription" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 90%">
+                <div style="width: 100%">
+                    <input type="button" id="btnCloseProcessIncidentType" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessIncidentType" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<fieldset id="fsIncidentTypeList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProcess" style="display: none; visibility: visible"></label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 80%">
+                <div style="width: 100%; font-weight: normal; font-size: 10pt; display: none; visibility: visible" id="brFeedback"></div>
+            </td>
+            <td style="width: 20%">
+                <div style="width: 100%">
+                    <input type="button" id="btnAddNewIncidentType" onclick="prepareIncidentTypeTemplate()" value="Add New IncidentType" class="btn btnAdd large" style="width: 190px; float: right" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblIncidentTypees" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 7%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 43%; text-align: left">
+                IncidentType
+            </th>
+            <th style="width: 40%; text-align: left">
+                Description
+            </th>
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Count(); i++)
+            {
+                var zxz = Model[i];
+
+                <tr id="tr@(zxz.IncidentTypeId)" class="xtcR" style="color: black;">
+                    <td style="width: 7%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 43%; text-align: left" id="tdName">
+                        @zxz.Name
+                    </td>
+                    <td style="width: 40%; text-align: left" id="tdDescription">
+                        @zxz.Description
+                    </td>
+                    <td style="width: 10%">
+                        <a class="edTx" title="Edit" id="ed@(zxz.IncidentTypeId)" onclick="edTx(this.id);"><img src="~/Images/edit.png" alt="Edit" /></a>&nbsp;&nbsp;<a class="delTx" title="Delete" id="del@(zxz.IncidentTypeId)" onclick="delTx(this.id);"><img src="~/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</fieldset>
+
+<script type="text/javascript">
+
+    $(window).load(function () {
+        //$('#tblIncidentTypees .xtcR:even').addClass('gridItem1');
+    });
+
+    function feedBackStatus(x, z) {
+        var dx = parseInt(x);
+
+        if (dx === 0 || dx === 2 || dx === -3 || dx === -1) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('success');
+            $("#brFeedback").addClass('error');
+            $("#brFeedback").fadeIn();
+        }
+
+        if (dx === 1) {
+            $("#brFeedback").text(z);
+            $("#brFeedback").removeClass('error');
+            $("#brFeedback").addClass('success');
+            $("#brFeedback").fadeIn();
+        }
+    }
+
+    $(document).ready(function () {
+        toggleValidators('fsProcessIncidentTypes');
+
+        $('#btnCloseProcessIncidentType').on("click", function () {
+            closePopModal($('#fsProcessIncidentTypes'));
+        });
+
+        $("#fsProcessIncidentTypes").submit(function (e) {
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessIncidentTypes')) {
+                return;
+            }
+
+            var data = $(this).serialize();
+
+            if ($('#brProcess').text() === "1") {
+                var url = $(this).attr('action');
+                //submit
+                $.post(url, data, function (x) {
+                    refresh(x);
+                });
+            }
+
+            if ($('#brProcess').text() === "2") {
+                //update
+                upDateQ();
+            }
+
+        });
+
+    });
+
+    var rtx = '';
+
+    function edTx(x) {
+        $('#brProcess').text('');
+
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/IncidentType/EditIncidentType?id=' + xxid;
+
+        $.get(url, function (data) { edGet(data); });
+
+    }
+
+    function edGet(data)
+    {
+
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessIncidentTypes', 'Update');
+        $('#fsProcessIncidentTypes').attr("action", "/IncidentType/EditIncidentType");
+        $('#txtIncidentTypeName').val(data.Name);
+        $('#txtDescription').val(data.Description);
+        $('#lgEditIncidentType').text('Update IncidentType');
+        $('#brProcess').text(2);
+        setModal($('#fsProcessIncidentTypes'));
+    }
+
+    function delTx(x) {
+
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/IncidentType/DeleteIncidentType?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblIncidentTypees #tr' + xxid).remove();
+
+                $('#tblIncidentTypees tr.xtcR').each(function (r) {
+                    $(this).children('.xtc').text(r + 1);
+                });
+                $('#tblIncidentTypees .xtcR:even').addClass('gridItem1');
+            }
+        });
+        return;
+    }
+
+    function prepareIncidentTypeTemplate() {
+        refreshForm('fsProcessIncidentTypes', '');
+        $('#fsProcessIncidentTypes').attr("action", "/IncidentType/AddIncidentType");
+        $('#brProcess').text(1);
+        setModal($('#fsProcessIncidentTypes'));
+    }
+
+    function upDateQ() {
+        var frm = $('#fsProcessIncidentTypes');
+        var url = frm.attr('action');
+        var data = frm.serialize();
+        $.ajax({
+            async: true,
+            type: "POST",
+            url: url,
+            data: data,
+            success: function (r) {
+                updateTable(r);
+
+            }
+        });
+    }
+
+    function updateTable(r) {
+
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdError').text(r.Error);
+            $('#brEdError').fadeIn('slow');
+            return;
+        }
+
+        closePopModal($('#fsProcessIncidentTypes'));
+
+        if (r.ErrorCode === 0) {
+            //Session has expired/Unknown Error was encountered => when an Exception was caught/Database operation failed
+            feedBackStatus(r.ErrorCode, r.Error);
+            return;
+        }
+
+        $('#tblIncidentTypees #tr' + rtx).children('#tdName').html(r.Name);
+
+        //$('#tblIncidentTypees .xtcR:even').addClass('gridItem1');
+
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+    }
+
+    function refresh(r) {
+
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdError').text(r.Error);
+            $('#brEdError').fadeIn('slow');
+            return;
+        }
+
+        closePopModal($('#fsProcessIncidentTypes'));
+
+        if (r.ErrorCode === 0) {
+            //Session has expired/Unknown Error was encountered => when an Exception was caught/Database operation failed
+            feedBackStatus(r.ErrorCode, r.Error);
+            return;
+        }
+
+        var bv = $('#tblIncidentTypees tr').length - 1;
+
+        $("#tblIncidentTypees tbody:last").append($('<tr class="xtcR" id="tr' + r.IncidentTypeId + '"><td style="width: 7%;text-align: center" class="xtc">' + (bv + 1) + '</td><td style="width: 43%"  id="tdName">' + r.Name + '</td><td style="width: 40%"  id="tdDescription">' + r.Description + '</td><td style="width: 10%"><a class="edTx" title="Edit" id="ed' + r.IncidentTypeId + '" onclick="edTx(this.id);"><img src="/Images/edit.png" style="cursor: pointer" alt ="Edit"/></a>&nbsp;&nbsp;<a class="delTx" title="Delete" id="del' + r.IncidentTypeId + '"onclick="delTx(this.id);" ><img src="/Images/delete_opt(1).png" alt="Delete" style="cursor: pointer"/></a></td></tr>'));
+
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcess').text(0);
+    }
+</script>
+

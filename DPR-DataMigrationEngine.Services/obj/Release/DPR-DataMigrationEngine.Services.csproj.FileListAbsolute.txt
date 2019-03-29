@@ -1,0 +1,35 @@
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.Services.dll.config
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.Services.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.Services.pdb
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.EF.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\EntityFramework.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\PagedList.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\PagedList.Mvc.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.EF.pdb
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\EntityFramework.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\PagedList.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\PagedList.Mvc.xml
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\obj\Release\DPR-DataMigrationEngine.Services.csprojResolveAssemblyReference.cache
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\obj\Release\DPR-DataMigrationEngine.Services.dll
+C:\Users\Ade\Google Drive\AppStudio\PROJECTS\WEB\MVC\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\obj\Release\DPR-DataMigrationEngine.Services.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.Services.dll.config
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.Services.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.Services.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.EF.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\EntityFramework.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\PagedList.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\PagedList.Mvc.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\DPR-DataMigrationEngine.EF.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\EntityFramework.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\PagedList.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\PagedList.Mvc.xml
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\obj\Release\DPR-DataMigrationEngine.Services.csprojResolveAssemblyReference.cache
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\obj\Release\DPR-DataMigrationEngine.Services.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\obj\Release\DPR-DataMigrationEngine.Services.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\CsvHelper.dll
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\CsvHelper.pdb
+C:\Users\MaxDev\Documents\Visual Studio 2013\Projects\DPR-DataMigrationEngine\DPR-DataMigrationEngine.Services\bin\Release\CsvHelper.xml

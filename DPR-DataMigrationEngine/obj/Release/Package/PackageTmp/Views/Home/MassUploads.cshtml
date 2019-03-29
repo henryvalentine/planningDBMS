@@ -1,0 +1,30 @@
+﻿
+@*<label>@ViewBag.ErrorMessage</label>
+
+<form class="fsEdit" method="POST" action="@Url.Action("SaveToFolder", "WellCompletion")" enctype="multipart/form-data" id="frmProcessProjectDocs">
+    <span class="legend22" style="width: 100%">Bulk Upload</span>
+
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; background: whitesmoke; border: none;margin-top:0">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorProjectBulk"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="form-group">
+                <br /><i style="width: auto" class="formLabel">Select Excel Data File</i><span id="spfdProjectTemplate" style="color: #FF0000; display: none">*Invalid file format</span>
+                <input id="fdProjectTemplate" type="file" name="file" style="width: 98%; margin-left: 1%" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseBulkProject" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessBulkProject" class="btn btnUpload large" style=" border: none; float: right; width: 110px" value="Upload" onclick="return valIdateProjectTemplate();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>*@

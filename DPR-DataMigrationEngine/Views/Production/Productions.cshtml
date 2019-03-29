@@ -1,0 +1,578 @@
+﻿@using System.Globalization
+@using DPR_DataMigrationEngine.HTMLExtensionHelpers
+
+@model DPR_DataMigrationEngine.ViewModels.ProductionViewModel
+<style type="text/css">
+    .ProductionEdTx 
+    {
+    }
+    .productionDelTx 
+    {
+    }
+    .wellworkEdTx {
+    }
+
+    .wellworkDelTx {
+    }
+
+    .workoverDate {
+    }
+
+    a#btnBulkUpload:link, a#btnBulkUpload:visited, a#btnBulkUpload:active, a#btnBulkUpload:hover {
+        text-decoration: none;
+        background: url(/Images/next.png) 110px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+    }
+</style>
+<form action="@Url.Action("AddProduction", "Production")" id="fsProcessProductions" class="fsEdit" style="display: none; visibility: visible; width: 45%">
+    <span class="legend22" id="lgEditProduction" style="width: 100%">Add New Production</span>
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; border: none">
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorProduction"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Product: </i><span style="color: red">*</span><span id="spddlProdProducts" data-valmsg-for="production.ProductId" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <select class="form-control" name="production.ProductId" id="ddlProdProducts">
+                    @{
+                        var productExtensions = new ExtensionHelpers().ListOption(Model.Products, "ProductId", "Name", "-- Select Product --");
+
+                        foreach (var product in productExtensions.Select(productString => Html.Raw(productString)))
+                        {
+                            @product
+                        }
+                    }
+                </select>
+            </td>
+            <td class="form-group" style="width: 50%">
+                <div>&nbsp;</div>
+                <div class="formLabel"><i style="width: auto">Field: </i><span style="color: red">*</span><span id="spddlProdFields" data-valmsg-for="production.FieldId" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                <select class="form-control" name="production.FieldId" id="ddlProdFields">
+                    @{
+                        var fieldExtensions = new ExtensionHelpers().ListOption(Model.Fields, "FieldId", "Name", "-- Select Field --");
+
+                        foreach (var field in fieldExtensions.Select(fieldString => Html.Raw(fieldString)))
+                        {
+                            @field
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group newItemTd" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Quantity(Barrels):</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtQuantity" data-valmsg-for="production.Quantity" style="color: red" data-valmsg-replace="true">Required</span></div>
+                <input type="text" name="production.Quantity" id="txtQuantity" class="form-control" />
+            </td>
+            <td class="form-group newItemTd" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">API Gravity:</i>@*<span style="color: red">*</span><span class="field-validation-valid" id="sptxtAPIGravity" data-valmsg-for="production.APIGravity" style="color: red" data-valmsg-replace="true">Required</span>*@</div>
+                <input type="text" name="production.APIGravity" id="txtAPIGravity" class="form-control" />
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group" style="width: 50%">
+                <div class="formLabel"><i style="width: auto">Production Date: </i><span style="color: red">*</span><span id="spproductionDate" style="color: red" data-valmsg-replace="true">Required</span> </div>
+                  <input type="text" name="production.ProductionDate" id="productionDate" class="form-control datepicker" style="margin-left: 2%; width: 98%" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div class="formLabel"><i style="width: auto">Remark: </i></div>
+                <textarea name="production.Remark" style="height: 45px" id="txtRemark" class="form-control"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="newItemTd">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseProcessProduction" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessProduction" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="width: 90%; padding-right: 8px;">
+            <div style="text-align: center; float: right; margin-top: 1%">
+                <a id="btnBulkUpload" class="btn btnNext large" style="width: 140px; float: left" href="/Production/ProductionUpload">Bulk Upload</a>
+            </div>
+        </td>
+        <td style="width: 10%">
+            <div style="width: 100%">
+                <input type="button" id="btnAddNewProduction" onclick="prepareProductionTemplate()" value="Single Entry" class="btn btnAddP large" style="width: 160px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+
+<fieldset id="fsProductionList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">@ViewBag.Title</legend>
+    <label id="brProductionProcess" style="display: none; visibility: visible">@ViewBag.ErrorCode</label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 100%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brFeedbackProduction">@ViewBag.ErrorMessage</div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblProductions" style="width: 100%" class="fils-border newTable">
+        <tr class="customGridHeader">
+            <th style="width: 5%; text-align: center">
+                S/N
+            </th>
+            <th style="width: 20%; text-align: left">
+                Product
+            </th>
+            <th style="width: 15%; text-align: left">
+                Field
+            </th>
+            <th style="width: 10%; text-align: left">
+                Quantity(Barrels)
+            </th>
+            <th style="width: 10%; text-align: left">
+                Month
+            </th>
+            <th style="width: 10%; text-align: left">
+                Year
+            </th>
+            <th style="width: 20%; text-align: left">
+                Remark
+            </th>
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Productions.Count(); i++)
+            {
+                var zxz = Model.Productions[i];
+                <tr id="tr@(zxz.ProductionId)" class="xtcR" style="color: black;">
+                    <td style="width: 5%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdProdName">
+
+                        @zxz.ProductName   
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdProdFieldName">
+                        @zxz.FieldName
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdProdQuantity">
+                        @zxz.Quantity
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdProdMonth">
+                        @zxz.MonthName
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdProdYear">
+                        @zxz.Year
+                    </td>
+                    <td style="width: 20%; text-align: left" id="tdProdRemark">
+                        @zxz.Remark
+                    </td>
+                    <td style="width: 10%">
+                        <a class="ProductionEdTx" title="Edit" id="ed@(zxz.ProductionId)" onclick="ProductionEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;<a class="productionDelTx" title="Delete" id="del@(zxz.ProductionId)" onclick="productionDelTx(this.id);"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+   
+</fieldset>
+<img src="/Images/select2-spinner.gif" id="imgProdSpin" class="spinProgress2" />
+<script type="text/javascript">
+
+    $(window).load(function ()
+    {
+        var dx = parseInt($('#brProductionProcess').text());
+
+        if (dx < 0) {
+            $("#brFeedbackProduction").removeClass('success');
+            $("#brFeedbackProduction").addClass('error');
+            $("#brFeedbackProduction").fadeIn();
+        }
+
+        if (dx > 0) {
+            $("#brFeedbackProduction").removeClass('error');
+            $("#brFeedbackProduction").addClass('success');
+            $("#brFeedbackProduction").fadeIn();
+        }
+    });
+
+    $(".page-button").click(function () {
+        if (!$(this).hasClass('current')) {
+
+            window.location.href = "http://" +
+                window.location.host + window.location.pathname +
+                '?page=' + $(this).val() + '&pageSize=' + 150;
+
+        }
+    });
+    
+    $(function () {
+        $(window).scroll(function () {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height() - 120) {
+                  
+                var url = '/Production/GetMoreWellCompletions';
+                $("#imgProdSpin").show();
+                $.ajax({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (zxz) {
+                        if (zxz === null) {
+                            $("#imgProdSpin").hide();
+                        } else {
+                            $.each(zxz, function (i, r) {
+                                refresh2(r);
+                            });
+                            $("#imgProdSpin").hide();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    function feedBackStatus(x, z)
+    {
+        var dx = parseInt(x);
+
+        if (dx < 1)
+        {
+            $("#brFeedbackProduction").text(z);
+            $("#brFeedbackProduction").removeClass('success');
+            $("#brFeedbackProduction").addClass('error');
+            $("#brFeedbackProduction").fadeIn();
+        }
+
+        if (dx > 0)
+        {
+            $("#brFeedbackProduction").text(z);
+            $("#brFeedbackProduction").removeClass('error');
+            $("#brFeedbackProduction").addClass('success');
+            $("#brFeedbackProduction").fadeIn();
+        }
+    }
+
+    $(document).ready(function () {
+        toggleValidators('fsProcessProductions');
+        toggleValidators('frmProcessProductionDocs');
+        
+        $('#btnCloseProcessProduction').on("click", function () {
+            $('#brEdErrorProduction').text('');
+            $('#brEdErrorProduction').hide();
+            closePopModal($('#fsProcessProductions'));
+        });
+
+        $("#fsProcessProductions").submit(function (e)
+        {
+            $("#brFeedbackProduction").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessProductions')) {
+                return;
+            }
+
+            var vx = $('#txtQuantity');
+            var vxx = $('#txtAPIGravity');
+            var rx = $('#txtRemark');
+            var rnx = $('#ddlProdProducts');
+            var rtx = $('#ddlProdFields');
+            var rxtv = $('#productionDate');
+            
+            var newProduction = {};
+            newProduction.ProductionId = rtx;
+
+            newProduction['Quantity'] = vx.val();
+            newProduction['APIGravity'] = vxx.val();
+            newProduction['Remark'] = rx.val();
+            newProduction['ProductId'] = rnx.val();
+            newProduction['FieldId'] = rtx.val();
+            newProduction['ProductionDate'] = rxtv.val();
+            
+            newProduction.ProductName = $("#ddlProdProducts option:selected").text();
+            newProduction.FieldName = $("#ddlProdFields option:selected").text();
+
+            var sdx = JSON.stringify({ production: newProduction });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode < 1) {
+                        $('#brEdErrorProduction').text(zxz.Error);
+                        $('#brEdErrorProduction').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProductionProcess').text() === "1") {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProductionProcess').text() === "2") {
+                        updateTable(zxz);
+                    }
+
+                    $('#brEdErrorProduction').text('');
+                    $('#brEdErrorProduction').hide();
+                }
+            });
+        });
+    });
+
+
+    var rtx = 0;
+    function ProductionEdTx(x)
+    {
+        $("#brFeedbackProduction").fadeOut();
+        $('#brProductionProcess').text('');
+
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1)
+        {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/Production/EditProduction?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessProductions', 'Update');
+        
+        $('#fsProcessProductions').attr("action", "/Production/EditProduction");
+        $('#txtQuantity').val(data.Quantity);
+        $('#txtAPIGravity').val(data.APIGravity);
+        $('#txtRemark').val(data.Remark);
+        $('#ddlProdProducts').val(data.ProductId);
+        $('#ddlProdFields').val(data.FieldId);
+        $('#lgEditProduction').text('Update Production Information');
+        $('#brProductionProcess').text(2);
+        $('#productionDate').datepicker("setValue", data.ProductionDateString);
+      setModal($('#fsProcessProductions'));
+    }
+
+    function productionDelTx(x)
+    {
+        $("#brFeedbackProduction").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/Production/DeleteProduction?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblProductions #tr' + xxid).remove();
+
+                //$('#tblProductions tr.xtcR').each(function (r) {
+                //    $(this).children('.xtc').text(r + 1);
+                //});
+              
+            }
+        });
+        return;
+    }
+
+    function prepareProductionTemplate() {
+        $('#brEdErrorProduction').text('');
+        $('#brEdErrorProduction').hide();
+        refreshForm('fsProcessProductions', '');
+        $('#fsProcessProductions').attr("action", "/Production/AddProduction");
+        $('#brProductionProcess').text(1);
+        setModal($('#fsProcessProductions'));
+    }
+
+    function updateTable(r) {
+        if (r.ErrorCode === -1 || r.ErrorCode === -2 || r.ErrorCode === 0 || r.ErrorCode === -3) {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorProduction').text(r.Error);
+            $('#brEdErrorProduction').fadeIn('slow');
+            return;
+        }
+
+        $('#tblProductions #tr' + rtx).children('#tdProdName').html(r.ProductName);
+        $('#tblProductions #tr' + rtx).children('#tdProdFieldName').html(r.FieldName);
+        $('#tblProductions #tr' + rtx).children('#tdProdQuantity').html(r.Quantity);
+        
+        $('#tblProductions #tr' + rtx).children('#tdProdRemark').html(r.Remark);
+        $('#tblProductions #tr' + rtx).children('#tdProdMonth').html(r.MonthName);
+        $('#tblProductions #tr' + rtx).children('#tdProdYear').html(r.Year);
+        
+        //$('#tblProductions .xtcR:even').addClass('gridItem1');
+        //Successfull operation
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProductionProcess').text(0);
+        closePopModal($('#fsProcessProductions'));
+    }
+
+    function refresh(r) {
+        if (r.ErrorCode < 1)
+        {
+            //Record could not be added/Duplicates found/a Backend validation failed
+            $('#brEdErrorProduction').text(r.Error);
+            $('#brEdErrorProduction').fadeIn('slow');
+            return;
+        }
+        var bv = $('#tblProductions tr').length - 1;
+
+        $("#tblProductions tbody:last").append($('<tr id="tr' + r.ProductionId  +'class="xtcR" style="color: black;">'
+                    + '<td style="width: 5%; text-align: center" class="xtc">'
+                   + (bv + 1)
+                   + '</td>'
+                   + '<td style="width: 20%; text-align: left" id="tdProdName">'
+                   + r.ProductName
+                   + '</td>'
+                   + '<td style="width: 15%; text-align: left" id="tdProdFieldName">'
+                   + r.FieldName
+                   + '</td>'
+                   + '<td style="width: 10%; text-align: left" id="tdProdQuantity">'
+                   + r.Quantity
+                   + '</td>'
+                   + '<td style="width: 10%; text-align: left" id="tdProdMonth">'
+                   + r.MonthName
+                   + '</td>'
+                   + '<td style="width: 10%; text-align: left" id="tdProdYear">'
+                   + r.Year
+                   + '</td>'
+                   + '<td style="width: 20%; text-align: left" id="tdProdRemark">'
+                   + r.Remark
+                   + '</td>'
+                   + '<td style="width: 10%">'
+                   + '<a class="ProductionEdTx" title="Edit" id="ed' + r.ProductionId + '"  onclick="ProductionEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;<a class="productionDelTx" title="Delete" id="del' + r.ProductionId + '" onclick="productionDelTx(this.id)"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>'
+                   + '</td>'
+                   + '</tr>'));
+
+        //Successfull operation
+        $('#brProductionProcess').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessProductions'));
+    }
+
+    function refresh2(r) {
+        
+        var bv = $('#tblProductions tr').length - 1;
+
+        $("#tblProductions tbody:last").append($('<tr id="tr' + r.ProductionId + 'class="xtcR" style="color: black;">'
+                   + '<td style="width: 5%; text-align: center" class="xtc">'
+                   + (bv + 1)
+                   + '</td>'
+                   + '<td style="width: 20%; text-align: left" id="tdProdName">'
+                   + r.ProductName
+                   + '</td>'
+                   + '<td style="width: 15%; text-align: left" id="tdProdFieldName">'
+                   + r.FieldName
+                   + '</td>'
+                   + '<td style="width: 10%; text-align: left" id="tdProdQuantity">'
+                   + r.Quantity
+                   + '</td>'
+                   + '<td style="width: 10%; text-align: left" id="tdProdMonth">'
+                   + r.MonthName
+                   + '</td>'
+                   + '<td style="width: 10%; text-align: left" id="tdProdYear">'
+                   + r.Year
+                   + '</td>'
+                   + '<td style="width: 20%; text-align: left" id="tdProdRemark">'
+                   + r.Remark
+                   + '</td>'
+                   + '<td style="width: 10%">'
+                   + '<a class="ProductionEdTx" title="Edit" id="ed' + r.ProductionId + '"  onclick="ProductionEdTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;<a class="productionDelTx" title="Delete" id="del' + r.ProductionId + '" onclick="productionDelTx(this.id)"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>'
+                   + '</td>'
+                   + '</tr>'));
+        
+    }
+
+    function valIdateProductionTemplate()
+    {
+        if ($('#fdProductionTemplate').val().trim().length < 1) {
+            alert("Please Select an Excel file to upload!");
+            $('#fdProductionTemplate').val('');
+            return false;
+        }
+
+        if (!validateTemplate('frmProcessProductionDocs')) {
+            $('#brEdErrorProductionBulk').text('Validation failed. Please check the input fileds and try again')
+                .fadeIn();
+            return false;
+        }
+        return true;
+        // $('#btnProcessBulkUpload').unbind('click').click();
+    }
+
+    $('#btnCloseBulkProduction').on("click", function () {
+        closePopModal($('#frmProcessProductionDocs'));
+    });
+
+    function prepareBulkUploadTemplate() {
+        //refreshForm('frmProcessProductionDocs', '');
+        setModal($('#frmProcessProductionDocs'));
+    }
+
+    function downloadFile(d) {
+        if (d.length < 1) {
+            alert('Invalid Selection!');
+            return;
+        }
+        $.get(d);
+    }
+
+    $('#fdProductionTemplate').on('change', validateProductionBulk);
+
+    function validateProductionBulk(z) {
+        var content = $('#fdProductionTemplate');
+        var input = z.target.files;
+
+        if (input.length > 0) {
+            var extension = content.val().split('.').pop();
+            // str.substring(str.lastIndexOf('~'));
+            var cdg = $('#fdProductionTemplate');
+            if (extension === 'xlsx' || extension === 'xls') {
+                $('#spfdProductionTemplate').fadeOut();
+            }
+            else {
+                $('#spfdProductionTemplate').fadeIn();
+                cdg.val('');
+            }
+            return;
+        }
+        else {
+            alert("Please select an Excel file to upload!");
+        }
+    }
+</script>
+

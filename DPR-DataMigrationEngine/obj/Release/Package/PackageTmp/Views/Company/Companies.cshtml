@@ -1,0 +1,697 @@
+﻿
+@using System.Globalization
+@model List<DPR_DataMigrationEngine.EF.Models.Company>
+
+
+<style type="text/css">
+    a#btnBulkUpload:link, a#btnBulkUpload:visited, a#btnBulkUpload:active, a#btnBulkUpload:hover {
+        text-decoration: none;
+        background: url(/Images/next.png) 110px no-repeat green;
+        -ms-background-size: 18px 18px;
+        background-size: 18px 18px;
+        color: #FFF;
+    }
+
+</style>
+
+<form class="fsEdit" style="display: none; visibility: visible" method="POST" action="@Url.Action("SaveToFolder", "Company")" enctype="multipart/form-data" id="frmProcessCompanyDocs">
+    <span class="legend22" style="width: 100%">Bulk Upload</span>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <table style="width: 100%; background: whitesmoke; border: none;margin-top:0">
+        <tr>
+            <td colspan="2">
+                <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="brEdErrorCompanyBulk"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="form-group">
+                <div>&nbsp;</div>
+                <br /><i style="width: auto">Select Excel Data File</i><span id="spfdCompanyTemplate" style="color: #FF0000; display: none">*Invalid file format</span>
+                <input id="fdCompanyTemplate" type="file" name="file" style="width: 100%" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>&nbsp;</div>
+                <div style="width: 100%; margin-left: 0">
+                    <input type="button" id="btnCloseBulkCompany" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input type="submit" id="btnProcessBulkCompany" class="btn btnUpload large" style=" border: none; float: right; width: 110px" value="Upload" onclick="return validateCompanyBulkTemplate();" />
+                </div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<form class="fsEdit" method="POST" id="fsProcessCompanys" action="@Url.Action("AddCompany", "Company")" style="background: #F5F5F5; visibility: visible; width: 50%; display: none">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    <legend class="legend22">Company Information</legend>
+    <table style="width: 100%">
+        <tbody>
+            <tr>
+                <td colspan="2" class="newItemTd">
+                    <div style="width: 100%; font-weight: bold; font-size: 8pt; display: none; visibility: visible" class="error label" id="breEdCompany"></div>
+                </td>
+            </tr>
+            <tr style="width: 100%">
+                <td class="form-group">
+                    <div>&nbsp;</div>
+                    <div class="formLabel">
+                        <div class="formLabel"><i style="width: auto">Company Name: </i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtCompanyName" data-valmsg-for="company.Name" style="color: red" data-valmsg-replace="true">Required</span></div>
+                        <input id="txtCompanyName" class="form-control" type="text" name="company.Name" />
+                    </div>
+                </td>
+                <td class="form-group">
+                    <div>&nbsp;</div>
+                    <div class="formLabel">
+                        <div class="formLabel"><i style="width: auto">Cannonial Name: </i></div>
+                        <input id="txtCannonialName" class="form-control" type="text" name="company.CanonialName" />
+                    </div>
+                </td>
+            </tr> 
+            <tr>
+                <td colspan="2">
+                    <div>&nbsp;</div>
+                    <div class="formLabel"><i style="width: auto">RC Number: </i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtAddress" data-valmsg-for="company.RCNumber" style="color: red" data-valmsg-replace="true">Required</span></div>
+                    <input type="text" name="company.RCNumber" id="txtRCNumber" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="formLabel"><i style="width: auto">Address: </i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtAddress" data-valmsg-for="company.Address" style="color: red" data-valmsg-replace="true">Required</span></div>
+                    <textarea name="company.Address" id="txtAddress" style="height: 50px" class="form-control"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+   
+    <label class="formLabel" style="width: 100%; padding-bottom: 0; margin-bottom: 0; margin-top: 12px">
+        Contact Person
+    </label>
+    <table style="width: 100%; margin-top: 0; padding-top: 0; border-bottom: 1px solid gray">
+        <tbody>
+            <tr>
+                <td class="form-group newItemTd" style="width: 50%">
+                    <div>&nbsp;</div>
+                    <div class="formLabel"><i style="width: auto">Last Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtLastName" data-valmsg-for="person.LastName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                    <input type="text" name="person.LastName" id="txtLastName" class="form-control" />
+                </td>
+                <td class="form-group newItemTd" style="width: 50%"> 
+                    <div>&nbsp;</div>
+                    <div class="formLabel"><i style="width: auto">First Name:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtFirstName" data-valmsg-for="person.FirstName" style="color: red" data-valmsg-replace="true">Required</span></div>
+                    <input type="text" name="person.FirstName" id="txtFirstName" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td class="form-group newItemTd" style="width: 50%"> 
+                    <div>&nbsp;</div>
+                    <div class="formLabel"><i style="width: auto">Phone Number:</i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtPhoneNumber" data-valmsg-for="person.PhoneNumber" style="color: red" data-valmsg-replace="true">Required</span></div>
+                    <input type="text" name="person.PhoneNumber" id="txtPhoneNumber" class="form-control" />
+                </td>
+                <td class="form-group newItemTd" style="width: 50%">
+                    <div>&nbsp;</div>
+                    <div class="formLabel"><i style="width: auto">Email:</i>@*<span style="color: red">*</span><span class="field-validation-valid" id="sptxtFirstName" data-valmsg-for="person.Email" style="color: red" data-valmsg-replace="true">Required</span>*@</div>
+                    <input type="text" name="person.Email" id="txtEmail" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="newItemTd">
+                    <div class="formLabel"><i style="width: auto">Designation: </i><span style="color: red">*</span><span class="field-validation-valid" id="sptxtDesignation" data-valmsg-for="person.Designation" style="color: red" data-valmsg-replace="true">Required</span></div>
+                    <input type="text" name="person.Designation" id="txtDesignation" class="form-control" />
+                </td>
+            </tr>
+            <tr> 
+                <td colspan="2" class="newItemTd">
+                    <div>&nbsp;</div>
+                    <div style="width: 100%; margin-left: 0">
+                        <input type="button" id="btnCloseProcessCompany" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <input type="submit" id="btnProcessCompInfo" class="btn btnSave large" style=" border: none; float: right; width: 110px" value="Submit" />
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+ <form class="fsEdit" id="fsViewContacts" style="background: #F5F5F5; visibility: visible; width: 70%; display: none"></form>
+
+<table style="width: 100%">
+    <tr>
+        <td style="width:80%; padding-right: 8px;" valign="top" align="center">
+            <div style="text-align: center; float: right">
+                <a title="Download Bulk Upload Template" id="dnTx" style="cursor:pointer" href="@("/Company/DownloadContentFromFolder?path=" + "~/BulkTemplate/CompanyTemplate.xlsx")"><img src="/Images/downloadExcel.png" alt="download Bulk Upload Template" style="width: 40px; height: 40px" /></a>
+            </div>
+
+        </td>
+        <td style="width:10%; padding-right: 8px;" valign="top" align="center">
+            <div style="text-align: center; float: right ">
+                <input type="button" id="btnPrepCompBulk" onclick="prepareBulkUploadTemplate()" value="Bulk Upload" class="btn btnNext large" style="width: 140px; float: left" />
+            </div>
+        </td>
+        <td style="width: 10%">
+            <div style="width: 100%">
+                <input type="button" id="btnAddNewCompanyCompany" onclick="prepareCompanyTemplate()" value="Single Entry" class="btn btnAdd large" style="width: 190px; float: right" />
+            </div>
+        </td>
+    </tr>
+</table>
+<div class="fsEdit" style="display: none">
+    <legend class="legendErr">Error List</legend>
+    <div style="width: 100%" id="dvErrorList">
+        
+    </div>
+</div>
+<fieldset id="fsCompanyList" style="background: whitesmoke; width: 100%" class="allcontent">
+    <legend class="customlegend22" id="lgHeader">Manage Companies</legend>
+    <label id="brProcessCompanyError" style="display: none; visibility: visible">@ViewBag.ErrorCode</label>
+    <table style="width: 100%; background: whitesmoke; border: 1px solid gainsboro; top: 10%">
+        <tr>
+            <td style="width: 100%">
+                <div style="width: 100%; font-weight: bold; font-size: 9pt; display: none; visibility: visible" id="brCompanyFeedback">@ViewBag.ErrorMessage</div>
+            </td>
+        </tr>
+    </table>
+    <table id="tblCompanys" style="width: 100%; padding: 10%" class="fils-border newTable"> 
+        <tr class="customGridHeader">
+            <th style="width: 3%; text-align: center">S/N</th>
+            <th style="width: 30%; text-align: left">
+                Company
+            </th>
+            <th style="width: 10%; text-align: left">
+                Canonial Name
+            </th>
+            <th style="width: 25%; text-align: left">
+                Contact
+            </th>
+            <th style="width: 15%; text-align: left">
+                Address
+            </th>
+            <th style="width: 7%; text-align: left">
+                RC Number
+            </th>
+            @*<th style="width: 10%; text-align: left">
+                Contact Persons
+            </th>*@
+            <th style="width: 10%">
+                Action
+            </th>
+        </tr>
+        @{
+            for (var i = 0; i < Model.Count(); i++)
+            {
+                var zxz = Model[i];
+                <tr id="tr@(zxz.CompanyId)" class="xtcR" style="color: black;">
+                    <td style="width: 3%; text-align: center" class="xtc">
+                        @(i + 1)
+                    </td>
+                    <td style="width: 30%; text-align: left" id="tdName">
+                        @zxz.Name
+                    </td>
+                    <td style="width: 10%; text-align: left" id="tdCanName">
+                        @zxz.CanonialName
+                    </td>
+                    <td style="width: 25%; text-align: left" id="tdContact">
+                        @zxz.PersonName
+                    </td>
+                    <td style="width: 15%; text-align: left" id="tdAddress">
+                        @zxz.Address
+                    </td>
+                    <td style="width: 7%; text-align: left" id="tdRCNumber">
+                        @zxz.RCNumber
+                    </td>
+                    @*<td style="width: 10%; text-align: left" id="tdpersons">
+                        <a class="edTx" title="View" id="viC@(zxz.CompanyId)" onclick="getContacts(this.id)">View Contacts</a>
+                    </td>*@
+                    <td style="width: 10%">
+                        <a class="edTx" title="Edit" id="ed@(zxz.CompanyId)" onclick="edTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;<a class="delTx" title="Delete" id="del@(zxz.CompanyId)" onclick="delTx(this.id)"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <img src="/Images/select2-spinner.gif" id="imgCompSpin" class="spinProgress2" />
+</fieldset>
+
+<script type="text/javascript">
+
+    $(window).load(function ()
+    {
+        var dx = parseInt($('#brProcessCompanyError').text());
+        if (dx === 0 || dx === 2 || dx === -3) {
+            $("#brCompanyFeedback").text(z);
+            $("#brCompanyFeedback").removeClass('success');
+            $("#brCompanyFeedback").addClass('error');
+            $("#brCompanyFeedback").fadeIn();
+        }
+         
+        if (dx === 1) {
+            $("#brCompanyFeedback").text(z);
+            $("#brCompanyFeedback").removeClass('error');
+            $("#brCompanyFeedback").addClass('success');
+            $("#brCompanyFeedback").fadeIn();
+        }
+    });
+
+    function feedBackStatus(x, z)
+    {
+        var dx = parseInt(x);
+
+        if (dx < 1)
+        {
+            $("#brCompanyFeedback").text(z);
+            $("#brCompanyFeedback").removeClass('success');
+            $("#brCompanyFeedback").addClass('error');
+            $("#brCompanyFeedback").fadeIn();
+        }
+
+        if (dx > 0) {
+            $("#brCompanyFeedback").text(z);
+            $("#brCompanyFeedback").removeClass('error');
+            $("#brCompanyFeedback").addClass('success');
+            $("#brCompanyFeedback").fadeIn();
+        }
+    }
+
+    $(".page-button").click(function () {
+        if (!$(this).hasClass('current')) {
+
+            window.location.href = "http://" +
+                window.location.host + window.location.pathname +
+                '?pageNumber=' + $(this).val() + '&itemsPerPage=' + 40;
+
+        }
+    });
+
+    $(document).ready(function ()
+    {
+        toggleValidators('fsProcessCompanys');
+
+        $('#btnCloseProcessCompany').on("click", function ()
+        {
+            $("#brCompanyFeedback").fadeOut();
+            closePopModal($('#fsProcessCompanys'));
+        });
+
+        $("#fsProcessCompanys").submit(function (e)
+        {
+            $("#brCompanyFeedback").fadeOut();
+            e.preventDefault();
+
+            if (!validateTemplate('fsProcessCompanys'))
+            {
+                return;
+            }
+
+            var vx = $('#txtCompanyName');
+            var rx = $('#txtAddress');
+
+            var vxx = $('#txtRCNumber');
+            var rxx = $('#txtLastName');
+            var rtxx = $('#txtFirstName');
+            var rxt = $('#txtPhoneNumber');
+            var rty = $('#txtEmail');
+            var ymx = $('#txtDesignation');
+            var drg = $('#txtCannonialName'); 
+             
+
+            var newCompany = {};
+            newCompany.CompanyId = rtx;
+            newCompany['Name'] = vx.val();
+            newCompany['Address'] = rx.val();
+            newCompany['RCNumber'] = vxx.val();
+            newCompany['CanonialName'] = drg.val();
+
+            newCompany.People = [];
+
+            var newContact = {};
+            newContact['LastName'] = rxx.val();
+            newContact['FirstName'] = rtxx.val();
+            newContact['Designation'] = ymx.val();
+            newContact['PhoneNumber'] = rxt.val();
+            newContact['Email'] = rty.val();
+            newContact['PersonId'] = personId;
+            newCompany['PersonName'] = rtxx.val() + " " + rxx.val();
+            newCompany.People.push(newContact);
+
+            var sdx = JSON.stringify({ company: newCompany, person: newContact });
+            var url = $(this).attr('action');
+            $.ajax({
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: sdx,
+                type: 'POST',
+                success: function (zxz) {
+                    if (zxz.ErrorCode < 1)
+                    {
+                        $('#breEdCompany').text(zxz.Error);
+                        $('#breEdCompany').fadeIn('slow');
+                        return;
+                    }
+
+                    if ($('#brProcessCompanyError').text() === "1")
+                    {
+                        refresh(zxz);
+                    }
+
+                    if ($('#brProcessCompanyError').text() === "2")
+                    {
+                        updateTable(zxz);
+                    }
+                }
+            });
+        });
+    });
+    var personId = 0;
+    var rtx = 0;
+    function edTx(x) {
+        $("#brCompanyFeedback").fadeOut();
+        $('#brProcessCompanyError').text('');
+
+        var xxid = parseInt(x.replace('ed', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+        rtx = xxid;
+        var url = '/Company/EditCompany?id=' + xxid;
+
+        $.get(url, function (data) {
+            edGet(data);
+        });
+
+    }
+
+    $(function () {
+        $(window).scroll(function() {
+            if ($(window).scrollTop() >= $(document).height() - $(window).height()-120) {
+                
+                var url = '/Company/GetMoreCompanies';
+                $("#imgCompSpin").show();
+                $.ajax({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    type: 'POST',
+                    success: function (zxz)
+                    {
+                        if (zxz === null)
+                        {
+                            $("#imgCompSpin").hide();
+                        } else
+                        {
+                            $.each(zxz, function (i, r)
+                            {
+                                refresh2(r);
+                            });
+                            $("#imgCompSpin").hide();
+                        }
+                    }        
+                });
+            }
+        });
+    }); 
+    
+    function edGet(data) {
+        if (data.ErrorCode < 1) {
+            //Data could not be retrieved/Database operation failed/An unknown error was encountered
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        refreshForm('fsProcessCompanys', 'Update');
+        $('#fsProcessCompanys').attr("action", "/Company/EditCompany");
+
+        $('#txtCompanyName').val(data.Name);
+        $('#txtAddress').val(data.Address);
+        $('#txtRCNumber').val(data.RCNumber);
+        $('#txtCannonialName').val(data.CanonialName); 
+
+        if (data.PersonObj.PersonId > 0)
+        {
+            var contact = data.PersonObj;
+            personId = contact.PersonId;
+            $('#txtLastName').val(contact.LastName);
+            $('#txtFirstName').val(contact.FirstName);
+            $('#txtPhoneNumber').val(contact.PhoneNumber);
+            $('#txtEmail').val(contact.Email);
+            $('#txtDesignation').val(contact.Designation);
+        }
+
+        $('#lgEditCompany').text('Update Company Information');
+        $('#brProcessCompanyError').text(2);
+        setModal($('#fsProcessCompanys'));
+    }
+
+    function delTx(x) {
+        $("#brCompanyFeedback").fadeOut();
+        var xxid = parseInt(x.replace('del', ''));
+        if (xxid < 1) {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        $.ajax({
+            beforeSend: function () { return confirm('Are you sure you want to delete this item?'); },
+            url: "/Company/DeleteCompany?id=" + xxid,
+            type: 'POST',
+            success: function (i) {
+                if (i.ErrorCode < 1) {
+                    ///Database operation failed/Data could not be deleted
+                    feedBackStatus(i.ErrorCode, i.Error);
+                    return;
+                }
+
+                $('#tblCompanys #tr' + xxid).remove();
+
+                //$('#tblCompanys tr.xtcR').each(function (r) {
+                //    $(this).children('.xtc').text(r + 1);
+                //});
+                
+            }
+        });
+        return;
+    }
+
+    function prepareCompanyTemplate() {
+        refreshForm('fsProcessCompanys', '');
+        $('#fsProcessCompanys').attr("action", "/Company/AddCompany");
+        $('#brProcessCompanyError').text(1);
+        setModal($('#fsProcessCompanys'));
+    }
+
+    function updateTable(r) {
+        $('#tblCompanys #tr' + rtx).children('#tdName').html(r.Name);
+        $('#tblCompanys #tr' + rtx).children('#tdAddress').html(r.Address);
+        $('#tblCompanys #tr' + rtx).children('#tdRCNumber').html(r.RCNumber);
+        $('#tblCompanys #tr' + rtx).children('#tdContact').html(r.PersonName);
+        $('#tblCompanys #tr' + rtx).children('#tdCanName').html(r.CanonialName);
+        
+        feedBackStatus(r.ErrorCode, r.Error);
+        $('#brProcessCompanyError').text(0);
+        closePopModal($('#fsProcessCompanys'));
+    }
+
+    function refresh(r)
+    {
+        var bv = $('#tblCompanys tr').length - 1;
+        
+       
+        $("#tblCompanys tbody:last").append($(' <tr id="tr' + r.CompanyId + '" class="xtcR" style="color: black;">'
+                   + '<td style="width: 3%; text-align: center" class="xtc">'
+                   + (bv + 1)
+                   + ' </td>'
+                   + ' <td style="width: 30%; text-align: left" id="tdName">'
+                    + r.Name
+                   + ' </td>'
+                   + ' <td style="width: 10%; text-align: left" id="tdCanName">'
+                   +  r.CanonialName
+                   + '</td>'
+                    +' <td style="width: 25%; text-align: left" id="tdContact">'
+                      +    r.PersonName
+                      + '</td>'
+                    + '<td style="width: 15%; text-align: left" id="tdAddress">'
+                     +   r.Address
+                   + ' </td>'
+                   + ' <td style="width: 7%; text-align: left" id="tdRCNumber">'
+                    + r.RCNumber
+                   + ' </td>'
+                   //+ ' <td style="width: 10%; text-align: left" id="tdpersons">'
+                   // + '<a class="edTx" title="View" id="viC' + r.CompanyId + '" onclick="getContacts(this.id)">View Contacts</a>'
+                   //+ ' </td>'
+                   + ' <td style="width: 13%">'
+                    + ' <a class="edTx" title="Edit" id="ed' + r.CompanyId + '" onclick="edTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;<a class="delTx" title="Delete" id="del' + r.CompanyId + '" onclick="delTx(this.id)"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>'
+                   + ' </td>'
+               + ' </tr>'));
+
+        //Successfull operation
+        $('#brProcessCompanyError').text(0);
+        feedBackStatus(r.ErrorCode, r.Error);
+        closePopModal($('#fsProcessCompanys'));
+    }
+    
+
+    function refresh2(r) {
+        var bv = $('#tblCompanys tr').length - 1;
+
+
+        $("#tblCompanys tbody:last").append($(' <tr id="tr' + r.CompanyId + '" class="xtcR" style="color: black;">'
+                   + '<td style="width: 3%; text-align: center" class="xtc">'
+                   + (bv + 1)
+                   + ' </td>'
+                   + ' <td style="width: 30%; text-align: left" id="tdName">'
+                    + r.Name
+                   + ' </td>'
+                   + ' <td style="width: 10%; text-align: left" id="tdCanName">'
+                   + r.CanonialName
+                   + '</td>'
+                    + ' <td style="width: 25%; text-align: left" id="tdContact">'
+                      + r.PersonName
+                      + '</td>'
+                    + '<td style="width: 15%; text-align: left" id="tdAddress">'
+                     + r.Address
+                   + ' </td>'
+                   + ' <td style="width: 7%; text-align: left" id="tdRCNumber">'
+                    + r.RCNumber
+                   + ' </td>'
+                   //+ ' <td style="width: 10%; text-align: left" id="tdpersons">'
+                   // + '<a class="edTx" title="View" id="viC' + r.CompanyId + '" onclick="getContacts(this.id)">View Contacts</a>'
+                   //+ ' </td>'
+                   + ' <td style="width: 13%">'
+                    + ' <a class="edTx" title="Edit" id="ed' + r.CompanyId + '" onclick="edTx(this.id)"><img src="/Images/edit.png" alt="Edit" /></a>&nbsp;<a class="delTx" title="Delete" id="del' + r.CompanyId + '" onclick="delTx(this.id)"><img src="/Images/delete_opt(1).png" alt="Delete" /></a>'
+                   + ' </td>'
+               + ' </tr>'));
+
+    }
+
+    function validateCompanyBulkTemplate()
+    {
+        if ($('#fdCompanyTemplate').val().trim().length < 1)
+        {
+            alert("Please Select an Excel file to upload!");
+            $('#fdCompanyTemplate').val('');
+            return false;
+        }
+
+        if (!validateTemplate('frmProcessCompanyDocs')) {
+            $('#brEdErrorCompanyBulk').text('Validation failed. Please check the input fileds and try again')
+                .fadeIn();
+            return false;
+        }
+        return true;
+        // $('#btnProcessBulkUpload').unbind('click').click();
+    }
+
+    $('#btnCloseBulkCompany').on("click", function () {
+        closePopModal($('#frmProcessCompanyDocs'));
+    });
+
+    function prepareBulkUploadTemplate()
+    {
+        //refreshForm('frmProcessCompanyDocs', '');
+        setModal($('#frmProcessCompanyDocs'));
+    }
+
+    function downloadFile(d)
+    {
+        if (d.length < 1) {
+            alert('Invalid Selection!');
+            return;
+        }
+        $.get(d);
+    }
+
+    $('#fdCompanyTemplate').on('change', validateCompanyBulk);
+
+    function validateCompanyBulk(z)
+    {
+        var content = $('#fdCompanyTemplate');
+        var input = z.target.files;
+
+        if (input.length > 0) {
+            var extension = content.val().split('.').pop();
+            // str.substring(str.lastIndexOf('~'));
+            var cdg = $('#fdCompanyTemplate');
+            if (extension === 'xlsx' || extension === 'xls') {
+                $('#spfdCompanyTemplate').fadeOut();
+            }
+            else {
+                $('#spfdCompanyTemplate').fadeIn();
+                cdg.val('');
+            }
+            return;
+        }
+        else {
+            alert("Please select an Excel file to upload!");
+        }
+    }
+
+
+    function getContacts(rtx)
+    {
+
+        $("#brCompanyFeedback").fadeOut();
+        $('#brProcessCompanyError').text('');
+
+        var xxid = parseInt(rtx.replace('viC', ''));
+        if (xxid < 1)
+        {
+            alert("Invalid Selection!");
+            return;
+        }
+
+        rtx = xxid;
+        var url = '/Company/GetContactListByCompany?id=' + xxid;
+
+        $.get(url, function (data)
+        {
+            showContacts(data);
+        });
+    }
+
+    function showContacts(data)
+    {
+        if (data.length < 1)
+        {
+            feedBackStatus(data.ErrorCode, data.Error);
+            return;
+        }
+
+        $("#fsViewContacts").append($('<legend class="customlegend22" >Contact List</legend> <table id="tblContacts" style="width: 100%; padding: 10%" class="fils-border newTable">'
+        + '<tr class="customGridHeader">'
+        + '<th style="width: 25%; text-align: left">'
+        + ' Last Name</th><th style="width: 25%; text-align: left">'
+        + 'First Name  </th><th style="width: 20%; text-align: left">'
+        + 'Email</th><th style="width: 15%; text-align: left">'
+        + 'PhoneNumber Number</th><th style="width: 15%">'
+        + 'Designation</th></tr></table> '));
+
+        $.each(data, function (i, rrzt) {
+
+            $("#tblContacts tbody:last").append($('<tr style="color: black;">'
+                     + '<td style="width: 25%; text-align: center" class="xtc">' + rrzt.LastName
+                        + '</td><td style="width: 25%; text-align: left">'
+                           + rrzt.FirstName + '</td><td style="width: 20%; text-align: left" id="tdAddress">' + rrzt.Email + '</td>'
+                        + '<td style="width: 15%; text-align: left" id="tdRCNumber">'
+                          + rrzt.PhoneNumber + '</td><td style="width: 15%; text-align: left" id="tdpersons">rrzt.Designation</td></tr>'));
+        });
+
+        $("#tblContacts tbody:last").append($('<tr>'
+            + ' <td colspan="5"><div>&nbsp;</div>'
+            + ' <div style="width: 100%; margin-left: 0">'
+            + ' <input type="button" id="btnCloseContacts" style="border: none; float:right; width: 110px" class="btn btnClose large" value="Close" onclick="closeContactModal()"/>'
+            + '</div></td></tr>'));
+        
+        setModal($('#fsViewContacts'));
+    }
+
+    function closeContactModal()
+    {
+        closePopModal($('#fsViewContacts'));
+        $('#fsViewContacts').html('');
+    }
+
+</script>
+

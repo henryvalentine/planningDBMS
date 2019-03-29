@@ -1,0 +1,1025 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DataMigrationEngineDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DPRDataMigrationEngineDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BlockTypes" EntityType="DataMigrationEngineDBModel.BlockType" />
+    <EntitySet Name="Companies" EntityType="DataMigrationEngineDBModel.Company" />
+    <EntitySet Name="Equipments" EntityType="DataMigrationEngineDBModel.Equipment" />
+    <EntitySet Name="EquipmentTypes" EntityType="DataMigrationEngineDBModel.EquipmentType" />
+    <EntitySet Name="EquipmentUsageHistories" EntityType="DataMigrationEngineDBModel.EquipmentUsageHistory" />
+    <EntitySet Name="Fields" EntityType="DataMigrationEngineDBModel.Field" />
+    <EntitySet Name="IncidentTypes" EntityType="DataMigrationEngineDBModel.IncidentType" />
+    <EntitySet Name="LeaseTypes" EntityType="DataMigrationEngineDBModel.LeaseType" />
+    <EntitySet Name="MilestoneStatus" EntityType="DataMigrationEngineDBModel.MilestoneStatu" />
+    <EntitySet Name="People" EntityType="DataMigrationEngineDBModel.Person" />
+    <EntitySet Name="Products" EntityType="DataMigrationEngineDBModel.Product" />
+    <EntitySet Name="ProjectMileStones" EntityType="DataMigrationEngineDBModel.ProjectMileStone" />
+    <EntitySet Name="ProjectReps" EntityType="DataMigrationEngineDBModel.ProjectRep" />
+    <EntitySet Name="ProjectTypes" EntityType="DataMigrationEngineDBModel.ProjectType" />
+    <EntitySet Name="Sectors" EntityType="DataMigrationEngineDBModel.Sector" />
+    <EntitySet Name="Sys_Param" EntityType="DataMigrationEngineDBModel.Sys_Param" />
+    <EntitySet Name="Terrains" EntityType="DataMigrationEngineDBModel.Terrain" />
+    <EntitySet Name="WellClasses" EntityType="DataMigrationEngineDBModel.WellClass" />
+    <EntitySet Name="WellClassifications" EntityType="DataMigrationEngineDBModel.WellClassification" />
+    <EntitySet Name="WellCompletions" EntityType="DataMigrationEngineDBModel.WellCompletion" />
+    <EntitySet Name="WellCompletionIntervals" EntityType="DataMigrationEngineDBModel.WellCompletionInterval" />
+    <EntitySet Name="WellCompletionTypes" EntityType="DataMigrationEngineDBModel.WellCompletionType" />
+    <EntitySet Name="WellTypes" EntityType="DataMigrationEngineDBModel.WellType" />
+    <EntitySet Name="WellWorkovers" EntityType="DataMigrationEngineDBModel.WellWorkover" />
+    <EntitySet Name="WellWorkOverReasons" EntityType="DataMigrationEngineDBModel.WellWorkOverReason" />
+    <EntitySet Name="Zones" EntityType="DataMigrationEngineDBModel.Zone" />
+    <AssociationSet Name="FK_EquipmentUsageHistory_Company" Association="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="EquipmentUsageHistory" EntitySet="EquipmentUsageHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Field_Company" Association="DataMigrationEngineDBModel.FK_Field_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Field" EntitySet="Fields" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Person_Company" Association="DataMigrationEngineDBModel.FK_Person_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Person" EntitySet="People" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Equipment_EquipmentType" Association="DataMigrationEngineDBModel.FK_Equipment_EquipmentType">
+      <End Role="EquipmentType" EntitySet="EquipmentTypes" />
+      <End Role="Equipment" EntitySet="Equipments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentUsageHistory_Equipment" Association="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Equipment">
+      <End Role="Equipment" EntitySet="Equipments" />
+      <End Role="EquipmentUsageHistory" EntitySet="EquipmentUsageHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellCompletion_Equipment" Association="DataMigrationEngineDBModel.FK_WellCompletion_Equipment">
+      <End Role="Equipment" EntitySet="Equipments" />
+      <End Role="WellCompletion" EntitySet="WellCompletions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellWorker_Equipment" Association="DataMigrationEngineDBModel.FK_WellWorker_Equipment">
+      <End Role="Equipment" EntitySet="Equipments" />
+      <End Role="WellWorkover" EntitySet="WellWorkovers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipmentUsageHistory_WellCompletion" Association="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_WellCompletion">
+      <End Role="WellCompletion" EntitySet="WellCompletions" />
+      <End Role="EquipmentUsageHistory" EntitySet="EquipmentUsageHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Field_Terrain" Association="DataMigrationEngineDBModel.FK_Field_Terrain">
+      <End Role="Terrain" EntitySet="Terrains" />
+      <End Role="Field" EntitySet="Fields" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Field_Zone" Association="DataMigrationEngineDBModel.FK_Field_Zone">
+      <End Role="Zone" EntitySet="Zones" />
+      <End Role="Field" EntitySet="Fields" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectMileStone_MilestoneStatus" Association="DataMigrationEngineDBModel.FK_ProjectMileStone_MilestoneStatus">
+      <End Role="MilestoneStatu" EntitySet="MilestoneStatus" />
+      <End Role="ProjectMileStone" EntitySet="ProjectMileStones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRep_Person" Association="DataMigrationEngineDBModel.FK_ProjectRep_Person">
+      <End Role="Person" EntitySet="People" />
+      <End Role="ProjectRep" EntitySet="ProjectReps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectMileStone_ProjectMileStone" Association="DataMigrationEngineDBModel.FK_ProjectMileStone_ProjectMileStone">
+      <End Role="ProjectMileStone" EntitySet="ProjectMileStones" />
+      <End Role="ProjectMileStone1" EntitySet="ProjectMileStones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellClassification_WellClass" Association="DataMigrationEngineDBModel.FK_WellClassification_WellClass">
+      <End Role="WellClass" EntitySet="WellClasses" />
+      <End Role="WellClassification" EntitySet="WellClassifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellCompletion_WellCompletionType" Association="DataMigrationEngineDBModel.FK_WellCompletion_WellCompletionType">
+      <End Role="WellCompletionType" EntitySet="WellCompletionTypes" />
+      <End Role="WellCompletion" EntitySet="WellCompletions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellCompletionInterval_WellCompletion" Association="DataMigrationEngineDBModel.FK_WellCompletionInterval_WellCompletion">
+      <End Role="WellCompletion" EntitySet="WellCompletions" />
+      <End Role="WellCompletionInterval" EntitySet="WellCompletionIntervals" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellWorker_WellWorkOverReason" Association="DataMigrationEngineDBModel.FK_WellWorker_WellWorkOverReason">
+      <End Role="WellWorkOverReason" EntitySet="WellWorkOverReasons" />
+      <End Role="WellWorkover" EntitySet="WellWorkovers" />
+    </AssociationSet>
+    <EntitySet Name="Productions" EntityType="DataMigrationEngineDBModel.Production" />
+    <EntitySet Name="Projects" EntityType="DataMigrationEngineDBModel.Project" />
+    <AssociationSet Name="FK_Project_Company" Association="DataMigrationEngineDBModel.FK_Project_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Production_Field" Association="DataMigrationEngineDBModel.FK_Production_Field">
+      <End Role="Field" EntitySet="Fields" />
+      <End Role="Production" EntitySet="Productions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Production_Product" Association="DataMigrationEngineDBModel.FK_Production_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="Production" EntitySet="Productions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_ProjectType" Association="DataMigrationEngineDBModel.FK_Project_ProjectType">
+      <End Role="ProjectType" EntitySet="ProjectTypes" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_Sector" Association="DataMigrationEngineDBModel.FK_Project_Sector">
+      <End Role="Sector" EntitySet="Sectors" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Project_Terrain" Association="DataMigrationEngineDBModel.FK_Project_Terrain">
+      <End Role="Terrain" EntitySet="Terrains" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectMileStone_Project" Association="DataMigrationEngineDBModel.FK_ProjectMileStone_Project">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="ProjectMileStone" EntitySet="ProjectMileStones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectRep_Project" Association="DataMigrationEngineDBModel.FK_ProjectRep_Project">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="ProjectRep" EntitySet="ProjectReps" />
+    </AssociationSet>
+    <EntitySet Name="Wells" EntityType="DataMigrationEngineDBModel.Well" />
+    <AssociationSet Name="FK_EquipmentUsageHistory_Well" Association="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Well">
+      <End Role="Well" EntitySet="Wells" />
+      <End Role="EquipmentUsageHistory" EntitySet="EquipmentUsageHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Well_Field" Association="DataMigrationEngineDBModel.FK_Well_Field">
+      <End Role="Field" EntitySet="Fields" />
+      <End Role="Well" EntitySet="Wells" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Well_WellType" Association="DataMigrationEngineDBModel.FK_Well_WellType">
+      <End Role="WellType" EntitySet="WellTypes" />
+      <End Role="Well" EntitySet="Wells" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellClassification_Well" Association="DataMigrationEngineDBModel.FK_WellClassification_Well">
+      <End Role="Well" EntitySet="Wells" />
+      <End Role="WellClassification" EntitySet="WellClassifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellCompletion_Well" Association="DataMigrationEngineDBModel.FK_WellCompletion_Well">
+      <End Role="Well" EntitySet="Wells" />
+      <End Role="WellCompletion" EntitySet="WellCompletions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WellWorker_Well" Association="DataMigrationEngineDBModel.FK_WellWorker_Well">
+      <End Role="Well" EntitySet="Wells" />
+      <End Role="WellWorkover" EntitySet="WellWorkovers" />
+    </AssociationSet>
+    <EntitySet Name="IncidentHistories" EntityType="DataMigrationEngineDBModel.IncidentHistory" />
+    <AssociationSet Name="FK_IncidentHistory_Company" Association="DataMigrationEngineDBModel.FK_IncidentHistory_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="IncidentHistory" EntitySet="IncidentHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IncidentHistory_IncidentType" Association="DataMigrationEngineDBModel.FK_IncidentHistory_IncidentType">
+      <End Role="IncidentType" EntitySet="IncidentTypes" />
+      <End Role="IncidentHistory" EntitySet="IncidentHistories" />
+    </AssociationSet>
+    <EntitySet Name="Blocks" EntityType="DataMigrationEngineDBModel.Block" />
+    <AssociationSet Name="FK_Block_BlockType" Association="DataMigrationEngineDBModel.FK_Block_BlockType">
+      <End Role="BlockType" EntitySet="BlockTypes" />
+      <End Role="Block" EntitySet="Blocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Block_Company" Association="DataMigrationEngineDBModel.FK_Block_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Block" EntitySet="Blocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Block_LeaseType" Association="DataMigrationEngineDBModel.FK_Block_LeaseType">
+      <End Role="LeaseType" EntitySet="LeaseTypes" />
+      <End Role="Block" EntitySet="Blocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Field_Block" Association="DataMigrationEngineDBModel.FK_Field_Block">
+      <End Role="Block" EntitySet="Blocks" />
+      <End Role="Field" EntitySet="Fields" />
+    </AssociationSet>
+    <EntitySet Name="Providers" EntityType="DataMigrationEngineDBModel.Provider" />
+  </EntityContainer>
+  <EntityType Name="BlockType">
+    <Key>
+      <PropertyRef Name="BlockTypeId" />
+    </Key>
+    <Property Name="BlockTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Blocks" Relationship="DataMigrationEngineDBModel.FK_Block_BlockType" FromRole="BlockType" ToRole="Block" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="RCNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CanonialName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="EquipmentUsageHistories" Relationship="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Company" FromRole="Company" ToRole="EquipmentUsageHistory" />
+    <NavigationProperty Name="Fields" Relationship="DataMigrationEngineDBModel.FK_Field_Company" FromRole="Company" ToRole="Field" />
+    <NavigationProperty Name="People" Relationship="DataMigrationEngineDBModel.FK_Person_Company" FromRole="Company" ToRole="Person" />
+    <NavigationProperty Name="Projects" Relationship="DataMigrationEngineDBModel.FK_Project_Company" FromRole="Company" ToRole="Project" />
+    <NavigationProperty Name="IncidentHistories" Relationship="DataMigrationEngineDBModel.FK_IncidentHistory_Company" FromRole="Company" ToRole="IncidentHistory" />
+    <NavigationProperty Name="Blocks" Relationship="DataMigrationEngineDBModel.FK_Block_Company" FromRole="Company" ToRole="Block" />
+  </EntityType>
+  <EntityType Name="Equipment">
+    <Key>
+      <PropertyRef Name="EquipmentId" />
+    </Key>
+    <Property Name="EquipmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EquipmentTypeId" Type="Int32" Nullable="false" />
+    <Property Name="LicenseStatus" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="EquipmentType" Relationship="DataMigrationEngineDBModel.FK_Equipment_EquipmentType" FromRole="Equipment" ToRole="EquipmentType" />
+    <NavigationProperty Name="EquipmentUsageHistories" Relationship="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Equipment" FromRole="Equipment" ToRole="EquipmentUsageHistory" />
+    <NavigationProperty Name="WellCompletions" Relationship="DataMigrationEngineDBModel.FK_WellCompletion_Equipment" FromRole="Equipment" ToRole="WellCompletion" />
+    <NavigationProperty Name="WellWorkovers" Relationship="DataMigrationEngineDBModel.FK_WellWorker_Equipment" FromRole="Equipment" ToRole="WellWorkover" />
+  </EntityType>
+  <EntityType Name="EquipmentType">
+    <Key>
+      <PropertyRef Name="EquipmentTypeId" />
+    </Key>
+    <Property Name="EquipmentTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Equipments" Relationship="DataMigrationEngineDBModel.FK_Equipment_EquipmentType" FromRole="EquipmentType" ToRole="Equipment" />
+  </EntityType>
+  <EntityType Name="EquipmentUsageHistory">
+    <Key>
+      <PropertyRef Name="EquipmentUsageHistoryId" />
+    </Key>
+    <Property Name="EquipmentUsageHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int64" Nullable="false" />
+    <Property Name="EquipmentId" Type="Int32" Nullable="false" />
+    <Property Name="WellId" Type="Int32" Nullable="false" />
+    <Property Name="DateUsed" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="WellCompletionId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Company" Relationship="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Company" FromRole="EquipmentUsageHistory" ToRole="Company" />
+    <NavigationProperty Name="Equipment" Relationship="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Equipment" FromRole="EquipmentUsageHistory" ToRole="Equipment" />
+    <NavigationProperty Name="WellCompletion" Relationship="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_WellCompletion" FromRole="EquipmentUsageHistory" ToRole="WellCompletion" />
+    <NavigationProperty Name="Well" Relationship="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Well" FromRole="EquipmentUsageHistory" ToRole="Well" />
+  </EntityType>
+  <EntityType Name="Field">
+    <Key>
+      <PropertyRef Name="FieldId" />
+    </Key>
+    <Property Name="FieldId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int64" Nullable="false" />
+    <Property Name="ZoneId" Type="Int32" Nullable="false" />
+    <Property Name="TerrainId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TechnicalAllowable" Type="Double" />
+    <Property Name="BlockId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Company" Relationship="DataMigrationEngineDBModel.FK_Field_Company" FromRole="Field" ToRole="Company" />
+    <NavigationProperty Name="Terrain" Relationship="DataMigrationEngineDBModel.FK_Field_Terrain" FromRole="Field" ToRole="Terrain" />
+    <NavigationProperty Name="Zone" Relationship="DataMigrationEngineDBModel.FK_Field_Zone" FromRole="Field" ToRole="Zone" />
+    <NavigationProperty Name="Productions" Relationship="DataMigrationEngineDBModel.FK_Production_Field" FromRole="Field" ToRole="Production" />
+    <NavigationProperty Name="Wells" Relationship="DataMigrationEngineDBModel.FK_Well_Field" FromRole="Field" ToRole="Well" />
+    <NavigationProperty Name="Block" Relationship="DataMigrationEngineDBModel.FK_Field_Block" FromRole="Field" ToRole="Block" />
+  </EntityType>
+  <EntityType Name="IncidentType">
+    <Key>
+      <PropertyRef Name="IncidentTypeId" />
+    </Key>
+    <Property Name="IncidentTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="IncidentHistories" Relationship="DataMigrationEngineDBModel.FK_IncidentHistory_IncidentType" FromRole="IncidentType" ToRole="IncidentHistory" />
+  </EntityType>
+  <EntityType Name="LeaseType">
+    <Key>
+      <PropertyRef Name="LeaseTypeId" />
+    </Key>
+    <Property Name="LeaseTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Blocks" Relationship="DataMigrationEngineDBModel.FK_Block_LeaseType" FromRole="LeaseType" ToRole="Block" />
+  </EntityType>
+  <EntityType Name="MilestoneStatu">
+    <Key>
+      <PropertyRef Name="MilestoneStatusId" />
+    </Key>
+    <Property Name="MilestoneStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ProjectMileStones" Relationship="DataMigrationEngineDBModel.FK_ProjectMileStone_MilestoneStatus" FromRole="MilestoneStatu" ToRole="ProjectMileStone" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PersonId" />
+    </Key>
+    <Property Name="PersonId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int64" Nullable="false" />
+    <Property Name="Designation" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Company" Relationship="DataMigrationEngineDBModel.FK_Person_Company" FromRole="Person" ToRole="Company" />
+    <NavigationProperty Name="ProjectReps" Relationship="DataMigrationEngineDBModel.FK_ProjectRep_Person" FromRole="Person" ToRole="ProjectRep" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Productions" Relationship="DataMigrationEngineDBModel.FK_Production_Product" FromRole="Product" ToRole="Production" />
+  </EntityType>
+  <EntityType Name="ProjectMileStone">
+    <Key>
+      <PropertyRef Name="ProjectMileStoneId" />
+    </Key>
+    <Property Name="ProjectMileStoneId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ParentId" Type="Int64" Nullable="false" />
+    <Property Name="ProjectId" Type="Int64" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DateDue" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="LastUpdated" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MileStoneStatusId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MilestoneStatu" Relationship="DataMigrationEngineDBModel.FK_ProjectMileStone_MilestoneStatus" FromRole="ProjectMileStone" ToRole="MilestoneStatu" />
+    <NavigationProperty Name="ProjectMileStone1" Relationship="DataMigrationEngineDBModel.FK_ProjectMileStone_ProjectMileStone" FromRole="ProjectMileStone" ToRole="ProjectMileStone1" />
+    <NavigationProperty Name="ProjectMileStone2" Relationship="DataMigrationEngineDBModel.FK_ProjectMileStone_ProjectMileStone" FromRole="ProjectMileStone1" ToRole="ProjectMileStone" />
+    <NavigationProperty Name="Project" Relationship="DataMigrationEngineDBModel.FK_ProjectMileStone_Project" FromRole="ProjectMileStone" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProjectRep">
+    <Key>
+      <PropertyRef Name="ProjectRepId" />
+    </Key>
+    <Property Name="ProjectRepId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectId" Type="Int64" Nullable="false" />
+    <Property Name="PersonId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Person" Relationship="DataMigrationEngineDBModel.FK_ProjectRep_Person" FromRole="ProjectRep" ToRole="Person" />
+    <NavigationProperty Name="Project" Relationship="DataMigrationEngineDBModel.FK_ProjectRep_Project" FromRole="ProjectRep" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="ProjectType">
+    <Key>
+      <PropertyRef Name="ProjectTypeId" />
+    </Key>
+    <Property Name="ProjectTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Projects" Relationship="DataMigrationEngineDBModel.FK_Project_ProjectType" FromRole="ProjectType" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="Sector">
+    <Key>
+      <PropertyRef Name="SectorId" />
+    </Key>
+    <Property Name="SectorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Projects" Relationship="DataMigrationEngineDBModel.FK_Project_Sector" FromRole="Sector" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="Sys_Param">
+    <Key>
+      <PropertyRef Name="Sys_ParamId" />
+    </Key>
+    <Property Name="Sys_ParamId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServerName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ServerLoginName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ServerLoginPassword" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DBName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Terrain">
+    <Key>
+      <PropertyRef Name="TerrainId" />
+    </Key>
+    <Property Name="TerrainId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Fields" Relationship="DataMigrationEngineDBModel.FK_Field_Terrain" FromRole="Terrain" ToRole="Field" />
+    <NavigationProperty Name="Projects" Relationship="DataMigrationEngineDBModel.FK_Project_Terrain" FromRole="Terrain" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="WellClass">
+    <Key>
+      <PropertyRef Name="WellClassId" />
+    </Key>
+    <Property Name="WellClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="WellClassifications" Relationship="DataMigrationEngineDBModel.FK_WellClassification_WellClass" FromRole="WellClass" ToRole="WellClassification" />
+  </EntityType>
+  <EntityType Name="WellClassification">
+    <Key>
+      <PropertyRef Name="WellClassificationId" />
+    </Key>
+    <Property Name="WellClassificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WellId" Type="Int32" Nullable="false" />
+    <Property Name="WellClassId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="WellClass" Relationship="DataMigrationEngineDBModel.FK_WellClassification_WellClass" FromRole="WellClassification" ToRole="WellClass" />
+    <NavigationProperty Name="Well" Relationship="DataMigrationEngineDBModel.FK_WellClassification_Well" FromRole="WellClassification" ToRole="Well" />
+  </EntityType>
+  <EntityType Name="WellCompletion">
+    <Key>
+      <PropertyRef Name="WellCompletionId" />
+    </Key>
+    <Property Name="WellCompletionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WellId" Type="Int32" Nullable="false" />
+    <Property Name="EquipmentId" Type="Int32" Nullable="false" />
+    <Property Name="WellCompletionTypeId" Type="Int32" Nullable="false" />
+    <Property Name="IsInitial" Type="Boolean" Nullable="false" />
+    <Property Name="DateCompleted" Type="DateTime" Precision="0" />
+    <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreated" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Equipment" Relationship="DataMigrationEngineDBModel.FK_WellCompletion_Equipment" FromRole="WellCompletion" ToRole="Equipment" />
+    <NavigationProperty Name="EquipmentUsageHistories" Relationship="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_WellCompletion" FromRole="WellCompletion" ToRole="EquipmentUsageHistory" />
+    <NavigationProperty Name="WellCompletionType" Relationship="DataMigrationEngineDBModel.FK_WellCompletion_WellCompletionType" FromRole="WellCompletion" ToRole="WellCompletionType" />
+    <NavigationProperty Name="WellCompletionIntervals" Relationship="DataMigrationEngineDBModel.FK_WellCompletionInterval_WellCompletion" FromRole="WellCompletion" ToRole="WellCompletionInterval" />
+    <NavigationProperty Name="Well" Relationship="DataMigrationEngineDBModel.FK_WellCompletion_Well" FromRole="WellCompletion" ToRole="Well" />
+  </EntityType>
+  <EntityType Name="WellCompletionInterval">
+    <Key>
+      <PropertyRef Name="WellCompletionIntervalId" />
+    </Key>
+    <Property Name="WellCompletionIntervalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WellCompletionId" Type="Int32" Nullable="false" />
+    <Property Name="LowerInterval" Type="Double" Nullable="false" />
+    <Property Name="UpperInterval" Type="Double" Nullable="false" />
+    <Property Name="DateCompleted" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastUpdatedTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="WellCompletion" Relationship="DataMigrationEngineDBModel.FK_WellCompletionInterval_WellCompletion" FromRole="WellCompletionInterval" ToRole="WellCompletion" />
+  </EntityType>
+  <EntityType Name="WellCompletionType">
+    <Key>
+      <PropertyRef Name="WellCompletionTypeId" />
+    </Key>
+    <Property Name="WellCompletionTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="WellCompletions" Relationship="DataMigrationEngineDBModel.FK_WellCompletion_WellCompletionType" FromRole="WellCompletionType" ToRole="WellCompletion" />
+  </EntityType>
+  <EntityType Name="WellType">
+    <Key>
+      <PropertyRef Name="WellTypeId" />
+    </Key>
+    <Property Name="WellTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Wells" Relationship="DataMigrationEngineDBModel.FK_Well_WellType" FromRole="WellType" ToRole="Well" />
+  </EntityType>
+  <EntityType Name="WellWorkover">
+    <Key>
+      <PropertyRef Name="WellWorkOverId" />
+    </Key>
+    <Property Name="WellWorkOverId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WellId" Type="Int32" Nullable="false" />
+    <Property Name="WellWorkOverReasonId" Type="Int32" Nullable="false" />
+    <Property Name="EquipmentId" Type="Int32" Nullable="false" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="Int64" Nullable="false" />
+    <Property Name="DateCompleted" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreated" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Equipment" Relationship="DataMigrationEngineDBModel.FK_WellWorker_Equipment" FromRole="WellWorkover" ToRole="Equipment" />
+    <NavigationProperty Name="WellWorkOverReason" Relationship="DataMigrationEngineDBModel.FK_WellWorker_WellWorkOverReason" FromRole="WellWorkover" ToRole="WellWorkOverReason" />
+    <NavigationProperty Name="Well" Relationship="DataMigrationEngineDBModel.FK_WellWorker_Well" FromRole="WellWorkover" ToRole="Well" />
+  </EntityType>
+  <EntityType Name="WellWorkOverReason">
+    <Key>
+      <PropertyRef Name="WellWorkOverReasonId" />
+    </Key>
+    <Property Name="WellWorkOverReasonId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="WellWorkovers" Relationship="DataMigrationEngineDBModel.FK_WellWorker_WellWorkOverReason" FromRole="WellWorkOverReason" ToRole="WellWorkover" />
+  </EntityType>
+  <EntityType Name="Zone">
+    <Key>
+      <PropertyRef Name="ZoneId" />
+    </Key>
+    <Property Name="ZoneId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Fields" Relationship="DataMigrationEngineDBModel.FK_Field_Zone" FromRole="Zone" ToRole="Field" />
+  </EntityType>
+  <Association Name="FK_EquipmentUsageHistory_Company">
+    <End Type="DataMigrationEngineDBModel.Company" Role="Company" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.EquipmentUsageHistory" Role="EquipmentUsageHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="EquipmentUsageHistory">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Field_Company">
+    <End Type="DataMigrationEngineDBModel.Company" Role="Company" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Field" Role="Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Field">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Person_Company">
+    <End Type="DataMigrationEngineDBModel.Company" Role="Company" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Person" Role="Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Person">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Equipment_EquipmentType">
+    <End Type="DataMigrationEngineDBModel.EquipmentType" Role="EquipmentType" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Equipment" Role="Equipment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EquipmentType">
+        <PropertyRef Name="EquipmentTypeId" />
+      </Principal>
+      <Dependent Role="Equipment">
+        <PropertyRef Name="EquipmentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentUsageHistory_Equipment">
+    <End Type="DataMigrationEngineDBModel.Equipment" Role="Equipment" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.EquipmentUsageHistory" Role="EquipmentUsageHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="EquipmentId" />
+      </Principal>
+      <Dependent Role="EquipmentUsageHistory">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellCompletion_Equipment">
+    <End Type="DataMigrationEngineDBModel.Equipment" Role="Equipment" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellCompletion" Role="WellCompletion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="EquipmentId" />
+      </Principal>
+      <Dependent Role="WellCompletion">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellWorker_Equipment">
+    <End Type="DataMigrationEngineDBModel.Equipment" Role="Equipment" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellWorkover" Role="WellWorkover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="EquipmentId" />
+      </Principal>
+      <Dependent Role="WellWorkover">
+        <PropertyRef Name="EquipmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipmentUsageHistory_WellCompletion">
+    <End Type="DataMigrationEngineDBModel.WellCompletion" Role="WellCompletion" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.EquipmentUsageHistory" Role="EquipmentUsageHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellCompletion">
+        <PropertyRef Name="WellCompletionId" />
+      </Principal>
+      <Dependent Role="EquipmentUsageHistory">
+        <PropertyRef Name="WellCompletionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Field_Terrain">
+    <End Type="DataMigrationEngineDBModel.Terrain" Role="Terrain" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Field" Role="Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Terrain">
+        <PropertyRef Name="TerrainId" />
+      </Principal>
+      <Dependent Role="Field">
+        <PropertyRef Name="TerrainId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Field_Zone">
+    <End Type="DataMigrationEngineDBModel.Zone" Role="Zone" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Field" Role="Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zone">
+        <PropertyRef Name="ZoneId" />
+      </Principal>
+      <Dependent Role="Field">
+        <PropertyRef Name="ZoneId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectMileStone_MilestoneStatus">
+    <End Type="DataMigrationEngineDBModel.MilestoneStatu" Role="MilestoneStatu" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.ProjectMileStone" Role="ProjectMileStone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MilestoneStatu">
+        <PropertyRef Name="MilestoneStatusId" />
+      </Principal>
+      <Dependent Role="ProjectMileStone">
+        <PropertyRef Name="MileStoneStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRep_Person">
+    <End Type="DataMigrationEngineDBModel.Person" Role="Person" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.ProjectRep" Role="ProjectRep" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="PersonId" />
+      </Principal>
+      <Dependent Role="ProjectRep">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectMileStone_ProjectMileStone">
+    <End Type="DataMigrationEngineDBModel.ProjectMileStone" Role="ProjectMileStone" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.ProjectMileStone" Role="ProjectMileStone1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectMileStone">
+        <PropertyRef Name="ProjectMileStoneId" />
+      </Principal>
+      <Dependent Role="ProjectMileStone1">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellClassification_WellClass">
+    <End Type="DataMigrationEngineDBModel.WellClass" Role="WellClass" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellClassification" Role="WellClassification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellClass">
+        <PropertyRef Name="WellClassId" />
+      </Principal>
+      <Dependent Role="WellClassification">
+        <PropertyRef Name="WellClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellCompletion_WellCompletionType">
+    <End Type="DataMigrationEngineDBModel.WellCompletionType" Role="WellCompletionType" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellCompletion" Role="WellCompletion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellCompletionType">
+        <PropertyRef Name="WellCompletionTypeId" />
+      </Principal>
+      <Dependent Role="WellCompletion">
+        <PropertyRef Name="WellCompletionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellCompletionInterval_WellCompletion">
+    <End Type="DataMigrationEngineDBModel.WellCompletion" Role="WellCompletion" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellCompletionInterval" Role="WellCompletionInterval" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellCompletion">
+        <PropertyRef Name="WellCompletionId" />
+      </Principal>
+      <Dependent Role="WellCompletionInterval">
+        <PropertyRef Name="WellCompletionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellWorker_WellWorkOverReason">
+    <End Type="DataMigrationEngineDBModel.WellWorkOverReason" Role="WellWorkOverReason" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellWorkover" Role="WellWorkover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellWorkOverReason">
+        <PropertyRef Name="WellWorkOverReasonId" />
+      </Principal>
+      <Dependent Role="WellWorkover">
+        <PropertyRef Name="WellWorkOverReasonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Production">
+    <Key>
+      <PropertyRef Name="ProductionId" />
+    </Key>
+    <Property Name="ProductionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="FieldId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Month" Type="Int32" Nullable="false" />
+    <Property Name="Year" Type="Int64" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="APIGravity" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreated" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Field" Relationship="DataMigrationEngineDBModel.FK_Production_Field" FromRole="Production" ToRole="Field" />
+    <NavigationProperty Name="Product" Relationship="DataMigrationEngineDBModel.FK_Production_Product" FromRole="Production" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="ProjectId" />
+    </Key>
+    <Property Name="ProjectId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TerrainId" Type="Int32" Nullable="false" />
+    <Property Name="SectorId" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Int64" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ProjectTypeId" Type="Int32" Nullable="false" />
+    <Property Name="Duration" Type="Int32" Nullable="false" />
+    <Property Name="Cost" Type="Double" Nullable="false" />
+    <Property Name="DateCompleted" Type="DateTime" Precision="0" />
+    <Property Name="ProjectObjectives" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CompletionStatus" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreated" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Company" Relationship="DataMigrationEngineDBModel.FK_Project_Company" FromRole="Project" ToRole="Company" />
+    <NavigationProperty Name="ProjectType" Relationship="DataMigrationEngineDBModel.FK_Project_ProjectType" FromRole="Project" ToRole="ProjectType" />
+    <NavigationProperty Name="Sector" Relationship="DataMigrationEngineDBModel.FK_Project_Sector" FromRole="Project" ToRole="Sector" />
+    <NavigationProperty Name="Terrain" Relationship="DataMigrationEngineDBModel.FK_Project_Terrain" FromRole="Project" ToRole="Terrain" />
+    <NavigationProperty Name="ProjectMileStones" Relationship="DataMigrationEngineDBModel.FK_ProjectMileStone_Project" FromRole="Project" ToRole="ProjectMileStone" />
+    <NavigationProperty Name="ProjectReps" Relationship="DataMigrationEngineDBModel.FK_ProjectRep_Project" FromRole="Project" ToRole="ProjectRep" />
+  </EntityType>
+  <Association Name="FK_Project_Company">
+    <End Type="DataMigrationEngineDBModel.Company" Role="Company" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Project" Role="Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Production_Field">
+    <End Type="DataMigrationEngineDBModel.Field" Role="Field" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Production" Role="Production" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Field">
+        <PropertyRef Name="FieldId" />
+      </Principal>
+      <Dependent Role="Production">
+        <PropertyRef Name="FieldId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Production_Product">
+    <End Type="DataMigrationEngineDBModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Production" Role="Production" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="Production">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_ProjectType">
+    <End Type="DataMigrationEngineDBModel.ProjectType" Role="ProjectType" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Project" Role="Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectType">
+        <PropertyRef Name="ProjectTypeId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="ProjectTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Sector">
+    <End Type="DataMigrationEngineDBModel.Sector" Role="Sector" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Project" Role="Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sector">
+        <PropertyRef Name="SectorId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="SectorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Project_Terrain">
+    <End Type="DataMigrationEngineDBModel.Terrain" Role="Terrain" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Project" Role="Project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Terrain">
+        <PropertyRef Name="TerrainId" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="TerrainId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectMileStone_Project">
+    <End Type="DataMigrationEngineDBModel.Project" Role="Project" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.ProjectMileStone" Role="ProjectMileStone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectId" />
+      </Principal>
+      <Dependent Role="ProjectMileStone">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectRep_Project">
+    <End Type="DataMigrationEngineDBModel.Project" Role="Project" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.ProjectRep" Role="ProjectRep" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="ProjectId" />
+      </Principal>
+      <Dependent Role="ProjectRep">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Well">
+    <Key>
+      <PropertyRef Name="WellId" />
+    </Key>
+    <Property Name="WellId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WellTypeId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="TechnicalAllowable" Type="Double" />
+    <Property Name="TotalDept" Type="Double" />
+    <Property Name="SpudDate" Type="DateTime" Precision="0" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="FieldId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="EquipmentUsageHistories" Relationship="DataMigrationEngineDBModel.FK_EquipmentUsageHistory_Well" FromRole="Well" ToRole="EquipmentUsageHistory" />
+    <NavigationProperty Name="Field" Relationship="DataMigrationEngineDBModel.FK_Well_Field" FromRole="Well" ToRole="Field" />
+    <NavigationProperty Name="WellType" Relationship="DataMigrationEngineDBModel.FK_Well_WellType" FromRole="Well" ToRole="WellType" />
+    <NavigationProperty Name="WellClassifications" Relationship="DataMigrationEngineDBModel.FK_WellClassification_Well" FromRole="Well" ToRole="WellClassification" />
+    <NavigationProperty Name="WellCompletions" Relationship="DataMigrationEngineDBModel.FK_WellCompletion_Well" FromRole="Well" ToRole="WellCompletion" />
+    <NavigationProperty Name="WellWorkovers" Relationship="DataMigrationEngineDBModel.FK_WellWorker_Well" FromRole="Well" ToRole="WellWorkover" />
+  </EntityType>
+  <Association Name="FK_EquipmentUsageHistory_Well">
+    <End Type="DataMigrationEngineDBModel.Well" Role="Well" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.EquipmentUsageHistory" Role="EquipmentUsageHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Well">
+        <PropertyRef Name="WellId" />
+      </Principal>
+      <Dependent Role="EquipmentUsageHistory">
+        <PropertyRef Name="WellId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Well_Field">
+    <End Type="DataMigrationEngineDBModel.Field" Role="Field" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Well" Role="Well" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Field">
+        <PropertyRef Name="FieldId" />
+      </Principal>
+      <Dependent Role="Well">
+        <PropertyRef Name="FieldId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Well_WellType">
+    <End Type="DataMigrationEngineDBModel.WellType" Role="WellType" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Well" Role="Well" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WellType">
+        <PropertyRef Name="WellTypeId" />
+      </Principal>
+      <Dependent Role="Well">
+        <PropertyRef Name="WellTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellClassification_Well">
+    <End Type="DataMigrationEngineDBModel.Well" Role="Well" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellClassification" Role="WellClassification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Well">
+        <PropertyRef Name="WellId" />
+      </Principal>
+      <Dependent Role="WellClassification">
+        <PropertyRef Name="WellId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellCompletion_Well">
+    <End Type="DataMigrationEngineDBModel.Well" Role="Well" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellCompletion" Role="WellCompletion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Well">
+        <PropertyRef Name="WellId" />
+      </Principal>
+      <Dependent Role="WellCompletion">
+        <PropertyRef Name="WellId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WellWorker_Well">
+    <End Type="DataMigrationEngineDBModel.Well" Role="Well" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.WellWorkover" Role="WellWorkover" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Well">
+        <PropertyRef Name="WellId" />
+      </Principal>
+      <Dependent Role="WellWorkover">
+        <PropertyRef Name="WellId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="IncidentHistory">
+    <Key>
+      <PropertyRef Name="IncidentHistoryId" />
+    </Key>
+    <Property Name="IncidentHistoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyId" Type="Int64" Nullable="false" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IncidentTypeId" Type="Int32" Nullable="false" />
+    <Property Name="IncidentDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Location" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ReportedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="CraetedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TimeCreated" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Company" Relationship="DataMigrationEngineDBModel.FK_IncidentHistory_Company" FromRole="IncidentHistory" ToRole="Company" />
+    <NavigationProperty Name="IncidentType" Relationship="DataMigrationEngineDBModel.FK_IncidentHistory_IncidentType" FromRole="IncidentHistory" ToRole="IncidentType" />
+  </EntityType>
+  <Association Name="FK_IncidentHistory_Company">
+    <End Type="DataMigrationEngineDBModel.Company" Role="Company" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.IncidentHistory" Role="IncidentHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="IncidentHistory">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IncidentHistory_IncidentType">
+    <End Type="DataMigrationEngineDBModel.IncidentType" Role="IncidentType" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.IncidentHistory" Role="IncidentHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IncidentType">
+        <PropertyRef Name="IncidentTypeId" />
+      </Principal>
+      <Dependent Role="IncidentHistory">
+        <PropertyRef Name="IncidentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Block">
+    <Key>
+      <PropertyRef Name="BlockId" />
+    </Key>
+    <Property Name="BlockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BlockTypeId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Area" Type="Double" />
+    <Property Name="LeaseTypeId" Type="Int32" Nullable="false" />
+    <Property Name="YearOfAward" Type="Int64" />
+    <Property Name="CompanyId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="BlockType" Relationship="DataMigrationEngineDBModel.FK_Block_BlockType" FromRole="Block" ToRole="BlockType" />
+    <NavigationProperty Name="Company" Relationship="DataMigrationEngineDBModel.FK_Block_Company" FromRole="Block" ToRole="Company" />
+    <NavigationProperty Name="LeaseType" Relationship="DataMigrationEngineDBModel.FK_Block_LeaseType" FromRole="Block" ToRole="LeaseType" />
+    <NavigationProperty Name="Fields" Relationship="DataMigrationEngineDBModel.FK_Field_Block" FromRole="Block" ToRole="Field" />
+  </EntityType>
+  <Association Name="FK_Block_BlockType">
+    <End Type="DataMigrationEngineDBModel.BlockType" Role="BlockType" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Block" Role="Block" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BlockType">
+        <PropertyRef Name="BlockTypeId" />
+      </Principal>
+      <Dependent Role="Block">
+        <PropertyRef Name="BlockTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Block_Company">
+    <End Type="DataMigrationEngineDBModel.Company" Role="Company" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Block" Role="Block" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Block">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Block_LeaseType">
+    <End Type="DataMigrationEngineDBModel.LeaseType" Role="LeaseType" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Block" Role="Block" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LeaseType">
+        <PropertyRef Name="LeaseTypeId" />
+      </Principal>
+      <Dependent Role="Block">
+        <PropertyRef Name="LeaseTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Field_Block">
+    <End Type="DataMigrationEngineDBModel.Block" Role="Block" Multiplicity="1" />
+    <End Type="DataMigrationEngineDBModel.Field" Role="Field" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Block">
+        <PropertyRef Name="BlockId" />
+      </Principal>
+      <Dependent Role="Field">
+        <PropertyRef Name="BlockId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Provider">
+    <Key>
+      <PropertyRef Name="ProviderId" />
+    </Key>
+    <Property Name="ProviderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProviderSecrete" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="Int64" Nullable="false" />
+    <Property Name="AllowedGrant" Type="Int32" Nullable="false" />
+    <Property Name="RedirectUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderLogo" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Report Builders";
+}
+
+<style type="text/css">
+    ul a 
+    {
+        text-decoration: none;
+    }
+</style>
+
+<div style="width: 25%; position: relative; float: left; margin-left: 3%">
+    <fieldset style="width: 100%; border: 1px solid whitesmoke; margin-left: 20px">
+        <legend class="customlegend22">Report Builders</legend>
+        <ul>
+            <li>@Html.ActionLink("Production Report", "DynamicReports", "ProductionReport")</li>
+            <li>@Html.ActionLink("Well Workover Report", "DynamicReports", "WellWorkoverReport")</li>
+            <li>@Html.ActionLink("Well Completion Report", "DynamicReports", "WellCompletionReport")</li>
+            <li>@Html.ActionLink("Field Report", "DynamicReports", "FieldReport")</li>
+            <li>@Html.ActionLink("Well Report", "DynamicReports", "WellReport")</li>
+            <li>@Html.ActionLink("Incident Report", "DynamicReports", "IncidentReport")</li>
+        </ul>
+    </fieldset>
+</div>
+
+
+
